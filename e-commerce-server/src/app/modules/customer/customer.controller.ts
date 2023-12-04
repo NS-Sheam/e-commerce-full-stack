@@ -5,7 +5,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 
 const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
-  const result = await CustomerServices.getAllCustomers();
+  const result = await CustomerServices.getAllCustomers(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -15,8 +15,8 @@ const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await CustomerServices.getSingleCustomer(id);
+  const { customerId } = req.params;
+  const result = await CustomerServices.getSingleCustomer(customerId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -26,9 +26,9 @@ const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { customerId } = req.params;
   const { customer } = req.body;
-  const result = await CustomerServices.updateCustomer(id, customer);
+  const result = await CustomerServices.updateCustomer(customerId, customer);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -38,10 +38,9 @@ const updateCustomer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  console.log(id);
+  const { customerId } = req.params;
 
-  const result = await CustomerServices.deleteCustomer(id);
+  const result = await CustomerServices.deleteCustomer(customerId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

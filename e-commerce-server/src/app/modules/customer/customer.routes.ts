@@ -4,13 +4,13 @@ import validateRequest from "../../middlewares/validateRequest";
 import { CustomerValidations } from "./customer.validation";
 
 const router = Router();
-router.get("/:id", CustomerControllers.getSingleCustomer);
+router.get("/:customerId", CustomerControllers.getSingleCustomer);
 router.get("/", CustomerControllers.getAllCustomers);
 router.patch(
-  "/:id",
+  "/:customerId",
   validateRequest(CustomerValidations.updateCustomerValidationSchema),
   CustomerControllers.updateCustomer,
 );
-router.delete("/:id", CustomerControllers.deleteCustomer);
+router.delete("/:customerId", CustomerControllers.deleteCustomer);
 
 export const CustomerRoutes = router;
