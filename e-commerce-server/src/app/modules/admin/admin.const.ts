@@ -1,4 +1,9 @@
-const adminSearchableFields = ["name.firstName", "name.lastName", "email"];
+const adminSearchableFields = [
+  "name.firstName",
+  "name.middleName",
+  "name.lastName",
+  "email",
+];
 
 export const AdminConstants = {
   searchableFields: adminSearchableFields,

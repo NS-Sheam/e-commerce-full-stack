@@ -35,7 +35,6 @@ const vendorSchema = new Schema<TVendor>(
     mobileNo: {
       type: String,
       required: true,
-      unique: true,
     },
     image: String,
     orderHistory: [Schema.Types.ObjectId],

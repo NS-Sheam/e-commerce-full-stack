@@ -35,7 +35,6 @@ const adminSchema = new Schema<TAdmin>(
     mobileNo: {
       type: String,
       required: true,
-      unique: true,
     },
     image: String,
     isDeleted: {
