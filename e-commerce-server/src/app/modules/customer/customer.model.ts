@@ -25,6 +25,12 @@ const customerSchema = new Schema<TCustomer>(
       required: true,
       unique: true,
     },
+    userName: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
     name: nameSchema,
     gender: {
       type: String,
@@ -49,6 +55,7 @@ const customerSchema = new Schema<TCustomer>(
   },
   {
     toJSON: { virtuals: true },
+    timestamps: true,
   },
 );
 
@@ -57,6 +64,7 @@ customerSchema.virtual("fullName").get(function () {
   return `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}`;
 });
 
+// checking if customer already existed
 customerSchema.pre("save", async function (next) {
   const customerId = this._id;
   const isCustomerExist = await Customer.findOne({ _id: customerId });

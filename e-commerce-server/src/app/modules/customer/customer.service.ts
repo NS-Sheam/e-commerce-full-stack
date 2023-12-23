@@ -2,43 +2,20 @@ import mongoose from "mongoose";
 import { TCustomer } from "./customer.interface";
 import { Customer } from "./customer.model";
 import { User } from "../user/user.model";
-import { TUser } from "../user/user.interface";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
+import QueryBuilder from "../../builder/QueryBuilder";
+import { CustomerConstants } from "./customer.const";
 
 const getAllCustomers = async (query: Record<string, unknown>) => {
-  const queryObject: Record<string, unknown> = { ...query };
+  const customerQuery = new QueryBuilder(Customer.find(), query)
+    .search(CustomerConstants.searchableFields)
+    .filter()
+    .sort()
+    .limit()
+    .paginate();
 
-  let searchTerm = "";
-  const excludeFields = ["searchTerm", "limit", "sort"];
-  excludeFields.forEach((field) => delete queryObject[field]);
-  if (query?.searchTerm) {
-    searchTerm = query.searchTerm as string;
-  }
-
-  const searchFields = ["name.firstName", "name.lastName", "email"];
-
-  const searchQuery = Customer.find({
-    $or: searchFields.map((field) => ({
-      [field]: { $regex: searchTerm, $options: "i" },
-    })),
-  });
-
-  let sort = "-createdAt";
-  if (query?.sort) {
-    sort = query.sort as string;
-  }
-
-  const sortQuery = searchQuery.sort(sort);
-
-  let limit = 10;
-  if (query?.limit) {
-    limit = Number(query.limit);
-  }
-
-  const limitQuery = sortQuery.limit(limit);
-
-  const result = await limitQuery.find(queryObject);
+  const result = await customerQuery.modelQuery;
   return result;
 };
 
@@ -101,10 +78,10 @@ const deleteCustomer = async (customerId: string) => {
     await session.commitTransaction();
     await session.endSession();
     return deletedCustomer;
-  } catch (error: any) {
+  } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    throw new AppError(500, error.message);
+    throw error;
   }
 };
 

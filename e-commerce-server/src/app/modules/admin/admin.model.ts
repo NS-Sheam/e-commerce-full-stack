@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { TName, TVendor } from "./vendor.interface";
+import { TAdmin, TName } from "./admin.interface";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 
@@ -17,7 +17,7 @@ const nameSchema = new Schema<TName>({
   },
 });
 
-const vendorSchema = new Schema<TVendor>(
+const adminSchema = new Schema<TAdmin>(
   {
     user: Schema.Types.ObjectId,
     userName: {
@@ -38,8 +38,6 @@ const vendorSchema = new Schema<TVendor>(
       unique: true,
     },
     image: String,
-    orderHistory: [Schema.Types.ObjectId],
-    review: [Schema.Types.ObjectId],
     isDeleted: {
       type: Boolean,
       default: false,
@@ -51,19 +49,19 @@ const vendorSchema = new Schema<TVendor>(
   },
 );
 
-// showing fullname of vendor
-vendorSchema.virtual("fullName").get(function () {
+// showing fullname of admin
+adminSchema.virtual("fullName").get(function () {
   return `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}`;
 });
 
-// checking if vendor already existed
-vendorSchema.pre("save", async function (next) {
-  const vendorId = this._id;
-  const isVendorExist = await Vendor.findOne({ _id: vendorId });
-  if (isVendorExist) {
-    throw new AppError(httpStatus.NOT_FOUND, "Vendor already exist");
+// checking if admin already existed
+adminSchema.pre("save", async function (next) {
+  const adminId = this._id;
+  const isAdminExist = await Admin.findOne({ _id: adminId });
+  if (isAdminExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Admin already existed");
   }
   next();
 });
 
-export const Vendor = model<TVendor>("Vendor", vendorSchema);
+export const Admin = model<TAdmin>("Admin", adminSchema);

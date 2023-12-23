@@ -12,9 +12,13 @@ const nameValidationSchema = z.object({
 
 const createCustomerValidationSchema = z.object({
   body: z.object({
-    userName: z.string(),
-    password: z.string(),
+    password: z.string({
+      required_error: "Password is required",
+    }),
     customer: z.object({
+      userName: z.string({
+        required_error: "Username is required",
+      }),
       name: nameValidationSchema,
       gender: z.enum(["male", "female", "other"]),
       email: z

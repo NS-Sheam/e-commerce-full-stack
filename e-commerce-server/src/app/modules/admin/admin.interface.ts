@@ -7,17 +7,16 @@ export type TName = {
   lastName: string;
 };
 
-export type TCustomer = {
+export type TAdmin = {
   user: Types.ObjectId;
   userName: string;
   name: TName;
-  gender: "male" | "female" | "other";
   email: string;
   mobileNo: string;
-  image?: string;
+  image: string;
   isDeleted: boolean;
 };
 
-export interface ICustomerModel extends Model<TCustomer> {
-  existedCustomer: (customerId: string) => Promise<TCustomer | null>;
+export interface IAdminModel extends Model<TAdmin> {
+  existedAdmin: (adminId: string) => Promise<TAdmin | null>;
 }

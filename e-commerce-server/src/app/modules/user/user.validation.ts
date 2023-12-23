@@ -9,6 +9,7 @@ const createUserValidationSchema = z.object({
       required_error: "Password is required",
     })
     .min(6, "Password must be at least 6 characters"),
+  email: z.string().email("Invalid email address"),
   userType: z.enum(["customer", "vendor", "admin"]),
   isDeleted: z.boolean(),
 });

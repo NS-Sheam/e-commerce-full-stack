@@ -10,12 +10,12 @@ const nameValidationSchema = z.object({
   }),
 });
 
-const createVendorValidationSchema = z.object({
+const createAdminValidationSchema = z.object({
   body: z.object({
     password: z.string({
       required_error: "Password is required",
     }),
-    vendor: z.object({
+    admin: z.object({
       userName: z.string({
         required_error: "Username is required",
       }),
@@ -29,8 +29,6 @@ const createVendorValidationSchema = z.object({
         required_error: "Mobile number is required",
       }),
       image: z.string().optional(),
-      orderHistory: z.array(z.string()).optional(),
-      review: z.array(z.string()).optional(),
       isDeleted: z.boolean().default(false),
     }),
   }),
@@ -42,22 +40,20 @@ const updateNameValidationSchema = z.object({
   lastName: z.string().optional(),
 });
 
-const updateVendorValidationSchema = z.object({
+const updateAdminValidationSchema = z.object({
   body: z.object({
     password: z.string().optional(),
-    vendor: z.object({
+    admin: z.object({
       name: updateNameValidationSchema.optional(),
       email: z.string().email().optional(),
       mobileNo: z.string().optional(),
       image: z.string().optional(),
-      orderHistory: z.array(z.string()).optional(),
-      review: z.array(z.string()).optional(),
       isDeleted: z.boolean().optional(),
     }),
   }),
 });
 
-export const VendorValidations = {
-  createVendorValidationSchema,
-  updateVendorValidationSchema,
+export const AdminValidations = {
+  createAdminValidationSchema,
+  updateAdminValidationSchema,
 };

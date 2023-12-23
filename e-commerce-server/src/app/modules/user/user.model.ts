@@ -13,6 +13,12 @@ const userSchema = new Schema<TUser>(
       required: true,
     },
     password: String,
+    email: {
+      type: String,
+      unique: true,
+      trim: true,
+      required: true,
+    },
     userType: {
       type: String,
       enum: ["customer", "vendor", "admin"],
@@ -29,13 +35,14 @@ const userSchema = new Schema<TUser>(
 );
 
 userSchema.pre("save", async function (next) {
-  const user = this;
-  const userId = user._id;
+  // const user = this;
+  const userId = this._id;
   const isUserExist = await User.findOne({ _id: userId });
   if (isUserExist) {
     throw new AppError(httpStatus.NOT_FOUND, "User already exist");
   }
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt));
+
+  this.password = await bcrypt.hash(this.password, Number(config.bcrypt_salt));
 
   next();
 });

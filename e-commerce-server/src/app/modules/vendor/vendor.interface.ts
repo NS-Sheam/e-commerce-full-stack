@@ -1,4 +1,5 @@
-import { Types } from "mongoose";
+/* eslint-disable no-unused-vars */
+import { Model, Types } from "mongoose";
 
 export type TName = {
   firstName: string;
@@ -8,6 +9,7 @@ export type TName = {
 
 export type TVendor = {
   user: Types.ObjectId;
+  userName: string;
   name: TName;
   email: string;
   mobileNo: string;
@@ -16,3 +18,7 @@ export type TVendor = {
   review?: Types.ObjectId[];
   isDeleted: boolean;
 };
+
+export interface IVendorModel extends Model<TVendor> {
+  existedVendor: (vendorId: string) => Promise<TVendor | null>;
+}

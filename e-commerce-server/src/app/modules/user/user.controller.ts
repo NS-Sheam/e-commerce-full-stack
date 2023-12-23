@@ -5,13 +5,9 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 
 const createCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { userName, password, customer } = req.body;
+  const { password, customer } = req.body;
 
-  const result = await UserServices.createCustomer(
-    userName,
-    password,
-    customer,
-  );
+  const result = await UserServices.createCustomer(password, customer);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -21,8 +17,9 @@ const createCustomer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const createVendor = catchAsync(async (req: Request, res: Response) => {
-  const { userName, password, vendor } = req.body;
-  const result = await UserServices.createVendor(userName, password, vendor);
+  const { password, vendor } = req.body;
+
+  const result = await UserServices.createVendor(password, vendor);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -31,8 +28,21 @@ const createVendor = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const createAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { password, admin } = req.body;
+
+  const result = await UserServices.createAdmin(password, admin);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Admin created successfully",
+    data: result,
+  });
+});
 
 export const UserControllers = {
   createCustomer,
   createVendor,
+  createAdmin,
 };

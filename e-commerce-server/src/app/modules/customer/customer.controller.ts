@@ -15,8 +15,8 @@ const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { customerId } = req.params;
-  const result = await CustomerServices.getSingleCustomer(customerId);
+  const { id } = req.params;
+  const result = await CustomerServices.getSingleCustomer(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -26,9 +26,9 @@ const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { customerId } = req.params;
+  const { id } = req.params;
   const { customer } = req.body;
-  const result = await CustomerServices.updateCustomer(customerId, customer);
+  const result = await CustomerServices.updateCustomer(id, customer);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -38,9 +38,9 @@ const updateCustomer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { customerId } = req.params;
+  const { id } = req.params;
 
-  const result = await CustomerServices.deleteCustomer(customerId);
+  const result = await CustomerServices.deleteCustomer(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
