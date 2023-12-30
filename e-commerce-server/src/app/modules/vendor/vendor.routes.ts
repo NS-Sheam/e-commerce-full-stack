@@ -7,13 +7,22 @@ import { USER_TYPE } from "../user/user.const";
 
 const router = Router();
 
-router.get("/:id", vendorControllers.getSingleVendor);
+router.get(
+  "/:id",
+  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  vendorControllers.getSingleVendor,
+);
 router.get("/", auth(USER_TYPE.admin), vendorControllers.getAllVendors);
 router.patch(
   "/:id",
+  auth(USER_TYPE.admin, USER_TYPE.vendor),
   validateRequest(VendorValidations.updateVendorValidationSchema),
   vendorControllers.updateVendor,
 );
-router.delete("/:id", vendorControllers.deleteVendor);
+router.delete(
+  "/:id",
+  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  vendorControllers.deleteVendor,
+);
 
 export const VendorRoutes = router;
