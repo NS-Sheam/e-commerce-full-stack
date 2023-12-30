@@ -4,9 +4,9 @@
 
 ### create Customer
 
-**Method:** **`POST`**
-**Endpoint:** **`/users/create-customer`**
-**Request Body:**
+- **Method:** **`POST`**
+- **Endpoint:** **`/users/create-customer`**
+  **Request Body:**
 
 ```json
 {
@@ -28,9 +28,9 @@
 
 ### create Vendor
 
-**Method:** **`POST`**
-**Endpoint:** **`/users/create-vendor`**
-**Request Body:**
+- **Method:** **`POST`**
+- **Endpoint:** **`/users/create-vendor`**
+  **Request Body:**
 
 ```json
 {
@@ -51,9 +51,9 @@
 
 ### create Admin
 
-**Method:** **`POST`**
-**Endpoint:** **`/users/create-admin`**
-**Request Body:**
+- **Method:** **`POST`**
+- **Endpoint:** **`/users/create-admin`**
+  **Request Body:**
 
 ```json
 {
@@ -78,8 +78,8 @@
 
 ### Get All customers
 
-**Method:** **`GET`**
-**Endpoint:** **`/customers`**
+- **Method:** **`GET`**
+- **Endpoint:** **`/customers`**
 
 #### Headers
 
@@ -89,8 +89,8 @@ Authorization <ADMIN_ACCESS_TOKEN | CUSTOMER_ACCESS_TOKEN>
 
 ### Get Single Customer
 
-**Method:** **`GET`**
-**Endpoint:** **`/customers/:_id`**
+- **Method:** **`GET`**
+- **Endpoint:** **`/customers/:_id`**
 
 #### Headers
 
@@ -100,8 +100,8 @@ Authorization <ADMIN_ACCESS_TOKEN | CUSTOMER_ACCESS_TOKEN>
 
 ### Update Single Customer
 
-**Method:** **`PATCH`**
-**Endpoint:** **`/customers/:_id`**
+- **Method:** **`PATCH`**
+- **Endpoint:** **`/customers/:_id`**
 
 #### Headers
 
@@ -124,8 +124,8 @@ Authorization <ADMIN_ACCESS_TOKEN | CUSTOMER_ACCESS_TOKEN>
 
 ### Delete Single Customer
 
-**Method:** **`DELETE`**
-**Endpoint:** **`/customers/:_id`**
+- **Method:** **`DELETE`**
+- **Endpoint:** **`/customers/:_id`**
 
 #### Headers
 
@@ -139,8 +139,8 @@ Authorization <ADMIN_ACCESS_TOKEN | CUSTOMER_ACCESS_TOKEN>
 
 ### Get All vendors
 
-**Method:** **`GET`**
-**Endpoint:** **`/vendors`**
+- **Method:** **`GET`**
+- **Endpoint:** **`/vendors`**
 
 #### Headers
 
@@ -150,8 +150,8 @@ Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
 
 ### Get Single Vendor
 
-**Method:** **`GET`**
-**Endpoint:** **`/vendors/:_id`**
+- **Method:** **`GET`**
+- **Endpoint:** **`/vendors/:_id`**
 
 #### Headers
 
@@ -161,8 +161,8 @@ Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
 
 ### Update Single Vendor
 
-**Method:** **`PATCH`**
-**Endpoint:** **`/vendors/:_id`**
+- **Method:** **`PATCH`**
+- **Endpoint:** **`/vendors/:_id`**
 
 #### Headers
 
@@ -185,8 +185,8 @@ Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
 
 ### Delete Single Vendor
 
-**Method:** **`DELETE`**
-**Endpoint:** **`/vendors/:_id`**
+- **Method:** **`DELETE`**
+- **Endpoint:** **`/vendors/:_id`**
 
 #### Headers
 
@@ -200,8 +200,8 @@ Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
 
 ### Get All Admins
 
-**Method:** **`GET`**
-**Endpoint:** **`/admins`**
+- **Method:** **`GET`**
+- **Endpoint:** **`/admins`**
 
 #### Headers
 
@@ -211,8 +211,8 @@ Authorization <ADMIN_ACCESS_TOKEN>
 
 ### Get Single Admin
 
-**Method:** **`GET`**
-**Endpoint:** **`/admins/:_id`**
+- **Method:** **`GET`**
+- **Endpoint:** **`/admins/:_id`**
 
 #### Headers
 
@@ -222,8 +222,8 @@ Authorization <ADMIN_ACCESS_TOKEN>
 
 ### Update Single Vendor
 
-**Method:** **`PATCH`**
-**Endpoint:** **`/admins/:_id`**
+- **Method:** **`PATCH`**
+- **Endpoint:** **`/admins/:_id`**
 
 #### Headers
 
@@ -246,8 +246,8 @@ Authorization <ADMIN_ACCESS_TOKEN>
 
 ### Delete Single Vendor
 
-**Method:** **`DELETE`**
-**Endpoint:** **`/admins/:_id`**
+- **Method:** **`DELETE`**
+- **Endpoint:** **`/admins/:_id`**
 
 #### Headers
 
@@ -261,8 +261,8 @@ Authorization <ADMIN_ACCESS_TOKEN>
 
 ### Login User
 
-**Method:** **`POST`**
-**Endpoint:** **`/login`**
+- **Method:** **`POST`**
+- **Endpoint:** **`/login`**
 
 **Request Body:**
 
@@ -289,7 +289,7 @@ Authorization <ADMIN_ACCESS_TOKEN>
 
 ## Error format
 
-```bash
+```javascript
 res.status(statusCode).json({
     success: false,
     message,
