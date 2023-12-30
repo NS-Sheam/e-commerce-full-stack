@@ -257,7 +257,7 @@ Authorization <ADMIN_ACCESS_TOKEN>
 
 ---
 
-## Login Routes
+## Auth Routes
 
 ### Login User
 
@@ -281,6 +281,53 @@ Authorization <ADMIN_ACCESS_TOKEN>
   "message": "User logged in successfully",
   "data": {
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRvMkBleGFtcGxlLmNvbSIsInVzZXJUeXBlIjoidmVuZG9yIiwiaWF0IjoxNzAzOTYwMjQ2LCJleHAiOjE3MDQwNDY2NDZ9.RbITJSc2XqpoEjHrS6k7ylsXVJcu5_z3mSF4iwqeDB0"
+  }
+}
+```
+
+### Change Password
+
+- **Method:** **`POST`**
+- **Endpoint:** **`/change-password`**
+
+**Request Body:**
+
+```json
+{
+  "oldPassword": "customer123",
+  "newPassword": "customer321"
+}
+```
+
+**Response Body:**
+
+```json
+{
+  "success": true,
+  "message": "Password changed successfully",
+  "data": null
+}
+```
+
+### Refresh Token
+
+- **Method:** **`POST`**
+- **Endpoint:** **`/refresh-token`**
+
+#### Request Cookies
+
+```bash
+refreshToken <ADMIN_REFRESH_TOKEN>
+```
+
+**Response Body:**
+
+```json
+{
+  "success": true,
+  "message": "Token refreshed successfully",
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImN1c3RvbWVyMkBleGFtcGxlLmNvbSIsInVzZXJUeXBlIjoiY3VzdG9tZXIiLCJpYXQiOjE3MDM5Njk2NDksImV4cCI6MTcwNDA1NjA0OX0.X19IltUNlQB68ktIl-W1vI9faCgU9WUrrR89dFSC_yo"
   }
 }
 ```
