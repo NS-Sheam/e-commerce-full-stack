@@ -3,19 +3,24 @@ import { TName, TVendor } from "./vendor.interface";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 
-const nameSchema = new Schema<TName>({
-  firstName: {
-    type: String,
-    required: true,
+const nameSchema = new Schema<TName>(
+  {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    middleName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
   },
-  middleName: {
-    type: String,
+  {
+    _id: false,
   },
-  lastName: {
-    type: String,
-    required: true,
-  },
-});
+);
 
 const vendorSchema = new Schema<TVendor>(
   {
