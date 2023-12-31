@@ -13,4 +13,9 @@ export default {
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
   reset_password_url_link: process.env.RESET_PASSWORD_URL_LINK,
+  email_user: process.env.EMAIL_USER,
+  email_password: process.env.EMAIL_PASSWORD,
+  email_from: process.env.EMAIL_FROM,
+  email_host: process.env.EMAIL_HOST,
+  email_port: process.env.EMAIL_PORT,
 };

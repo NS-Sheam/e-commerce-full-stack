@@ -332,6 +332,41 @@ refreshToken <ADMIN_REFRESH_TOKEN>
 }
 ```
 
+### Forget Password
+
+- **Method:** **`POST`**
+- **Endpoint:** **`/forget-password`**
+
+#### Request Cookies
+
+**Response Body:**
+
+```json
+{
+  "email": "vendor@gmail.com"
+}
+```
+
+### Reset Password
+
+- **Method:** **`POST`**
+- **Endpoint:** **`/reset-password`**
+
+#### Headers
+
+```bash
+Authorization <USER_ACCESS_TOKEN>
+```
+
+**Response Body:**
+
+```json
+{
+  "email": "8625sakib@gmail.com",
+  "newPassword": "amiVendor"
+}
+```
+
 ---
 
 ## Error format
