@@ -4,10 +4,28 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 
+// create customer without image file upload
+/*
 const createCustomer = catchAsync(async (req: Request, res: Response) => {
   const { password, customer } = req.body;
-
   const result = await UserServices.createCustomer(password, customer);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Customer created successfully",
+    data: result,
+  });
+});
+ */
+
+// create customer with image file upload
+const createCustomer = catchAsync(async (req: Request, res: Response) => {
+  const { password, customer } = req.body;
+  const result = await UserServices.createCustomer(
+    req.file,
+    password,
+    customer,
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

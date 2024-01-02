@@ -6,11 +6,23 @@ import { VendorValidations } from "../vendor/vendor.validation";
 import { AdminValidations } from "../admin/admin.validation";
 import auth from "../../middlewares/auth";
 import { USER_TYPE } from "./user.const";
+import { upload } from "../../utils/sendImageToCloudinary";
+import textToJsonParser from "../../middlewares/textToJsonParser";
 
 const router = Router();
 
+// for hosting image cloudinary and multer is used
+/*
 router.post(
   "/create-customer",
+  validateRequest(CustomerValidations.createCustomerValidationSchema),
+  UserControllers.createCustomer,
+);
+ */
+router.post(
+  "/create-customer",
+  upload.single("file"),
+  textToJsonParser,
   validateRequest(CustomerValidations.createCustomerValidationSchema),
   UserControllers.createCustomer,
 );

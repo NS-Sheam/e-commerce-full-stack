@@ -18,4 +18,7 @@ export default {
   email_from: process.env.EMAIL_FROM,
   email_host: process.env.EMAIL_HOST,
   email_port: process.env.EMAIL_PORT,
+  cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
+  cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
 };

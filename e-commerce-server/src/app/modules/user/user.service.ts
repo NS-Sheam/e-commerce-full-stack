@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 import { TCustomer } from "../customer/customer.interface";
 import { TUser } from "./user.interface";
@@ -12,7 +13,10 @@ import { Admin } from "../admin/admin.model";
 import config from "../../config";
 import { verifyToken } from "../Auth/auth.utils";
 import { JwtPayload } from "jsonwebtoken";
+import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 
+// create customer without image file upload
+/*
 const createCustomer = async (password: string, payload: TCustomer) => {
   const userData: Partial<TUser> = {};
   userData.userName = payload.userName;
@@ -35,6 +39,55 @@ const createCustomer = async (password: string, payload: TCustomer) => {
     payload.user = newUser[0]._id;
 
     // Transaction 2: Create Customer
+    const newCustomer = await Customer.create([payload], { session });
+    if (!newCustomer) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Customer creation failed");
+    }
+    await session.commitTransaction();
+    await session.endSession();
+    return newCustomer;
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw error;
+  }
+};
+ */
+
+// create customer with image file upload
+const createCustomer = async (
+  file: any,
+  password: string,
+  payload: TCustomer,
+) => {
+  const userData: Partial<TUser> = {};
+  userData.userName = payload.userName;
+  userData.password = password;
+  userData.email = payload.email;
+  userData.userType = "customer";
+
+  const session = await mongoose.startSession();
+
+  try {
+    // Starting Session
+    session.startTransaction();
+
+    // Transaction 1: Create User
+    const newUser = await User.create([userData], { session });
+    if (!newUser) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User creation failed");
+    }
+
+    payload.user = newUser[0]._id;
+
+    // Transaction 2: Create Customer
+    const { secure_url } = (await sendImageToCloudinary(
+      payload.userName,
+      file?.path,
+    )) as any;
+
+    payload.image = secure_url;
     const newCustomer = await Customer.create([payload], { session });
     if (!newCustomer) {
       throw new AppError(httpStatus.BAD_REQUEST, "Customer creation failed");
