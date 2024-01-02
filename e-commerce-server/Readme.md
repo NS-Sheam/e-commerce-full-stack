@@ -72,6 +72,17 @@
 }
 ```
 
+### Get Me
+
+- **Method:** **`GET`**
+- **Endpoint:** **`/me`**
+
+#### Headers
+
+```bash
+Authorization <USER_ACCESS_TOKEN>
+```
+
 ---
 
 ## `Customer Routes`
@@ -365,6 +376,77 @@ Authorization <USER_ACCESS_TOKEN>
   "email": "8625sakib@gmail.com",
   "newPassword": "amiVendor"
 }
+```
+
+---
+
+## `Product Routes`
+
+### Create Product
+
+- **Method:** **`POST`**
+- **Endpoint:** **`/products/create-product`**
+
+#### Headers
+
+```bash
+Authorization <VENDOR_ACCESS_TOKEN>
+```
+
+```json
+{
+  "name": "Laptop",
+  "description": "Powerful laptop for professional use",
+  "price": 1200,
+  "images": ["laptop_image1.jpg", "laptop_image2.jpg"],
+  "category": "Electronics",
+  "inventory": {
+    "quantity": 10,
+    "lowSockNotification": "No"
+  },
+  "discount": 100
+}
+```
+
+### Get All products
+
+- **Method:** **`GET`**
+- **Endpoint:** **`/vendors`**
+
+### Get Single Product
+
+- **Method:** **`GET`**
+- **Endpoint:** **`/products/:_id`**
+
+### Update Single Product
+
+- **Method:** **`PUT`**
+- **Endpoint:** **`/products/:_id`**
+
+#### Headers
+
+```bash
+Authorization <VENDOR_ACCESS_TOKEN>
+```
+
+**Request Body:**
+
+```json
+{
+  "images": ["laptop_image3.jpg", "laptop_image4.jpg"]
+  // Other field to update
+}
+```
+
+### Delete Single Vendor
+
+- **Method:** **`DELETE`**
+- **Endpoint:** **`/products/:_id`**
+
+#### Headers
+
+```bash
+Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
 ```
 
 ---

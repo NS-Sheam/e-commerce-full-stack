@@ -2,14 +2,14 @@ import { Types } from "mongoose";
 
 export type TInventory = {
   quantity: number;
-  lowSockNotification: string;
+  lowSockNotification: "Yes" | "No";
 };
 
 export type TProduct = {
   name: string;
   description: string;
   price: number;
-  image: string[];
+  images: string[];
   category: string;
   vendor: Types.ObjectId;
   inventory: TInventory;

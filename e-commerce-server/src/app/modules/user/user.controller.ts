@@ -41,8 +41,21 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const token = req.headers.authorization;
+  const result = await UserServices.getMe(token as string);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User fetched successfully",
+    data: result,
+  });
+});
+
 export const UserControllers = {
   createCustomer,
   createVendor,
   createAdmin,
+  getMe,
 };

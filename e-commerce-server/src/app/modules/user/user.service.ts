@@ -9,6 +9,9 @@ import { TVendor } from "../vendor/vendor.interface";
 import { Vendor } from "../vendor/vendor.model";
 import { TAdmin } from "../admin/admin.interface";
 import { Admin } from "../admin/admin.model";
+import config from "../../config";
+import { verifyToken } from "../Auth/auth.utils";
+import { JwtPayload } from "jsonwebtoken";
 
 const createCustomer = async (password: string, payload: TCustomer) => {
   const userData: Partial<TUser> = {};
@@ -124,8 +127,25 @@ const createAdmin = async (password: string, payload: TAdmin) => {
   }
 };
 
+const getMe = async (token: string) => {
+  const decoded = verifyToken(token, config.jwt_access_secret as string);
+  const { userId, userType } = decoded as JwtPayload;
+  // check if user exists
+  let result = null;
+  if (userType === "customer") {
+    result = await Customer.findById(userId).populate("user");
+  } else if (userType === "vendor") {
+    result = await Vendor.findById(userId).populate("user");
+  } else if (userType === "admin") {
+    result = await Admin.findById(userId).populate("user");
+  }
+
+  return result;
+};
+
 export const UserServices = {
   createCustomer,
   createVendor,
   createAdmin,
+  getMe,
 };

@@ -4,6 +4,8 @@ import validateRequest from "../../middlewares/validateRequest";
 import { CustomerValidations } from "../customer/customer.validation";
 import { VendorValidations } from "../vendor/vendor.validation";
 import { AdminValidations } from "../admin/admin.validation";
+import auth from "../../middlewares/auth";
+import { USER_TYPE } from "./user.const";
 
 const router = Router();
 
@@ -23,5 +25,10 @@ router.post(
   "/create-admin",
   validateRequest(AdminValidations.createAdminValidationSchema),
   UserControllers.createAdmin,
+);
+router.get(
+  "/me",
+  auth(USER_TYPE.admin, USER_TYPE.customer, USER_TYPE.vendor),
+  UserControllers.getMe,
 );
 export const UserRoutes = router;

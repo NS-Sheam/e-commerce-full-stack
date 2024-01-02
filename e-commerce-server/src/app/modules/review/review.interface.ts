@@ -5,5 +5,4 @@ export type TReview = {
   product: Types.ObjectId;
   rating: number;
   description?: string;
-  isDeleted: boolean;
 };
