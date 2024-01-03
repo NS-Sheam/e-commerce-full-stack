@@ -5,6 +5,7 @@ import { VendorRoutes } from "../modules/vendor/vendor.routes";
 import { AdminRoutes } from "../modules/admin/admin.routes";
 import { AuthRoutes } from "../modules/Auth/auth.routes";
 import { ProductRoutes } from "../modules/product/product.routes";
+import { ReviewRoutes } from "../modules/review/review.routes";
 
 const router = Router();
 const moduleRoutes = [
@@ -31,6 +32,10 @@ const moduleRoutes = [
   {
     path: "/products",
     route: ProductRoutes,
+  },
+  {
+    path: "/reviews",
+    route: ReviewRoutes,
   },
 ];
 

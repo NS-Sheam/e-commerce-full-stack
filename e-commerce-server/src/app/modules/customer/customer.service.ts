@@ -5,11 +5,11 @@ import { User } from "../user/user.model";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import QueryBuilder from "../../builder/QueryBuilder";
-import { CustomerConstants } from "./customer.const";
+import { customerSearchableFields } from "./customer.const";
 
 const getAllCustomers = async (query: Record<string, unknown>) => {
   const customerQuery = new QueryBuilder(Customer.find(), query)
-    .search(CustomerConstants.searchableFields)
+    .search(customerSearchableFields)
     .filter()
     .sort()
     .limit()

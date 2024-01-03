@@ -386,6 +386,7 @@ Authorization <USER_ACCESS_TOKEN>
 
 - **Method:** **`POST`**
 - **Endpoint:** **`/products/create-product`**
+- Only vendors can add a product
 
 #### Headers
 
@@ -422,6 +423,7 @@ Authorization <VENDOR_ACCESS_TOKEN>
 
 - **Method:** **`PUT`**
 - **Endpoint:** **`/products/:_id`**
+- Only vendors can update a product
 
 #### Headers
 
@@ -438,15 +440,86 @@ Authorization <VENDOR_ACCESS_TOKEN>
 }
 ```
 
-### Delete Single Vendor
+### Delete Single Product
 
 - **Method:** **`DELETE`**
 - **Endpoint:** **`/products/:_id`**
+- Only vendors and admins can delete a product
 
 #### Headers
 
 ```bash
 Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
+```
+
+---
+
+## Upload images in file
+
+- First send all data in text formate inside 'data'
+- Then send image as file formate and received it with req.file
+- Have to parse the file with multer before going to the controller
+- Make sure that we have parse text **`req.body.data`** to json format and add in **`req.body`** before data going to validateRequest.
+
+### **`Example:`**
+
+**`Route:`**
+
+```javascript
+router.post(
+  "/create-customer",
+  upload.single("file"), // parse file with multer
+  textToJsonParser, // parse req.data.body which is in text formate to req.body with textToJson Middleware
+  validateRequest(CustomerValidations.createCustomerValidationSchema),
+  UserControllers.createCustomer,
+);
+```
+
+**`Cloudiniary:`**
+
+```javascript
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: "ex_cloud_name",
+  api_key: "ex_api_key",
+  api_secret: "ex_api_secret",
+});
+
+return new Promise(resolve, reject) =>{
+  cloudinary.uploader.upload(
+  "file_path",
+  { public_id: "file_name" },
+  function (error, result) {
+    if (error) {
+      reject(error);
+    }
+    resolve(result);
+    fs.unlink(imagePath, (err) => { // Delete file from temporary location after uploading in cloudinary
+      if (err) {
+        reject(err);
+      } else {
+        console.log("File is deleted.");
+      }
+    });
+  },
+)};
+```
+
+**`Multer:`**
+
+```javascript
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, process.cwd() + "/temporary_file_uploading_path");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix); // can customize file name
+  },
+});
+
+export const upload = multer({ storage: storage }); // export upload for parsing file in router eg:- upload.single("file")
 ```
 
 ---

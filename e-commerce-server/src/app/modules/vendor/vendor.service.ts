@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
-import { VendorConstants } from "./vendor.const";
 import { TVendor } from "./vendor.interface";
 import { Vendor } from "./vendor.model";
 import { User } from "../user/user.model";
+import { vendorSearchableFields } from "./vendor.const";
 
 const getAllVendors = async (query: Record<string, unknown>) => {
   const vendorQuery = new QueryBuilder(Vendor.find(), query)
-    .search(VendorConstants.searchableFields)
+    .search(vendorSearchableFields)
     .filter()
     .sort()
     .limit()

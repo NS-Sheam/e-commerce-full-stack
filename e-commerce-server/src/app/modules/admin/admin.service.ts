@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
-import { AdminConstants } from "./admin.const";
 import { TAdmin } from "./admin.interface";
 import { Admin } from "./admin.model";
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { User } from "../user/user.model";
+import { adminSearchableFields } from "./admin.const";
 
 const getAllAdmins = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
-    .search(AdminConstants.searchableFields)
+    .search(adminSearchableFields)
     .filter()
     .sort()
     .limit()

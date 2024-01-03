@@ -27,7 +27,7 @@ class QueryBuilder<T> {
   filter() {
     const queryObject = { ...this.query };
     // remove unwanted fields
-    const excludeFields = ["searchTerm", "limit", "sort"];
+    const excludeFields = ["searchTerm", "limit", "sort", "page", "fields"];
     excludeFields.forEach((field) => delete queryObject[field]);
     this.modelQuery = this.modelQuery.find(queryObject as FilterQuery<T>);
     return this;
@@ -57,7 +57,7 @@ class QueryBuilder<T> {
   }
 
   // field limiting
-  field() {
+  fields() {
     const fields =
       (this?.query?.fields as string)?.split(",")?.join(" ") || "__v";
     this.modelQuery = this.modelQuery.select(fields);

@@ -3,11 +3,19 @@ import { TProduct } from "./product.interface";
 import { Product } from "./product.model";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
+import QueryBuilder from "../../builder/QueryBuilder";
+import { productSearchableFields } from "./product.const";
 
 const getAllProducts = async (query: Record<string, unknown>) => {
-  // const productSearchableFields = ["name", "description", "category"];
+  const resultQuery = new QueryBuilder(Product.find(), query)
+    .search(productSearchableFields)
+    .filter()
+    .sort()
+    .limit()
+    .paginate()
+    .fields();
 
-  const result = await Product.find();
+  const result = await resultQuery.modelQuery;
   return result;
 };
 
