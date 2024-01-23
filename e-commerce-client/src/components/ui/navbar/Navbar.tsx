@@ -71,7 +71,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`absolute top-full right-0 lg:relative lg:col-span-2 my-auto ${
+          className={`absolute top-full lg:top-0 right-0 lg:relative lg:col-span-3 my-auto ${
             showSearch ? "block" : "hidden lg:block"
           }`}
         >
@@ -80,9 +80,12 @@ const Navbar = () => {
             className="w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Search"
           />
-          <FaMagnifyingGlass className="absolute top-2 right-4 text-2xl text-gray" />
+          <FaMagnifyingGlass
+            onClick={() => setShowSearch(!showSearch)}
+            className={`absolute top-3 lg:top-2 right-4 text-xl lg:text-2xl text-gray`}
+          />
         </div>
-        <div className="flex justify-end items-center gap-8 col-span-4 lg:col-span-2 text-3xl font-bold">
+        <div className="flex justify-end items-center gap-8 col-span-4 lg:col-span-1 text-3xl font-bold">
           {rightMenu.map((item) => (
             <div
               className="flex justify-center items-center w-4 lg:w-12 h-4 lg:h-12 rounded-full hover:bg-white text-white hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
@@ -92,7 +95,7 @@ const Navbar = () => {
             </div>
           ))}
           <FaMagnifyingGlass
-            className=" lg:hidden text-2xl text-white"
+            className={`${showSearch ? "hidden" : "block"} lg:hidden text-sm lg:text-2xl text-white`}
             onClick={() => setShowSearch(!showSearch)}
           />
         </div>
