@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 * {
   margin: 0;
   padding: 0;
@@ -8,4 +11,5 @@
   --primary-bg-color: #1b6392;
   --button-orange: #fa8232;
   --button-warning: #ebc80c;
+  --gray-color: #5f6c72;
 }
