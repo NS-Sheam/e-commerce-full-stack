@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { CiHeart, CiShoppingCart, CiUser } from "react-icons/ci";
 import { FaFacebook, FaInstagram, FaMagnifyingGlass, FaPinterest, FaTwitter, FaYoutube } from "react-icons/fa6";
 
 const Navbar = () => {
+  const [showSearch, setShowSearch] = useState(false);
   const rightMenu = [
     {
       name: "cart",
@@ -57,33 +59,42 @@ const Navbar = () => {
         </p>
       </div>
       <hr className="bg-white h-[1px]" />
-      <div className="grid grid-cols-5 justify-between py-2 inner-container">
+      <div className="relative grid grid-cols-5 justify-between py-2 inner-container">
         <div className="flex justify-start items-center gap-2 col-span-1 text-white font-bold text-xl lg:text-2xl">
           <h2
-            className="bg-white rounded-full w-8 h-8 lg:w-12 lg:h-12 flex justify-center items-center"
+            className="bg-white rounded-full p-1 lg:w-12 lg:h-12 flex justify-center items-center"
             style={{ color: "#f44336" }}
           >
             2
           </h2>
           <h2>ClickMe</h2>
         </div>
-        <div className="relative col-span-2 my-auto hidden lg:block">
+
+        <div
+          className={`absolute top-full right-0 lg:relative lg:col-span-2 my-auto ${
+            showSearch ? "block" : "hidden lg:block"
+          }`}
+        >
           <input
             type="text"
-            className=" w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Search"
           />
           <FaMagnifyingGlass className="absolute top-2 right-4 text-2xl text-gray" />
         </div>
-        <div className="flex justify-end items-center gap-8 col-span-2 text-3xl font-bold">
+        <div className="flex justify-end items-center gap-8 col-span-4 lg:col-span-2 text-3xl font-bold">
           {rightMenu.map((item) => (
             <div
-              className="flex justify-center items-center w-12 h-12 rounded-full hover:bg-white text-white hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
+              className="flex justify-center items-center w-4 lg:w-12 h-4 lg:h-12 rounded-full hover:bg-white text-white hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
               key={item.name}
             >
               {item.icon}
             </div>
           ))}
+          <FaMagnifyingGlass
+            className=" lg:hidden text-2xl text-white"
+            onClick={() => setShowSearch(!showSearch)}
+          />
         </div>
       </div>
     </section>
