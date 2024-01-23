@@ -42,15 +42,14 @@ const Navbar = () => {
 
   return (
     <section className="bg-primary ">
-      <div className="flex items-center justify-between py-2 inner-container">
+      <div className="text-sm lg:text-xl text-center lg:flex items-center justify-between lg:py-2 inner-container">
         <p className="text-white">Welcome to My-commerce online e-commerce store</p>
-
-        <p>
+        <p className="flex items-center justify-center gap-2">
           <span className=" text-white">Follow Us:</span>
           {followIcons.map((item) => (
             <span
               key={item.name}
-              className="mx-2 inline-flex justify-center items-center w-8 h-8 rounded-full bg-white text-primary hover:bg-primary hover:text-white transition-all duration-300 ease-in-out cursor-pointer"
+              className="mx-2 inline-flex justify-center items-center lg:w-8 lg:h-8 text-sm rounded-full lg:bg-white text-white lg:text-primary hover:bg-primary hover:text-white transition-all duration-300 ease-in-out cursor-pointer"
             >
               {item.icon}
             </span>
@@ -59,16 +58,16 @@ const Navbar = () => {
       </div>
       <hr className="bg-white h-[1px]" />
       <div className="grid grid-cols-5 justify-between py-2 inner-container">
-        <div className="flex justify-start items-center gap-2 col-span-1 text-white font-bold text-2xl">
+        <div className="flex justify-start items-center gap-2 col-span-1 text-white font-bold text-xl lg:text-2xl">
           <h2
-            className="bg-white rounded-full w-12 h-12 flex justify-center items-center"
+            className="bg-white rounded-full w-8 h-8 lg:w-12 lg:h-12 flex justify-center items-center"
             style={{ color: "#f44336" }}
           >
             2
           </h2>
           <h2>ClickMe</h2>
         </div>
-        <div className="relative col-span-2 my-auto">
+        <div className="relative col-span-2 my-auto hidden lg:block">
           <input
             type="text"
             className=" w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
