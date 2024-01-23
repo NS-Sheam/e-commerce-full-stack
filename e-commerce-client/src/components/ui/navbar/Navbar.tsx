@@ -71,7 +71,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`absolute top-full lg:top-0 right-0 lg:relative lg:col-span-3 my-auto ${
+          className={`absolute top-full lg:top-0 right-0 lg:relative lg:col-span-3 my-auto lg:mx-20 ${
             showSearch ? "block" : "hidden lg:block"
           }`}
         >
