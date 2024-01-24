@@ -14,7 +14,7 @@
   --gray-color: #5f6c72;
 }
 .inner-container {
-  @apply xl:px-20 md:px-10 px-4 sm:px-2;
+  @apply xl:px-4 md:px-3 px-2 sm:px-1;
 }
 .my-container {
   @apply xl:mx-20 md:mx-10 mx-4 sm:mx-2;
