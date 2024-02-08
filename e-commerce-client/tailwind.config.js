@@ -8,6 +8,7 @@ export default {
         orange: "fa8232",
         warning: "#ebc80c",
         gray: "#5f6c72",
+        grayBlack: "#191C1F",
       },
     },
   },
