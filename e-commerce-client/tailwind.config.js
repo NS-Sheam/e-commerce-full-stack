@@ -9,8 +9,12 @@ export default {
         warning: "#ebc80c",
         gray: "#5f6c72",
         grayBlack: "#191C1F",
+        grayWhite: "#E4E7E9",
       },
     },
+  },
+  corePlugins: {
+    preflight: false,
   },
   plugins: [],
 };

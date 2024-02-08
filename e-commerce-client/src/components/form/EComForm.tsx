@@ -28,7 +28,12 @@ const EComForm = ({ onSubmit, children, defaultValues, resolver }: TEComFormProp
 
   return (
     <FormProvider {...methods}>
-      <Form onFinish={methods.handleSubmit(submit)}>{children}</Form>
+      <Form
+        onFinish={methods.handleSubmit(submit)}
+        layout="vertical"
+      >
+        {children}
+      </Form>
     </FormProvider>
   );
 };

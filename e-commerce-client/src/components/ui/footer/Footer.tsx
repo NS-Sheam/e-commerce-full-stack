@@ -68,11 +68,10 @@ const Footer = () => {
             "Headphone",
             "TV",
             "Smartphone",
-            "Computer",
-          ].map((item) => {
+          ].map((item, index) => {
             return (
               <Tag
-                key={item}
+                key={index}
                 color="default"
                 className="m-1"
               >
