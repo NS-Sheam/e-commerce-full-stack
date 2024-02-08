@@ -5,7 +5,11 @@ import { Request, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
 
 const createProduct = catchAsync(async (req: Request, res: Response) => {
-  const result = await ProductServices.createProduct(req.body, req.user);
+  const result = await ProductServices.createProduct(
+    req.body,
+    req.user,
+    req.files,
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

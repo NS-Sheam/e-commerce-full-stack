@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken";
 import { TProduct } from "./product.interface";
 import { Product } from "./product.model";
@@ -5,6 +6,7 @@ import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { productSearchableFields } from "./product.const";
+import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 
 const getAllProducts = async (query: Record<string, unknown>) => {
   const resultQuery = new QueryBuilder(Product.find(), query)
@@ -24,9 +26,27 @@ const getSingleProduct = async (productId: string) => {
   return result;
 };
 
-const createProduct = async (payload: TProduct, user: JwtPayload) => {
-  payload.vendor = user.userId;
+const createProduct = async (
+  payload: TProduct,
+  user: JwtPayload,
+  files: any,
+) => {
+  const images: string[] = [];
+  if (files && files.length) {
+    let imageNo = 0;
+    for (const file of files) {
+      const imageName = `${user.userId}-${payload?.name}-${payload?.category}-${imageNo}`;
+      const path = file?.path;
 
+      // send image to cloudinary
+      const { secure_url } = await sendImageToCloudinary(imageName, path);
+      images.push(secure_url as string);
+      imageNo++;
+    }
+  }
+  payload.images = images;
+
+  payload.vendor = user.userId;
   const result = await Product.create(payload);
   return result;
 };
