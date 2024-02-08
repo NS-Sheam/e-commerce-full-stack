@@ -24,6 +24,7 @@ const auth = (...requiredTypes: TUserType[]) => {
       token,
       config.jwt_access_secret as string,
     ) as JwtPayload;
+    console.log(decoded);
 
     const { email, userType } = decoded;
 
