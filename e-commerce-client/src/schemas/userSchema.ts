@@ -12,4 +12,28 @@
 //   }
 // }
 
-const userRegistrationSchema = z;
+import { z } from "zod";
+
+export const userRegistrationFormSchema = z.object({
+  userName: z.string(),
+  name: z.object({
+    firstName: z.string(),
+    middleName: z.string().optional(),
+    lastName: z.string(),
+  }),
+  image: z.string().url().optional(),
+  gender: z.enum(["male", "female", "other"]).refine(
+    (value) => {
+      return ["male", "female", "other"].includes(value);
+    },
+    {
+      message: "Gender must be either 'male', 'female', or 'other'",
+    }
+  ),
+  email: z.string().email(),
+  mobileNo: z.string().length(11),
+  password: z
+    .string()
+    .min(6)
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:<>?`\-=[\]\\;',./])(?!.*\s).{6,}$/),
+});
