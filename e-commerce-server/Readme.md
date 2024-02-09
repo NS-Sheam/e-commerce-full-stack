@@ -465,6 +465,33 @@ Authorization <ADMIN_ACCESS_TOKEN | VENDOR_ACCESS_TOKEN>
 
 ---
 
+## `Category Routes`
+
+### Create Product
+
+- **Method:** **`POST`**
+- **Endpoint:** **`/categories`**
+- Only vendors can add a product
+
+#### Headers
+
+```bash
+Authorization <ADMIN_ACCESS_TOKEN| VENDOR_ACCESS_TOKEN>
+```
+
+```json
+{
+  "name": "Electric"
+}
+```
+
+### Get All categories
+
+- **Method:** **`GET`**
+- **Endpoint:** **`/categories`**
+
+---
+
 ## Upload images in file
 
 - First send all data in text formate inside 'data'
