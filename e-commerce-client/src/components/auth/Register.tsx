@@ -8,6 +8,7 @@ import EComProfileImageUploader from "../form/EComProfileImageUploader";
 import { useRegistrationMutation } from "../../redux/features/auth/auth.api";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../types/global";
+import GoogleLoginButton from "../ui/GoogleLoginButton";
 
 const defaultValues = {
   userName: "customer321",
@@ -139,6 +140,7 @@ const Register = () => {
             >
               Register
             </Button>
+            <GoogleLoginButton />
           </EComForm>
         </Col>
       </Row>

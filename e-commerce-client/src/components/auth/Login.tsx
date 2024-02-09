@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useLoginMutation } from "../../redux/features/auth/auth.api";
 import { verifyToken } from "../../utils/verifyToken";
 import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
+import GoogleLoginButton from "../ui/GoogleLoginButton";
 
 const defaultValues = {
   email: "admin@example.com",
@@ -75,6 +76,7 @@ const Login = () => {
             >
               Login
             </Button>
+            <GoogleLoginButton />
           </EComForm>
         </Col>
       </Row>
