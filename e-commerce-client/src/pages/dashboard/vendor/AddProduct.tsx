@@ -18,6 +18,7 @@ import EComInput from "../../../components/form/EComInput";
 import EComSelect from "../../../components/form/EComSelect";
 import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
 import EComMultipleImageUploader from "../../../components/form/EComMultipleImageUploader";
+import EComTextAreaInput from "../../../components/form/EComTextAreaInput";
 
 const defaultValues = {
   name: "Laptop",
@@ -55,36 +56,51 @@ const AddProduct = () => {
             defaultValues={defaultValues}
           >
             <Row gutter={8}>
-              <Col span={24}>
-                <EComInput
-                  type="text"
-                  name="name"
-                  label="Product Name"
-                />
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
+                <Col span={24}>
+                  <EComInput
+                    type="text"
+                    name="name"
+                    label="Product Name"
+                  />
+                </Col>
+                <Col span={24}>
+                  <EComSelect
+                    label="Category"
+                    name="category"
+                    loading={categoryIsLoading}
+                    options={categoryOptions!}
+                  />
+                </Col>
               </Col>
-              <Col span={24}>
-                <EComInput
-                  type="text"
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
+                <EComTextAreaInput
                   name="description"
                   label="Description"
+                  placeholder="Product Description..."
                 />
               </Col>
-              <Col span={24}>
-                <EComSelect
-                  label="Category"
-                  name="category"
-                  loading={categoryIsLoading}
-                  options={categoryOptions!}
-                />
-              </Col>
-              <Col span={24}>
+
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
                 <EComInput
                   type="text"
                   name="price"
                   label="Price"
                 />
               </Col>
-              <Col span={24}>
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
                 <EComInput
                   type="text"
                   name="inventory.quantity"
@@ -92,7 +108,10 @@ const AddProduct = () => {
                 />
               </Col>
 
-              <Col span={24}>
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
                 <EComSelect
                   label="Low Stock Notification"
                   name="inventory.lowSockNotification"
@@ -109,26 +128,34 @@ const AddProduct = () => {
                   ]}
                 />
               </Col>
-              <Col span={24}>
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
                 <EComInput
                   type="text"
                   name="discount"
                   label="Discount"
                 />
               </Col>
-              <Col span={24}>
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
                 <EComMultipleImageUploader
                   name="images"
                   label="Images"
                 />
               </Col>
             </Row>
-            <Button
-              htmlType="submit"
-              style={{ width: "100%", backgroundColor: "#fa8232", color: "white", fontWeight: "bold" }}
-            >
-              Register
-            </Button>
+            <Row justify="start">
+              <Button
+                htmlType="submit"
+                style={{ backgroundColor: "#fa8232", color: "white", fontWeight: "bold" }}
+              >
+                Add Product
+              </Button>
+            </Row>
           </EComForm>
         </Col>
       </Row>
