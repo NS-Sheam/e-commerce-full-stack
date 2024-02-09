@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { CiHeart, CiShoppingCart, CiUser } from "react-icons/ci";
 import { FaFacebook, FaInstagram, FaMagnifyingGlass, FaPinterest, FaTwitter, FaYoutube } from "react-icons/fa6";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const userData = useAppSelector(selectCurrentUser);
+
   const rightMenu = [
     {
       name: "cart",
@@ -15,7 +19,15 @@ const Navbar = () => {
     },
     {
       name: "user",
-      icon: <CiUser />,
+      icon: userData?.image ? (
+        <img
+          src={userData.image}
+          alt="user"
+          className="m-auto border-white border-2 w-6 h-6 lg:w-10 lg:h-10 rounded-full bg-white"
+        />
+      ) : (
+        <CiUser />
+      ),
     },
   ];
 
