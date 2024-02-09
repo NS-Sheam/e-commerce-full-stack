@@ -4,10 +4,11 @@ import { Outlet } from "react-router-dom";
 import { customerDashboardItems } from "../../router/customer.routes";
 import Sidebar from "../../components/layout/Sidebar";
 import { sidebarItemGenerator } from "../../utils/sidebarItemGenerator";
+import { vendorDashboardItems } from "../../router/vendor.routes";
 
 const { Content } = Layout;
 
-const items = sidebarItemGenerator(customerDashboardItems);
+const items = sidebarItemGenerator(vendorDashboardItems);
 
 const Dashboard = () => {
   return (

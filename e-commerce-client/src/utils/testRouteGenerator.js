@@ -69,83 +69,83 @@
 //       },
 //     ],
 //   },
-const path = [
-  {
-    path: "home",
-    name: "Dashboard",
-    icon: "dashboardIcon",
-    element: "Home",
-  },
-  {
-    path: "order-history",
-    name: "Order History",
-    icon: "orderHistoryIcon",
-    element: "Products",
-  },
-  {
-    path: "track-order",
-    name: "Track Order",
-    icon: "trackOrderIcon",
-    element: "Orders",
-  },
-  {
-    path: "shopping-cart",
-    name: "Shopping Cart",
-    icon: "shoppingCartIcon",
-    element: "wishlist",
-  },
-  {
-    path: "wishlist",
-    name: "Wishlist",
-    icon: "wishlistIcon",
-    element: "wishlist",
-  },
-  {
-    path: "compare",
-    name: "Compare",
-    icon: "compareIcon",
-    element: "compare",
-  },
-  {
-    path: "card-and-address",
-    name: "Card and Address",
-    icon: "cardAndAddressIcon",
-    element: "card-and-address",
-  },
+// const path = [
+//   {
+//     path: "home",
+//     name: "Dashboard",
+//     icon: "dashboardIcon",
+//     element: "Home",
+//   },
+//   {
+//     path: "order-history",
+//     name: "Order History",
+//     icon: "orderHistoryIcon",
+//     element: "Products",
+//   },
+//   {
+//     path: "track-order",
+//     name: "Track Order",
+//     icon: "trackOrderIcon",
+//     element: "Orders",
+//   },
+//   {
+//     path: "shopping-cart",
+//     name: "Shopping Cart",
+//     icon: "shoppingCartIcon",
+//     element: "wishlist",
+//   },
+//   {
+//     path: "wishlist",
+//     name: "Wishlist",
+//     icon: "wishlistIcon",
+//     element: "wishlist",
+//   },
+//   {
+//     path: "compare",
+//     name: "Compare",
+//     icon: "compareIcon",
+//     element: "compare",
+//   },
+//   {
+//     path: "card-and-address",
+//     name: "Card and Address",
+//     icon: "cardAndAddressIcon",
+//     element: "card-and-address",
+//   },
 
-  {
-    path: "browsing-history",
-    name: "Browsing History",
-    icon: "browsingHistoryIcon",
-    element: "browsing-history",
-  },
-  {
-    path: "setting",
-    name: "Setting",
-    icon: "settingIcon",
-    element: "setting",
-  },
-  {
-    path: "logout",
-    name: "Logout",
-    icon: "logoutIcon",
-    element: "logout",
-  },
-];
+//   {
+//     path: "browsing-history",
+//     name: "Browsing History",
+//     icon: "browsingHistoryIcon",
+//     element: "browsing-history",
+//   },
+//   {
+//     path: "setting",
+//     name: "Setting",
+//     icon: "settingIcon",
+//     element: "setting",
+//   },
+//   {
+//     path: "logout",
+//     name: "Logout",
+//     icon: "logoutIcon",
+//     element: "logout",
+//   },
+// ];
 
-const routeGenerator = path.reduce((acc, item) => {
-  acc.push({
-    path: item.path,
-    element: item.element,
-  });
-  return acc;
-}, []);
+// const routeGenerator = path.reduce((acc, item) => {
+//   acc.push({
+//     path: item.path,
+//     element: item.element,
+//   });
+//   return acc;
+// }, []);
 
-const sidebarItemGenerator = path.reduce((acc, item) => {
-  acc.push({
-    key: item.path,
-    icon: item.icon,
-    label: "Navlink" + item.name,
-  });
-  return acc;
-}, []);
+// const sidebarItemGenerator = path.reduce((acc, item) => {
+//   acc.push({
+//     key: item.path,
+//     icon: item.icon,
+//     label: "Navlink" + item.name,
+//   });
+//   return acc;
+// }, []);
