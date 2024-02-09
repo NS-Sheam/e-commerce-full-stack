@@ -3,6 +3,11 @@ import { useState } from "react";
 import Register from "../../components/auth/Register";
 import Login from "../../components/auth/Login";
 
+/*  TODO:
+ - Add google Login
+  - Add forgot password
+  - Add reset password
+*/
 const Auth = () => {
   const [showRegister, setShowRegister] = useState(false);
 

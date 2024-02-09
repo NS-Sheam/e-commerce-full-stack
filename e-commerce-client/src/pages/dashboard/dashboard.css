@@ -1,0 +1,7 @@
+.ant-menu-light {
+  font-weight: 600;
+}
+.ant-menu-light .ant-menu-item-selected {
+  background: #fa8232;
+  color: #ffffff;
+}

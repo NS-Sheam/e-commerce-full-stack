@@ -3,6 +3,7 @@ import { CiHeart, CiShoppingCart, CiUser } from "react-icons/ci";
 import { FaFacebook, FaInstagram, FaMagnifyingGlass, FaPinterest, FaTwitter, FaYoutube } from "react-icons/fa6";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -59,6 +60,12 @@ const Navbar = () => {
       <div className="text-sm lg:text-xl text-center lg:flex items-center justify-between lg:py-2 inner-container">
         <p className="text-white">Welcome to My-commerce online e-commerce store</p>
         <p className="flex items-center justify-center gap-2">
+          <Link
+            to="/contact"
+            className="text-white"
+          >
+            Dashboard
+          </Link>
           <span className=" text-white">Follow Us:</span>
           {followIcons.map((item) => (
             <span
