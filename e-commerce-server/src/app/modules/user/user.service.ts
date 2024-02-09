@@ -236,16 +236,18 @@ const makeVendor = async (customerId: string) => {
 
 const getMe = async (token: string) => {
   const decoded = verifyToken(token, config.jwt_access_secret as string);
+
   const { userId, userType } = decoded as JwtPayload;
   // check if user exists
   let result = null;
   if (userType === "customer") {
-    result = await Customer.findById(userId).populate("user");
+    result = await Customer.findOne({ user: userId }).populate("user");
   } else if (userType === "vendor") {
-    result = await Vendor.findById(userId).populate("user");
+    result = await Vendor.findOne({ user: userId }).populate("user");
   } else if (userType === "admin") {
-    result = await Admin.findById(userId).populate("user");
+    result = await Admin.findOne({ user: userId }).populate("user");
   }
+  console.log(result);
 
   return result;
 };

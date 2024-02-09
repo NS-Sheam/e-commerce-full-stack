@@ -26,6 +26,8 @@ const auth = (...requiredTypes: TUserType[]) => {
         config.jwt_access_secret as string,
       ) as JwtPayload;
     } catch (error) {
+      console.log(error);
+
       throw new AppError(httpStatus.UNAUTHORIZED, "Invalid token");
     }
     const { email, userType } = decoded;

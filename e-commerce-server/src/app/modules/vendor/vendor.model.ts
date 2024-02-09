@@ -24,7 +24,11 @@ const nameSchema = new Schema<TName>(
 
 const vendorSchema = new Schema<TVendor>(
   {
-    user: Schema.Types.ObjectId,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     userName: {
       type: String,
       required: true,

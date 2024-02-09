@@ -13,6 +13,7 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set("authorization", `${token}`);
     }
+
     return headers;
   },
 });
@@ -41,6 +42,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, FetchBaseQ
       api.dispatch(logOut());
     }
   }
+
   return result;
 };
 

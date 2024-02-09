@@ -24,7 +24,16 @@ const Login = () => {
       if (!res.error) {
         const user = verifyToken(res.data.data.accessToken) as TUser;
 
-        dispatch(setUser({ user, token: res.data.data.accessToken }));
+        const data = await fetch("http://localhost:4000/api/v1/users/me", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            authorization: res.data.data.accessToken,
+          },
+        });
+        const userInfo = await data.json();
+        dispatch(setUser({ user: { ...user, image: userInfo?.data?.image }, token: res.data.data.accessToken }));
+
         toast.success("Logged in successfully", { id: toastId });
       } else {
         toast.error(res.error.message, { id: toastId });

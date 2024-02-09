@@ -28,7 +28,6 @@ const customerSchema = new Schema<TCustomer>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
     },
     userName: {
       type: String,
