@@ -72,6 +72,17 @@
 }
 ```
 
+### make Vendor
+
+- **Method:** **`PATCH`**
+- **Endpoint:** **`/users/make-vendor/_id`**
+
+#### Headers
+
+```bash
+Authorization <ADMIN_ACCESS_TOKEN>
+```
+
 ### Get Me
 
 - **Method:** **`GET`**
