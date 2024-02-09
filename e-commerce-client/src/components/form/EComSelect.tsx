@@ -12,12 +12,14 @@ type TEComSelectProps = {
   disabled?: boolean;
   mode?: "multiple" | "tags" | undefined;
   loading?: boolean;
+  defaultValue?: string;
 };
 
-const EComSelect = ({ label, name, options, disabled, mode, loading }: TEComSelectProps) => {
+const EComSelect = ({ label, name, options, disabled, mode, loading, defaultValue }: TEComSelectProps) => {
   return (
     <Controller
       name={name}
+      defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
         <Form.Item label={label}>
           <Select

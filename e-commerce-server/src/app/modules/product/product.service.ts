@@ -7,9 +7,12 @@ import httpStatus from "http-status";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { productSearchableFields } from "./product.const";
 import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
-
+//TODO: Populate review and rating
 const getAllProducts = async (query: Record<string, unknown>) => {
-  const resultQuery = new QueryBuilder(Product.find(), query)
+  const resultQuery = new QueryBuilder(
+    Product.find().populate("category"),
+    query,
+  )
     .search(productSearchableFields)
     .filter()
     .sort()

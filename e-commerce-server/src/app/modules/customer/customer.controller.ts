@@ -6,6 +6,7 @@ import catchAsync from "../../utils/catchAsync";
 
 const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
   const result = await CustomerServices.getAllCustomers(req.query);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

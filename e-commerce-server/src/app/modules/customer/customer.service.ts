@@ -16,6 +16,7 @@ const getAllCustomers = async (query: Record<string, unknown>) => {
     .paginate();
 
   const result = await customerQuery.modelQuery;
+
   return result;
 };
 
