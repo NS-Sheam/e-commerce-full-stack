@@ -17,6 +17,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import EComInput from "../../../components/form/EComInput";
 import EComSelect from "../../../components/form/EComSelect";
 import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
+import EComMultipleImageUploader from "../../../components/form/EComMultipleImageUploader";
 
 const defaultValues = {
   name: "Laptop",
@@ -113,6 +114,12 @@ const AddProduct = () => {
                   type="text"
                   name="discount"
                   label="Discount"
+                />
+              </Col>
+              <Col span={24}>
+                <EComMultipleImageUploader
+                  name="images"
+                  label="Images"
                 />
               </Col>
             </Row>
