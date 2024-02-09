@@ -1,16 +1,3 @@
-// {
-//     "name": "Laptop",
-//     "description": "Powerful laptop for professional use",
-//     "price": 1200,
-//     "images": ["laptop_image1.jpg", "laptop_image2.jpg"],
-//     "category": "Electronics",
-//     "inventory": {
-//       "quantity": 10,
-//       "lowSockNotification": "No"
-//     },
-//     "discount": 100
-//   }
-
 import { Button, Col, Row } from "antd";
 import EComForm from "../../../components/form/EComForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
@@ -25,6 +12,13 @@ import EComTextAreaInput from "../../../components/form/EComTextAreaInput";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../../types/global";
 import { TProduct } from "../../../types/product.type";
+
+/**
+ * TODO:
+ * - Reset the image uploader after adding product
+ * - Navigate to the product page after adding product
+ * - Error handling more specific
+ */
 
 const AddProduct = () => {
   const { data: categories, isLoading: categoryIsLoading } = useGetCategoriesQuery(undefined);
