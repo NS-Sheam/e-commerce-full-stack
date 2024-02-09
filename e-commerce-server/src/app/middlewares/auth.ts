@@ -18,13 +18,16 @@ const auth = (...requiredTypes: TUserType[]) => {
         "You are not authorized to access this route",
       );
     }
-
+    let decoded;
     // verify token
-    const decoded = jwt.verify(
-      token,
-      config.jwt_access_secret as string,
-    ) as JwtPayload;
-
+    try {
+      decoded = jwt.verify(
+        token,
+        config.jwt_access_secret as string,
+      ) as JwtPayload;
+    } catch (error) {
+      throw new AppError(httpStatus.UNAUTHORIZED, "Invalid token");
+    }
     const { email, userType } = decoded;
 
     // check if user exists
