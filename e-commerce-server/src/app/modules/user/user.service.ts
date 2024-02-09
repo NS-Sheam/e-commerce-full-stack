@@ -247,7 +247,6 @@ const getMe = async (token: string) => {
   } else if (userType === "admin") {
     result = await Admin.findOne({ user: userId }).populate("user");
   }
-  console.log(result);
 
   return result;
 };
