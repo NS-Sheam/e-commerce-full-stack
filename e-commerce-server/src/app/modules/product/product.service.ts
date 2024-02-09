@@ -18,11 +18,15 @@ const getAllProducts = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await resultQuery.modelQuery;
-  return result;
+  const meta = await resultQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
 };
 
 const getSingleProduct = async (productId: string) => {
-  const result = await Product.findById(productId);
+  const result = await Product.findById(productId).populate("category");
   return result;
 };
 
