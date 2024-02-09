@@ -1,7 +1,6 @@
 import "./dashboard.css";
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import { customerDashboardItems } from "../../router/customer.routes";
 import Sidebar from "../../components/layout/Sidebar";
 import { sidebarItemGenerator } from "../../utils/sidebarItemGenerator";
 import { vendorDashboardItems } from "../../router/vendor.routes";

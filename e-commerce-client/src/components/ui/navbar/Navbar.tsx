@@ -21,11 +21,16 @@ const Navbar = () => {
     {
       name: "user",
       icon: userData?.image ? (
-        <img
-          src={userData.image}
-          alt="user"
-          className="m-auto border-white border-2 w-6 h-6 lg:w-10 lg:h-10 rounded-full bg-white"
-        />
+        <Link
+          to="/dashboard/home"
+          className="flex items-center justify-center"
+        >
+          <img
+            src={userData.image}
+            alt="user"
+            className="m-auto border-white border-2 w-10 h-10 rounded-full bg-white"
+          />
+        </Link>
       ) : (
         <CiUser />
       ),
@@ -107,7 +112,7 @@ const Navbar = () => {
         <div className="flex justify-end items-center gap-8 col-span-4 lg:col-span-1 text-3xl font-bold">
           {rightMenu.map((item) => (
             <div
-              className="flex justify-center items-center w-4 lg:w-12 h-4 lg:h-12 rounded-full hover:bg-white text-white hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
+              className="flex justify-center items-center w-4 lg:w-10 h-4 lg:h-10 rounded-full hover:bg-white text-white hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
               key={item.name}
             >
               {item.icon}

@@ -9,7 +9,12 @@ import { useRegistrationMutation } from "../../redux/features/auth/auth.api";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../types/global";
 import GoogleLoginButton from "../ui/GoogleLoginButton";
-
+/** TODO:
+ * - Add google Login
+ * - Add autmatic login after registration
+ * - Automatically redirect to page where user was before login or want to go
+ *
+ */
 const defaultValues = {
   userName: "customer321",
   name: {
@@ -37,7 +42,6 @@ const Register = () => {
     if (data.image) formData.append("file", data.image?.originFileObj);
     try {
       const res = (await registerUser(formData)) as TReduxResponse<any>;
-      console.log(res);
       if (!res.error) {
         toast.success("Registered successfully");
       }
