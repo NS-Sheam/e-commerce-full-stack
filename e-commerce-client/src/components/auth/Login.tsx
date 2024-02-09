@@ -1,6 +1,6 @@
 import { Button, Col, Row } from "antd";
-import EComForm from "../../components/form/EComForm";
-import EComInput from "../../components/form/EComInput";
+import EComForm from "../form/EComForm";
+import EComInput from "../form/EComInput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
 import { toast } from "sonner";
@@ -43,18 +43,12 @@ const Login = () => {
     }
   };
   return (
-    <div className="inner-container bg-grayWhite">
+    <div className="p-4">
       <Row
         justify="center"
         align="middle"
-        style={{ minHeight: "100vh" }}
       >
-        <Col
-          span={24}
-          md={{ span: 12 }}
-          lg={{ span: 8 }}
-        >
-          <h1 className="text-2xl font-bold text-center my-4">Login</h1>
+        <Col span={24}>
           <EComForm
             onSubmit={onSubmit}
             defaultValues={defaultValues}
@@ -75,7 +69,12 @@ const Login = () => {
                 />
               </Col>
             </Row>
-            <Button htmlType="submit">Login</Button>
+            <Button
+              htmlType="submit"
+              style={{ width: "100%", backgroundColor: "#fa8232", color: "white", fontWeight: "bold" }}
+            >
+              Login
+            </Button>
           </EComForm>
         </Col>
       </Row>

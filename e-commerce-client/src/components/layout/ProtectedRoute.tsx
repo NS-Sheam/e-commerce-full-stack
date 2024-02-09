@@ -5,11 +5,10 @@ import { ReactNode } from "react";
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const token = useAppSelector(useCurrentToken);
-  console.log(token);
   if (!token) {
     return (
       <Navigate
-        to="/login"
+        to="/auth"
         replace={true}
       />
     );
