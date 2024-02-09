@@ -75,6 +75,7 @@ const createCustomer = async (
 
     // Transaction 1: Create User
     const newUser = await User.create([userData], { session });
+
     if (!newUser) {
       throw new AppError(httpStatus.BAD_REQUEST, "User creation failed");
     }
@@ -94,7 +95,7 @@ const createCustomer = async (
     }
     await session.commitTransaction();
     await session.endSession();
-    return newCustomer;
+    return newCustomer[0];
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
@@ -180,6 +181,59 @@ const createAdmin = async (password: string, payload: TAdmin) => {
   }
 };
 
+const makeVendor = async (customerId: string) => {
+  const session = await mongoose.startSession();
+
+  try {
+    // Starting Session
+    session.startTransaction();
+
+    // Transaction 1: Change Customer to Vendor
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Customer not found");
+    }
+
+    await Customer.findByIdAndDelete(customerId, { session });
+
+    const newUpdatedUser = await User.findByIdAndUpdate(
+      customer.user,
+      { userType: "vendor" },
+      { new: true, session },
+    );
+
+    if (!newUpdatedUser) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User updation failed");
+    }
+
+    const newVendor = await Vendor.create(
+      [
+        {
+          user: customer.user,
+          userName: customer.userName,
+          name: customer.name,
+          email: customer.email,
+          mobileNo: customer.mobileNo,
+          image: customer.image,
+        },
+      ],
+      { session },
+    );
+
+    if (!newVendor) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Vendor creation failed");
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+    return newVendor[0];
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw error;
+  }
+};
+
 const getMe = async (token: string) => {
   const decoded = verifyToken(token, config.jwt_access_secret as string);
   const { userId, userType } = decoded as JwtPayload;
@@ -200,5 +254,6 @@ export const UserServices = {
   createCustomer,
   createVendor,
   createAdmin,
+  makeVendor,
   getMe,
 };

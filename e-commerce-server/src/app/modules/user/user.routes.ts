@@ -38,6 +38,11 @@ router.post(
   validateRequest(AdminValidations.createAdminValidationSchema),
   UserControllers.createAdmin,
 );
+router.patch(
+  "/make-vendor/:id",
+  auth(USER_TYPE.admin),
+  UserControllers.makeVendor,
+);
 router.get(
   "/me",
   auth(USER_TYPE.admin, USER_TYPE.customer, USER_TYPE.vendor),
