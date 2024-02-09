@@ -9,15 +9,16 @@ import textToJsonParser from "../../middlewares/textToJsonParser";
 
 const router = Router();
 router.post(
-  "/create-product",
+  "/",
   auth(USER_TYPE.vendor),
   upload.array("file", 5),
   textToJsonParser,
+
   validateRequest(ProductValidationSchema.createProductValidationSchema),
   productControllers.createProduct,
 );
 // router.post(
-//   "/create-product",
+//   "/",
 //   auth(USER_TYPE.vendor),
 //   validateRequest(ProductValidationSchema.createProductValidationSchema),
 //   productControllers.createProduct,

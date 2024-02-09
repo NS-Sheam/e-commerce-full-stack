@@ -4,6 +4,13 @@ import { baseApi } from "../../api/baseApi";
 
 const productManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    addProduct: builder.mutation({
+      query: (productInfo) => ({
+        url: `products`,
+        method: "POST",
+        body: productInfo,
+      }),
+    }),
     getProducts: builder.query({
       query: (args: TQueryParams[]) => {
         const params = new URLSearchParams();
@@ -32,4 +39,4 @@ const productManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetProductsQuery, useGetCategoriesQuery } = productManagementApi;
+export const { useGetProductsQuery, useGetCategoriesQuery, useAddProductMutation } = productManagementApi;

@@ -396,7 +396,7 @@ Authorization <USER_ACCESS_TOKEN>
 ### Create Product
 
 - **Method:** **`POST`**
-- **Endpoint:** **`/products/create-product`**
+- **Endpoint:** **`/products`**
 - Only vendors can add a product
 
 #### Headers

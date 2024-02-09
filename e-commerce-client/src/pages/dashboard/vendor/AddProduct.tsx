@@ -16,31 +16,53 @@ import EComForm from "../../../components/form/EComForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import EComInput from "../../../components/form/EComInput";
 import EComSelect from "../../../components/form/EComSelect";
-import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
+import {
+  useAddProductMutation,
+  useGetCategoriesQuery,
+} from "../../../redux/features/productManagement/productManagement.api";
 import EComMultipleImageUploader from "../../../components/form/EComMultipleImageUploader";
 import EComTextAreaInput from "../../../components/form/EComTextAreaInput";
+import { toast } from "sonner";
+import { TReduxResponse } from "../../../types/global";
+import { TProduct } from "../../../types/product.type";
 
-const defaultValues = {
-  name: "Laptop",
-  description: "Powerful laptop for professional use",
-  price: 1200,
-  // category: "Electronics",
-  inventory: {
-    quantity: 10,
-    lowSockNotification: "No",
-  },
-  discount: 100,
-};
 const AddProduct = () => {
   const { data: categories, isLoading: categoryIsLoading } = useGetCategoriesQuery(undefined);
-
+  const [addProduct] = useAddProductMutation();
   const categoryOptions = categories?.map((category) => ({
     value: category._id,
     label: category.name,
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const toastId = toast.loading("Adding Product...");
+    const productInfo = {
+      ...data,
+      price: Number(data.price),
+      inventory: {
+        quantity: Number(data.inventory.quantity),
+        lowSockNotification: data.inventory.lowSockNotification,
+      },
+      discount: Number(data.discount),
+    };
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(productInfo));
+
+    await data?.images?.forEach((image: any) => {
+      formData.append("file", image);
+    });
+    try {
+      const res = (await addProduct(formData)) as TReduxResponse<TProduct>;
+
+      if (!res.error) {
+        toast.success(res.message || "Product added successfully", { id: toastId, duration: 2000 });
+      } else {
+        toast.error(res.error.message || "Product adding failed", { id: toastId, duration: 2000 });
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Product adding failed", { id: toastId, duration: 2000 });
+    }
   };
 
   return (
@@ -51,10 +73,7 @@ const AddProduct = () => {
         style={{ minHeight: "100vh" }}
       >
         <Col span={24}>
-          <EComForm
-            onSubmit={onSubmit}
-            defaultValues={defaultValues}
-          >
+          <EComForm onSubmit={onSubmit}>
             <Row gutter={8}>
               <Col
                 span={24}

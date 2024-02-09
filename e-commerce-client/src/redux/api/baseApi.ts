@@ -24,6 +24,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, FetchBaseQ
   extraOptions
 ): Promise<any> => {
   let result = (await baseQuery(arg, api, extraOptions)) as TReduxResponse<any>;
+
   if (result?.error?.statusCode === 401) {
     const res = await fetch("http://localhost:4000/api/v1/auth/refresh-token", {
       method: "POST",
