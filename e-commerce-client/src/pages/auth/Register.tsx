@@ -6,6 +6,7 @@ import { Button, Col, Row } from "antd";
 
 import EComProfileImageUploader from "../../components/form/EComProfileImageUploader";
 import { useRegistrationMutation } from "../../redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 const defaultValues = {
   userName: "customer321",
@@ -21,11 +22,26 @@ const defaultValues = {
 
 const Register = () => {
   const [registerUser] = useRegistrationMutation();
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(data));
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const userInfo = {
+      password: data.password,
+      customer: {
+        ...data,
+      },
+    };
 
-    if (data.image) formData.append("image", data.image?.originFileObj);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(userInfo));
+    if (data.image) formData.append("file", data.image?.originFileObj);
+    try {
+      const res = await registerUser(formData);
+      console.log(res);
+      if (!res.error) {
+        toast.success("Registered successfully");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Something went wrong");
+    }
   };
   return (
     <div className="inner-container bg-grayWhite py-6 md:py-8 lg:py-10">

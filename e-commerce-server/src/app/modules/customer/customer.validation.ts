@@ -29,7 +29,6 @@ const createCustomerValidationSchema = z.object({
       mobileNo: z.string({
         required_error: "Mobile number is required",
       }),
-      image: z.string().optional(),
       isDeleted: z.boolean().default(false),
     }),
   }),

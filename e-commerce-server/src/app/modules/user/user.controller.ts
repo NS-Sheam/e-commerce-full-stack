@@ -21,6 +21,7 @@ const createCustomer = catchAsync(async (req: Request, res: Response) => {
 // create customer with image file upload
 const createCustomer = catchAsync(async (req: Request, res: Response) => {
   const { password, customer } = req.body;
+
   const result = await UserServices.createCustomer(
     req.file,
     password,
