@@ -2,7 +2,7 @@ import { Button, Col, Row } from "antd";
 import EComForm from "../../components/form/EComForm";
 import EComInput from "../../components/form/EComInput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import { toast } from "sonner";
 import { useLoginMutation } from "../../redux/features/auth/auth.api";
 import { verifyToken } from "../../utils/verifyToken";
@@ -21,7 +21,6 @@ const Login = () => {
     const toastId = toast.loading("Logging in...");
     try {
       const res: any = await login(data);
-      console.log(res);
       if (!res.error) {
         const user = verifyToken(res.data.data.accessToken) as TUser;
 
