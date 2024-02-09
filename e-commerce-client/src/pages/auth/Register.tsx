@@ -1,8 +1,11 @@
-import { Controller } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import EComForm from "../../components/form/EComForm";
 import EComInput from "../../components/form/EComInput";
 import EComSelect from "../../components/form/EComSelect";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Row } from "antd";
+
+import EComProfileImageUploader from "../../components/form/EComProfileImageUploader";
+import { useRegistrationMutation } from "../../redux/features/auth/auth.api";
 
 const defaultValues = {
   userName: "customer321",
@@ -17,11 +20,15 @@ const defaultValues = {
 };
 
 const Register = () => {
-  const onSubmit = (data) => {
-    console.log(data);
+  const [registerUser] = useRegistrationMutation();
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+
+    if (data.image) formData.append("image", data.image?.originFileObj);
   };
   return (
-    <div className="inner-container bg-grayWhite">
+    <div className="inner-container bg-grayWhite py-6 md:py-8 lg:py-10">
       <Row
         justify="center"
         align="middle"
@@ -125,19 +132,9 @@ const Register = () => {
                 span={24}
                 md={{ span: 12 }}
               >
-                <Controller
+                <EComProfileImageUploader
                   name="image"
-                  render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
-                    <Form.Item label="Image">
-                      <Input
-                        {...field}
-                        type="file"
-                        {...field}
-                        onChange={(e) => onChange(e?.target.files?.[0])}
-                      />
-                      {error && <small style={{ color: "red" }}>{error.message}</small>}
-                    </Form.Item>
-                  )}
+                  label="Image"
                 />
               </Col>
               <Col
