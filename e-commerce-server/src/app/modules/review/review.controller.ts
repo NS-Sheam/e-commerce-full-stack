@@ -14,12 +14,13 @@ const addReview = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getReviews = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReviewServices.getReviews();
+  const result = await ReviewServices.getReviews(req.query);
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: "Reviews fetched successfully",
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 

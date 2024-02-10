@@ -8,7 +8,7 @@ import { ReviewValidations } from "./review.validation";
 const router = Router();
 
 router.post(
-  "/create-review",
+  "/",
   auth(USER_TYPE.customer),
   validateRequest(ReviewValidations.createReviewValidationSchema),
   ReviewControllers.addReview,
