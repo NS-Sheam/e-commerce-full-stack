@@ -17,7 +17,7 @@ const Dashboard = () => {
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
-              padding: 10,
+              //   padding: 10,
               minHeight: "100%",
             }}
           >

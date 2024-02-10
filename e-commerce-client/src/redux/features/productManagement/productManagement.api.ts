@@ -1,5 +1,5 @@
 import { TQueryParams, TReduxResponse } from "../../../types/global";
-import { TCatgeory } from "../../../types/product.type";
+import { TCatgeory, TProduct } from "../../../types/product.type";
 import { baseApi } from "../../api/baseApi";
 
 const productManagementApi = baseApi.injectEndpoints({
@@ -24,6 +24,12 @@ const productManagementApi = baseApi.injectEndpoints({
           url: `products`,
           method: "GET",
           params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TProduct[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
         };
       },
     }),

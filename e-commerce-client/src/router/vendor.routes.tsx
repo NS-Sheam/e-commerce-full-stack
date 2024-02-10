@@ -8,6 +8,7 @@ import transactionIcon from "../assets/icons/transaction.png";
 
 import { TUserPath } from "../types/dashboardItem.type";
 import AddProduct from "../pages/dashboard/vendor/AddProduct";
+import Products from "../pages/dashboard/vendor/Products";
 export const vendorDashboardItems: TUserPath[] = [
   {
     path: "home",
@@ -27,11 +28,11 @@ export const vendorDashboardItems: TUserPath[] = [
     icon: (
       <img
         src={productIcon}
-        alt="dashboard"
+        alt="products"
         className="w-6 h-6"
       />
     ),
-    element: <div>Products</div>,
+    element: <Products />,
   },
   {
     path: "add-product",
