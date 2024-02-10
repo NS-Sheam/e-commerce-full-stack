@@ -22,12 +22,11 @@ const ProductImageCarousel = ({ product }: { product: TProduct }) => {
       >
         {/* FIXME: Zoom in second no image is not working. have to fix it. It is possible for image resulation */}
         <div
-          className="flex justify-center items-center"
+          className="flex justify-center items-center h-80 md:h-96 product-image-carousel-left"
           //   style={{ height: "400px" }}
         >
           <GlassMagnifier
             key={sliderIndex}
-            className=""
             imageSrc={product?.images[sliderIndex]}
             imageAlt={product?.name}
             square
