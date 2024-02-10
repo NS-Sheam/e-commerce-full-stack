@@ -18,6 +18,7 @@ import { TProduct } from "../../../types/product.type";
  * - Reset the image uploader after adding product
  * - Navigate to the product page after adding product
  * - Error handling more specific
+ * - Have to check the response after adding the brand of the product
  */
 
 const AddProduct = () => {
@@ -99,7 +100,16 @@ const AddProduct = () => {
                   placeholder="Product Description..."
                 />
               </Col>
-
+              <Col
+                span={24}
+                md={{ span: 12 }}
+              >
+                <EComInput
+                  type="text"
+                  name="brand"
+                  label="Brand"
+                />
+              </Col>
               <Col
                 span={24}
                 md={{ span: 12 }}
@@ -151,10 +161,7 @@ const AddProduct = () => {
                   label="Discount"
                 />
               </Col>
-              <Col
-                span={24}
-                md={{ span: 12 }}
-              >
+              <Col span={24}>
                 <EComMultipleImageUploader
                   name="images"
                   label="Images"

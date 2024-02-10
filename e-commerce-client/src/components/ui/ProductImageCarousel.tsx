@@ -64,14 +64,14 @@ const ProductImageCarousel = ({ product }: { product: TProduct }) => {
           {/* FIXME:Have to fix arrow position for many items  */}
           <span
             style={{ backgroundColor: "#fa8232" }}
-            className={arrowButtonStyle + " left-0"}
+            className={arrowButtonStyle + " -left-10"}
             onClick={() => setSliderIndex(sliderIndex - 1 < 0 ? product.images.length - 1 : sliderIndex - 1)}
           >
             <FaArrowLeft />
           </span>
           <span
             style={{ backgroundColor: "#fa8232" }}
-            className={arrowButtonStyle + " right-0"}
+            className={arrowButtonStyle + " -right-10"}
             onClick={() => setSliderIndex(sliderIndex + 1 > product.images.length - 1 ? 0 : sliderIndex + 1)}
           >
             <FaArrowRight />

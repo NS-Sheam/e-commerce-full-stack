@@ -8,6 +8,9 @@ const createProductValidationSchema = z.object({
     description: z.string({
       required_error: "Product description is required",
     }),
+    brand: z.string({
+      required_error: "Product brand is required",
+    }),
     price: z.number({
       required_error: "Product price is required",
     }),
@@ -28,6 +31,7 @@ const updateProductValidationSchema = z.object({
   body: z.object({
     name: z.string().optional(),
     description: z.string().optional(),
+    brand: z.string().optional(),
     price: z.number().optional(),
     images: z.array(z.string()).optional(),
     category: z.string().optional(),

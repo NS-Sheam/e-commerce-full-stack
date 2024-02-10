@@ -1,14 +1,25 @@
 import { useParams } from "react-router-dom";
 import { useGetSingleProductQuery } from "../redux/features/productManagement/productManagement.api";
-import { Col, Row } from "antd";
-import { useState } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { Col, Flex, Row, Spin } from "antd";
+
 import ProductImageCarousel from "../components/ui/ProductImageCarousel";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading: pIsLoading } = useGetSingleProductQuery(id || "");
-  const [sliderIndex, setSliderIndex] = useState(0);
+
+  if (pIsLoading) {
+    return (
+      <Flex
+        justify="center"
+        align="center"
+        gap="middle"
+        style={{ minHeight: "100vh" }}
+      >
+        <Spin size="large" />
+      </Flex>
+    );
+  }
 
   return (
     <div className="inner-container p-4">
@@ -27,12 +38,6 @@ const ProductDetails = () => {
                 <ProductImageCarousel product={product} />
               </Col>
             </Row>
-            {/* Display the first image outside the slider */}
-            {/* <img
-              src={product.images[0]}
-              alt={product.name}
-              style={{ width: "100%" }}
-            /> */}
           </Col>
           <Col
             span={24}

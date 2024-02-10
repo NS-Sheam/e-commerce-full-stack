@@ -16,6 +16,7 @@ export type TProduct = {
   _id: string;
   name: string;
   description: string;
+  brand: string;
   price: number;
   images: string[];
   category: TCatgeory;
