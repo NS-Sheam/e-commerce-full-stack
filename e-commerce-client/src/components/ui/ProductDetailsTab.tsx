@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import { Rating } from "@smastrom/react-rating";
+import { Col, Progress, Row, Tag } from "antd";
 import { FaRegHandshake } from "react-icons/fa6";
 import { FiHeadphones } from "react-icons/fi";
 import { LiaShippingFastSolid } from "react-icons/lia";
@@ -50,17 +51,18 @@ const ProductDetailsTab = ({ product }) => {
   return (
     <div className="space-y-4">
       <div
-        style={{ border: "2px solid #e2e8f0" }}
+        style={{ border: "2px solid #E4E7E9" }}
         className="flex w-full items-center justify-center text-xl font-semibold gap-4 py-2"
       >
         <p>Description</p>
         <p>Review</p>
       </div>
+      {/* Description section  */}
       <Row
         gutter={[16, 16]}
         justify={"center"}
         align={"top"}
-        style={{ padding: "1rem", borderBottom: "2px solid #e2e8f0" }}
+        style={{ padding: "1rem", borderBottom: "2px solid #E4E7E9" }}
       >
         <Col
           span={24}
@@ -109,6 +111,7 @@ const ProductDetailsTab = ({ product }) => {
           </ul>
         </Col>
       </Row>
+      {/* Review section  */}
     </div>
   );
 };

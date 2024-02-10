@@ -47,7 +47,7 @@ const ProductDetails = () => {
           >
             <Col span={16}>
               {/* Carousel Component  */}
-              <ProductImageCarousel product={product} />
+              <ProductImageCarousel product={product!} />
             </Col>
           </Row>
         </Col>
