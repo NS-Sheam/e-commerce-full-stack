@@ -9,6 +9,7 @@ import AddToCartBtnComponent from "../components/ui/addToCartBtnComponent";
 import { FaFacebook, FaPinterest, FaRegHeart, FaTwitter } from "react-icons/fa6";
 import { MdOutlineCompareArrows } from "react-icons/md";
 import { FiCopy } from "react-icons/fi";
+import ProductDetailsTab from "../components/ui/ProductDetailsTab";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,8 +27,6 @@ const ProductDetails = () => {
       </Flex>
     );
   }
-
-  console.log(product);
 
   const avgProductRating = product?.productReview.length
     ? product?.productReview?.reduce((acc, review) => acc + review.rating, 0) / product.productReview.length
@@ -97,11 +96,11 @@ const ProductDetails = () => {
           <WishListComponent />
         </Col>
       </Row>
+      <ProductDetailsTab product={product} />
     </div>
   );
 };
 {
-  /* <p>{product.description}</p> */
 }
 
 export default ProductDetails;
