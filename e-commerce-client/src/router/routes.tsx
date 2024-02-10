@@ -7,6 +7,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import { routesGenerator } from "../utils/routeGenerator";
 import { customerDashboardItems } from "./customer.routes";
 import { vendorDashboardItems } from "./vendor.routes";
+import ProductDetails from "../pages/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <Auth />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
       },
       {
         path: "dashboard",

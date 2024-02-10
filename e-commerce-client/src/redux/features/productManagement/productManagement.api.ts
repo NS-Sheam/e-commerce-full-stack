@@ -33,6 +33,15 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+    getSingleProduct: builder.query({
+      query: (id: string) => {
+        return {
+          url: `products/${id}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TReduxResponse<TProduct>) => response.data,
+    }),
     getCategories: builder.query({
       query: () => {
         return {
@@ -45,4 +54,5 @@ const productManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetProductsQuery, useGetCategoriesQuery, useAddProductMutation } = productManagementApi;
+export const { useGetProductsQuery, useGetCategoriesQuery, useAddProductMutation, useGetSingleProductQuery } =
+  productManagementApi;
