@@ -29,7 +29,9 @@ const getAllProducts = async (query: Record<string, unknown>) => {
 };
 
 const getSingleProduct = async (productId: string) => {
-  const result = await Product.findById(productId).populate("category");
+  const result = await Product.findById(productId).populate(
+    "category productReview",
+  );
   return result;
 };
 
