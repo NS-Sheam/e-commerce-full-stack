@@ -5,11 +5,11 @@ import { Col, Flex, Row, Spin, Tag } from "antd";
 import ProductImageCarousel from "../components/ui/ProductImageCarousel";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import AddToCartBtnComponent from "../components/ui/addToCartBtnComponent";
 import { FaFacebook, FaPinterest, FaRegHeart, FaTwitter } from "react-icons/fa6";
 import { MdOutlineCompareArrows } from "react-icons/md";
 import { FiCopy } from "react-icons/fi";
 import ProductDetailsTab from "../components/ui/ProductDetailsTab";
+import AddToCartBtnComponent from "../components/ui/AddToCartBtnComponent";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -96,12 +96,10 @@ const ProductDetails = () => {
           <WishListComponent />
         </Col>
       </Row>
-      <ProductDetailsTab product={product} />
+      <ProductDetailsTab product={product!} />
     </div>
   );
 };
-{
-}
 
 export default ProductDetails;
 

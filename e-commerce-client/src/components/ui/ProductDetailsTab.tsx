@@ -1,12 +1,15 @@
-import { Rating } from "@smastrom/react-rating";
-import { Col, Progress, Row, Tag } from "antd";
+import { Col, Row } from "antd";
 import { FaRegHandshake } from "react-icons/fa6";
 import { FiHeadphones } from "react-icons/fi";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { MdOutlinePayment } from "react-icons/md";
 import { SlBadge } from "react-icons/sl";
+import ProductReview from "./ProductReview";
+import { TProduct } from "../../types/product.type";
+import { useState } from "react";
 
-const ProductDetailsTab = ({ product }) => {
+const ProductDetailsTab = ({ product }: { product: TProduct }) => {
+  const [activeTab, setActiveTab] = useState("description");
   const featuresItems = [
     {
       icon: <SlBadge />,
@@ -51,11 +54,29 @@ const ProductDetailsTab = ({ product }) => {
   return (
     <div className="space-y-4">
       <div
-        style={{ border: "2px solid #E4E7E9" }}
-        className="flex w-full items-center justify-center text-xl font-semibold gap-4 py-2"
+        style={{ border: "3px solid #E4E7E9" }}
+        className="flex w-full items-center justify-center text-xl font-semibold"
       >
-        <p>Description</p>
-        <p>Review</p>
+        <p
+          onClick={() => setActiveTab("description")}
+          style={{
+            borderBottom: `${activeTab === "description" ? "5px solid #fa8232" : ""}`,
+            padding: "0.5rem 0.5rem ",
+            cursor: "pointer",
+          }}
+        >
+          Description
+        </p>
+        <p
+          onClick={() => setActiveTab("review")}
+          style={{
+            borderBottom: `${activeTab === "review" ? "5px solid #fa8232" : ""}`,
+            padding: "0.5rem 0.5rem",
+            cursor: "pointer",
+          }}
+        >
+          Review
+        </p>
       </div>
       {/* Description section  */}
       <Row
@@ -63,6 +84,7 @@ const ProductDetailsTab = ({ product }) => {
         justify={"center"}
         align={"top"}
         style={{ padding: "1rem", borderBottom: "2px solid #E4E7E9" }}
+        className={`${activeTab === "description" ? "" : "hidden"}`}
       >
         <Col
           span={24}
@@ -112,6 +134,7 @@ const ProductDetailsTab = ({ product }) => {
         </Col>
       </Row>
       {/* Review section  */}
+      {activeTab === "review" && <ProductReview product={product} />}
     </div>
   );
 };
