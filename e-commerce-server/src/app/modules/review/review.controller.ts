@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import { ReviewServices } from "./review.service";
 import sendResponse from "../../utils/sendResponse";
 import catchAsync from "../../utils/catchAsync";
-
+/**
+ * TODO: Add update and delete review functionality
+ *
+ */
 const addReview = catchAsync(async (req: Request, res: Response) => {
   const result = await ReviewServices.addReview(req.user, req.body);
   sendResponse(res, {
