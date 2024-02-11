@@ -4,12 +4,19 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/layout/Sidebar";
 import { sidebarItemGenerator } from "../../utils/sidebarItemGenerator";
 import { vendorDashboardItems } from "../../router/vendor.routes";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/auth/auth.Slice";
+import { customerDashboardItems } from "../../router/customer.routes";
 
 const { Content } = Layout;
 
-const items = sidebarItemGenerator(vendorDashboardItems);
-
 const Dashboard = () => {
+  const user = useAppSelector(selectCurrentUser);
+  const items =
+    user?.userType === "vendor"
+      ? sidebarItemGenerator(vendorDashboardItems)
+      : sidebarItemGenerator(customerDashboardItems);
+
   return (
     <Layout>
       <Sidebar items={items} />

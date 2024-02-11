@@ -45,7 +45,7 @@ export const customerDashboardItems: TUserPath[] = [
         className="w-6 h-6"
       />
     ),
-    element: <div>Orders</div>,
+    element: <div>Track Order</div>,
   },
   {
     path: "shopping-cart",
