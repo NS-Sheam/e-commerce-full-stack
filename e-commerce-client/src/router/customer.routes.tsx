@@ -8,6 +8,8 @@ import cardAndAddressIcon from "../assets/icons/card-address.png";
 import browsingHistoryIcon from "../assets/icons/history.png";
 import settingIcon from "../assets/icons/settings.png";
 import { TUserPath } from "../types/dashboardItem.type";
+import Products from "../pages/dashboard/vendor/Products";
+import productIcon from "../assets/icons/products.png";
 
 export const customerDashboardItems: TUserPath[] = [
   {
@@ -46,6 +48,19 @@ export const customerDashboardItems: TUserPath[] = [
     ),
     element: <div>Track Order</div>,
   },
+  {
+    path: "products",
+    name: "Products",
+    icon: (
+      <img
+        src={productIcon}
+        alt="products"
+        className="w-6 h-6"
+      />
+    ),
+    element: <Products />,
+  },
+
   {
     path: "shopping-cart",
     name: "Shopping Cart",

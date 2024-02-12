@@ -21,6 +21,8 @@
     "gender": "male",
     "email": "customer@example.com",
     "mobileNo": "012323232323",
+    "wishList": [], // product Id
+    "shoppingCart": [], // product Id
     "image": "https://example.com/profile.jpg"
   }
 }
@@ -411,7 +413,7 @@ Authorization <VENDOR_ACCESS_TOKEN>
   "description": "Powerful laptop for professional use",
   "price": 1200,
   "images": ["laptop_image1.jpg", "laptop_image2.jpg"],
-  "category": "Electronics",
+  "category": "CategoryId123",
   "inventory": {
     "quantity": 10,
     "lowSockNotification": "No"
@@ -494,7 +496,7 @@ Authorization <ADMIN_ACCESS_TOKEN| VENDOR_ACCESS_TOKEN>
 
 ## Upload images in file
 
-- First send all data in text formate inside 'data'
+- First send all data in text format inside 'data'
 - Then send image as file formate and received it with req.file
 - Have to parse the file with multer before going to the controller
 - Make sure that we have parse text **`req.body.data`** to json format and add in **`req.body`** before data going to validateRequest.

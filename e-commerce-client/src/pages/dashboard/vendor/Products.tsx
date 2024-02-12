@@ -10,23 +10,26 @@ import { Link } from "react-router-dom";
 const Products = () => {
   const user = useAppSelector(selectCurrentUser);
 
-  const { data: products, isLoading: pIsLoading } = useGetProductsQuery([
-    {
-      name: "vendor",
-      value: user?.userId as string,
-    },
-  ]);
+  const { data: products, isLoading: pIsLoading } = useGetProductsQuery(undefined);
+  //   [
+  //   {
+  //     name: "vendor",
+  //     value: user?.userId as string,
+  //   },
+  // ]
 
   return (
     <div className="p-4">
       <DashboardHeading>
         <h3>Products</h3>
-        <Button style={{ color: "#FF8C00", border: "FF8C00" }}>
-          <p className="flex items-center justify-center gap-2">
-            <span>Add Product</span>
-            <FaArrowRight />
-          </p>
-        </Button>
+        {user?.userType === "vendor" && (
+          <Button style={{ color: "#FF8C00", border: "FF8C00" }}>
+            <p className="flex items-center justify-center gap-2">
+              <span>Add Product</span>
+              <FaArrowRight />
+            </p>
+          </Button>
+        )}
       </DashboardHeading>
       {pIsLoading && (
         <Flex
