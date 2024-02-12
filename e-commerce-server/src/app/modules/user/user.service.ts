@@ -241,11 +241,17 @@ const getMe = async (token: string) => {
   // check if user exists
   let result = null;
   if (userType === "customer") {
-    result = await Customer.findOne({ user: userId }).populate("user");
+    result = await Customer.findOne({ user: userId }).populate(
+      "user wishList shoppingCart",
+    );
   } else if (userType === "vendor") {
-    result = await Vendor.findOne({ user: userId }).populate("user");
+    result = await Vendor.findOne({ user: userId }).populate(
+      "user wishList shoppingCart",
+    );
   } else if (userType === "admin") {
-    result = await Admin.findOne({ user: userId }).populate("user");
+    result = await Admin.findOne({ user: userId }).populate(
+      "user wishList shoppingCart",
+    );
   }
 
   return result;

@@ -10,6 +10,7 @@ import settingIcon from "../assets/icons/settings.png";
 import { TUserPath } from "../types/dashboardItem.type";
 import Products from "../pages/dashboard/vendor/Products";
 import productIcon from "../assets/icons/products.png";
+import WishList from "../pages/WishList";
 
 export const customerDashboardItems: TUserPath[] = [
   {
@@ -83,7 +84,7 @@ export const customerDashboardItems: TUserPath[] = [
         className="w-6 h-6"
       />
     ),
-    element: <div>wishlist</div>,
+    element: <WishList />,
   },
   {
     path: "compare",

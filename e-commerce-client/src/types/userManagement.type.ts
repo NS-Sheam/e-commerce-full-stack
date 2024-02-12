@@ -3,6 +3,8 @@
  * - make type for order history and review
  */
 
+import { TProduct } from "./product.type";
+
 export type TName = {
   firstName: string;
   middleName: string;
@@ -23,4 +25,5 @@ export type TUser = {
   updatedAt: string;
   orderHistory?: string[];
   review?: string[];
+  wishList?: TProduct[];
 };
