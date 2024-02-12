@@ -3,15 +3,15 @@ import { FaShoppingCart } from "react-icons/fa";
 import { TProduct } from "../../types/product.type";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
+import { handleAddToShoppingCart } from "../../utils/setShoppingCart";
 
 const AddToCartBtnComponent = ({ product }: { product: TProduct }) => {
   const { shoppingCart } = useAppSelector((state) => state.auth);
-  console.log(shoppingCart);
 
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = () => {
-    dispatch(setShoppingCart({ type: "ADD_TO_CART", id: product?._id }));
+  const handleSubmit = () => {
+    handleAddToShoppingCart({ id: product._id, shoppingCart, dispatchFn: dispatch, addFn: setShoppingCart });
   };
 
   return (
@@ -48,7 +48,7 @@ const AddToCartBtnComponent = ({ product }: { product: TProduct }) => {
         md={{ span: 12 }}
       >
         <Button
-          onClick={handleAddToCart}
+          onClick={handleSubmit}
           size="large"
           style={{
             width: "100%",

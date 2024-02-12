@@ -9,11 +9,24 @@ import {
   useUpdateWishListMutation,
 } from "../../redux/features/userManagement/userManagement.api";
 import { handleAddToWishList } from "../../utils/updateWishList";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { handleAddToShoppingCart, handleRemoveFromShoppingCart } from "../../utils/setShoppingCart";
+import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
 const ProductCard = ({ product }: { product: TProduct }) => {
   const { data: customerData } = useGetSingleCustomerQuery(undefined);
   const [updateWishList] = useUpdateWishListMutation();
   const wishList = customerData?.wishList;
   const doesWishListContainProduct = wishList?.some((p) => p._id === product._id) as boolean;
+
+  const { shoppingCart } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+  const doesProductExistToShoppingCart = shoppingCart.some((item) => item === product._id);
+  const handleShoppingCart = () => {
+    doesProductExistToShoppingCart
+      ? handleRemoveFromShoppingCart({ id: product._id, dispatchFn: dispatch, removeFn: setShoppingCart })
+      : handleAddToShoppingCart({ id: product._id, shoppingCart, dispatchFn: dispatch, addFn: setShoppingCart });
+  };
 
   const handleSubmit = async () => {
     await handleAddToWishList({
@@ -44,7 +57,14 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             >
               <FaRegHeart />
             </span>
-            <span className={`${iconStyle} bg-white hover:bg-orange`}>
+            <span
+              onClick={handleShoppingCart}
+              className={`p-3 flex items-center justify-center rounded-full text-xl duration-300 ${
+                doesProductExistToShoppingCart
+                  ? "bg-orange hover:bg-white text-white hover:text-grayBlack"
+                  : "bg-white hover:bg-orange text-grayBlack hover:text-white"
+              } `}
+            >
               {" "}
               <FaShoppingCart />
             </span>
