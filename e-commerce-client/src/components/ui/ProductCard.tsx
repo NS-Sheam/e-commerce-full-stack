@@ -1,8 +1,9 @@
 import { Card, Tag } from "antd";
 import { TProduct } from "../../types/product.type";
-import { FaRegHeart } from "react-icons/fa6";
+import { FaEye, FaRegHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import "../../styles/ProductCard.css";
+import { Link } from "react-router-dom";
 const ProductCard = ({ product }: { product: TProduct }) => {
   const iconStyle =
     "bg-white hover:bg-orange p-3 flex items-center justify-center rounded-full text-grayBlack hover:text-white text-xl duration-300";
@@ -22,6 +23,12 @@ const ProductCard = ({ product }: { product: TProduct }) => {
               {" "}
               <FaShoppingCart />
             </span>
+            <Link
+              to={`/product/${product._id}`}
+              className={iconStyle}
+            >
+              <FaEye />
+            </Link>
           </div>
           <img
             alt={product.name}

@@ -5,7 +5,6 @@ import { useGetProductsQuery } from "../../../redux/features/productManagement/p
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import ProductCard from "../../../components/ui/ProductCard";
-import { Link } from "react-router-dom";
 
 const Products = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -52,9 +51,7 @@ const Products = () => {
             lg={6}
             key={product._id}
           >
-            <Link to={`/product/${product._id}`}>
-              <ProductCard product={product} />
-            </Link>
+            <ProductCard product={product} />
           </Col>
         ))}
       </Row>
