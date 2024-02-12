@@ -9,7 +9,7 @@ import { customerSearchableFields } from "./customer.const";
 
 const getAllCustomers = async (query: Record<string, unknown>) => {
   const customerQuery = new QueryBuilder(
-    Customer.find().populate("wishList"),
+    Customer.find().populate("wishList shoppingCart"),
     query,
   )
     .search(customerSearchableFields)
@@ -24,7 +24,9 @@ const getAllCustomers = async (query: Record<string, unknown>) => {
 };
 
 const getSingleCustomer = async (customerId: string) => {
-  const result = Customer.findById(customerId);
+  const result = Customer.findById(customerId).populate(
+    "wishList shoppingCart",
+  );
   return result;
 };
 
