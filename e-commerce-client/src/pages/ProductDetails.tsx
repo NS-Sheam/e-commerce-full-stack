@@ -15,11 +15,13 @@ import {
   useGetSingleCustomerQuery,
   useUpdateWishListMutation,
 } from "../redux/features/userManagement/userManagement.api";
+import { useAppDispatch } from "../redux/hooks";
+import { setShoppingCart } from "../redux/features/auth/auth.Slice";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading: pIsLoading } = useGetSingleProductQuery(id || "");
-
+  const dispatch = useAppDispatch();
   if (pIsLoading) {
     return (
       <Flex
@@ -32,6 +34,12 @@ const ProductDetails = () => {
       </Flex>
     );
   }
+  const handleAddToCart = () => {
+    dispatch(setShoppingCart({ type: "ADD_TO_CART", payload: { id: product?._id } }));
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(setShoppingCart({ type: "REMOVE_FROM_CART", payload: { id: product?._id } }));
+  };
 
   const avgProductRating = product?.productReview.length
     ? product?.productReview?.reduce((acc, review) => acc + review.rating, 0) / product.productReview.length
@@ -95,7 +103,7 @@ const ProductDetails = () => {
             <span className={`text-xl font-thin text-black line-through`}>
               {product!.price + (product?.discount || 0)}
             </span>
-            <Tag color="#f50">{Math.ceil(discount)}% OFF</Tag>
+            {discount && <Tag color="#f50">{Math.ceil(discount)}% OFF</Tag>}
           </p>
           <AddToCartBtnComponent />
           <WishListComponent product={product} />
