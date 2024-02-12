@@ -51,6 +51,38 @@ const updateCustomer = async (
   return result;
 };
 
+const addWishList = async (customerId: string, productId: string) => {
+  const matchedWithPreviousWishlist = await Customer.aggregate([
+    {
+      $match: {
+        _id: customerId,
+      },
+    },
+    {
+      $project: {
+        wishList: {
+          $filter: {
+            input: "$wishList",
+            as: "wish",
+            cond: { $eq: ["$$wish", productId] },
+          },
+        },
+      },
+    },
+  ]);
+  if (matchedWithPreviousWishlist.length) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Product already in wishlist");
+  }
+  const result = Customer.findByIdAndUpdate(
+    customerId,
+    {
+      $push: { wishList: productId },
+    },
+    { new: true },
+  );
+  return result;
+};
+
 const deleteCustomer = async (customerId: string) => {
   const session = await mongoose.startSession();
 
