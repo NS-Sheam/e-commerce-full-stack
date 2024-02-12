@@ -12,7 +12,7 @@ const productManagementApi = baseApi.injectEndpoints({
       }),
     }),
     getProducts: builder.query({
-      query: (args: TQueryParams[]) => {
+      query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
 
         if (args) {
