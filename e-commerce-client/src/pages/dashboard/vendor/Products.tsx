@@ -8,8 +8,8 @@ import ProductCard from "../../../components/ui/ProductCard";
 
 const Products = () => {
   const user = useAppSelector(selectCurrentUser);
-
   const { data: products, isLoading: pIsLoading } = useGetProductsQuery(undefined);
+
   //   [
   //   {
   //     name: "vendor",

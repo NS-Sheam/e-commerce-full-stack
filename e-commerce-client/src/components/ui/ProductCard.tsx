@@ -4,7 +4,25 @@ import { FaEye, FaRegHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import "../../styles/ProductCard.css";
 import { Link } from "react-router-dom";
+import {
+  useGetSingleCustomerQuery,
+  useUpdateWishListMutation,
+} from "../../redux/features/userManagement/userManagement.api";
+import { handleAddToWishList } from "../../utils/updateWishList";
 const ProductCard = ({ product }: { product: TProduct }) => {
+  const { data: customerData } = useGetSingleCustomerQuery(undefined);
+  const [updateWishList] = useUpdateWishListMutation();
+  const wishList = customerData?.wishList;
+  const doesWishListContainProduct = wishList?.some((p) => p._id === product._id) as boolean;
+
+  const handleSubmit = async () => {
+    await handleAddToWishList({
+      productId: product._id,
+      doesWishListContainProduct,
+      updateFn: updateWishList,
+    });
+  };
+
   const iconStyle =
     "bg-white hover:bg-orange p-3 flex items-center justify-center rounded-full text-grayBlack hover:text-white text-xl duration-300";
   return (
@@ -16,16 +34,23 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       cover={
         <div style={{ width: "100%", height: 200, position: "relative" }}>
           <div className="card-icon-container">
-            <span className={iconStyle}>
+            <span
+              onClick={handleSubmit}
+              className={`${
+                doesWishListContainProduct
+                  ? "bg-orange hover:bg-white text-white hover:text-grayBlack"
+                  : "bg-white hover:bg-orange text-grayBlack hover:text-white"
+              }  p-3 flex items-center justify-center rounded-full text-xl duration-300`}
+            >
               <FaRegHeart />
             </span>
-            <span className={iconStyle}>
+            <span className={`${iconStyle} bg-white hover:bg-orange`}>
               {" "}
               <FaShoppingCart />
             </span>
             <Link
               to={`/product/${product._id}`}
-              className={iconStyle}
+              className={`${iconStyle} bg-white hover:bg-orange`}
             >
               <FaEye />
             </Link>

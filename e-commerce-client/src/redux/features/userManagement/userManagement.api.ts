@@ -13,22 +13,27 @@ const userManagementApi = baseApi.injectEndpoints({
     getSingleCustomer: builder.query({
       query: () => {
         return {
-          url: `/users/me`,
+          url: "/users/me",
           method: "GET",
         };
       },
+      providesTags: ["wishlist", "customer", "user"],
       transformResponse: (response: TReduxResponse<TUser>) => response.data,
     }),
-    updateWishList: builder.query({
-      query: () => {
+    updateWishList: builder.mutation({
+      query: (data: { productId: string }) => {
         return {
-          url: `/users/me`,
-          method: "GET",
+          url: "/customers/wishlist",
+          method: "PATCH",
+          body: data,
         };
       },
-      transformResponse: (response: TReduxResponse<TUser>) => response.data,
+      invalidatesTags: ["wishlist", "customer", "user"],
+      transformResponse: (response: TReduxResponse<TUser>) => {
+        return response.data;
+      },
     }),
   }),
 });
 
-export const { useGetCustomersQuery, useGetSingleCustomerQuery } = userManagementApi;
+export const { useGetCustomersQuery, useGetSingleCustomerQuery, useUpdateWishListMutation } = userManagementApi;
