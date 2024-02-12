@@ -18,6 +18,11 @@ router.patch(
   CustomerControllers.updateWishList,
 );
 router.patch(
+  "/shopping-cart",
+  auth(USER_TYPE.admin, USER_TYPE.customer),
+  CustomerControllers.updateShoppingCart,
+);
+router.patch(
   "/:id",
   auth(USER_TYPE.admin, USER_TYPE.customer),
   validateRequest(CustomerValidations.updateCustomerValidationSchema),

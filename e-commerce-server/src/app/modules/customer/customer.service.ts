@@ -76,6 +76,31 @@ const updateWishList = async (
   }
   return result;
 };
+const updateShoppingCart = async (
+  customerId: string,
+  productId: Types.ObjectId,
+) => {
+  let result;
+  const customer = await Customer.findOne({ user: customerId });
+  if (!customer) {
+    throw new AppError(httpStatus.NOT_FOUND, "Customer not found");
+  }
+
+  if (customer.shoppingCart.includes(productId)) {
+    result = await Customer.findOneAndUpdate(
+      { user: customerId },
+      { $pull: { wishList: productId } },
+      { new: true },
+    );
+  } else {
+    result = await Customer.findOneAndUpdate(
+      { user: customerId },
+      { $push: { wishList: productId } },
+      { new: true },
+    );
+  }
+  return result;
+};
 
 const deleteCustomer = async (customerId: string) => {
   const session = await mongoose.startSession();
@@ -120,7 +145,8 @@ const deleteCustomer = async (customerId: string) => {
 export const CustomerServices = {
   getAllCustomers,
   getSingleCustomer,
+  updateWishList,
+  updateShoppingCart,
   updateCustomer,
   deleteCustomer,
-  updateWishList,
 };

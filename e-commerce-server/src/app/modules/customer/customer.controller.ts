@@ -50,6 +50,18 @@ const updateWishList = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const updateShoppingCart = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const { productId } = req.body;
+
+  const result = await CustomerServices.updateShoppingCart(userId, productId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Wishlist updated successfully",
+    data: result,
+  });
+});
 
 const deleteCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -68,5 +80,6 @@ export const CustomerControllers = {
   getSingleCustomer,
   updateCustomer,
   updateWishList,
+  updateShoppingCart,
   deleteCustomer,
 };
