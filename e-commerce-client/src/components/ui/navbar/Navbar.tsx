@@ -16,7 +16,14 @@ const Navbar = () => {
     },
     {
       name: "wishlist",
-      icon: <CiHeart />,
+      icon: (
+        <Link
+          to="/customer/wishlist"
+          className="text-white hover:text-primary flex justify-center items-center "
+        >
+          <CiHeart />
+        </Link>
+      ),
     },
     {
       name: "user",
@@ -28,7 +35,7 @@ const Navbar = () => {
           <img
             src={userData.image}
             alt="user"
-            className="m-auto border-white border-2 w-10 h-10 rounded-full bg-white"
+            className="m-auto border-white border-2 w-10 h-10 rounded-full bg-white "
           />
         </Link>
       ) : (
