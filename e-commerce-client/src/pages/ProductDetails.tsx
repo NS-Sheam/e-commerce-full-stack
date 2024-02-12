@@ -5,11 +5,16 @@ import { Col, Flex, Row, Spin, Tag } from "antd";
 import ProductImageCarousel from "../components/ui/ProductImageCarousel";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import { FaFacebook, FaPinterest, FaRegHeart, FaTwitter } from "react-icons/fa6";
+import { FaFacebook, FaHeart, FaPinterest, FaRegHeart, FaTwitter } from "react-icons/fa6";
 import { MdOutlineCompareArrows } from "react-icons/md";
 import { FiCopy } from "react-icons/fi";
 import ProductDetailsTab from "../components/ui/ProductDetailsTab";
 import AddToCartBtnComponent from "../components/ui/AddToCartBtnComponent";
+import { handleAddToWishList } from "../utils/updateWishList";
+import {
+  useGetSingleCustomerQuery,
+  useUpdateWishListMutation,
+} from "../redux/features/userManagement/userManagement.api";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -90,10 +95,10 @@ const ProductDetails = () => {
             <span className={`text-xl font-thin text-black line-through`}>
               {product!.price + (product?.discount || 0)}
             </span>
-            <Tag color="#f50">{discount}% OFF</Tag>
+            <Tag color="#f50">{Math.ceil(discount)}% OFF</Tag>
           </p>
           <AddToCartBtnComponent />
-          <WishListComponent />
+          <WishListComponent product={product} />
         </Col>
       </Row>
       <ProductDetailsTab product={product!} />
@@ -103,11 +108,34 @@ const ProductDetails = () => {
 
 export default ProductDetails;
 
-export const WishListComponent = () => {
+export const WishListComponent = ({ product }) => {
+  const { data: customerData } = useGetSingleCustomerQuery(undefined);
+  const [updateWishList] = useUpdateWishListMutation();
+  const wishList = customerData?.wishList;
+  const doesWishListContainProduct = wishList?.some((p) => p._id === product._id) as boolean;
+
+  const handleSubmit = async () => {
+    await handleAddToWishList({
+      productId: product._id,
+      doesWishListContainProduct,
+      updateFn: updateWishList,
+    });
+  };
   return (
     <div className="grid grid-cols-7 gap-2 w-full text-gray">
       <span className="col-span-4 md:col-span-2 flex justify-center items-center gap-1">
-        <FaRegHeart className="text-xl" /> Add to Wishlist
+        {doesWishListContainProduct ? (
+          <FaHeart
+            onClick={handleSubmit}
+            className="text-xl cursor-pointer text-orange"
+          />
+        ) : (
+          <FaRegHeart
+            onClick={handleSubmit}
+            className="text-xl cursor-pointer text-orange"
+          />
+        )}{" "}
+        Add to Wishlist
       </span>
       <span className="col-span-3 md:col-span-2 flex justify-center items-center gap-1">
         <MdOutlineCompareArrows className="text-xl" /> Add To Compare
