@@ -19,6 +19,15 @@ const userManagementApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: TReduxResponse<TUser>) => response.data,
     }),
+    updateWishList: builder.query({
+      query: () => {
+        return {
+          url: `/users/me`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TReduxResponse<TUser>) => response.data,
+    }),
   }),
 });
 
