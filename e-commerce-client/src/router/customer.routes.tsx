@@ -7,7 +7,6 @@ import compareIcon from "../assets/icons/swap.png";
 import cardAndAddressIcon from "../assets/icons/card-address.png";
 import browsingHistoryIcon from "../assets/icons/history.png";
 import settingIcon from "../assets/icons/settings.png";
-import logoutIcon from "../assets/icons/logout.png";
 import { TUserPath } from "../types/dashboardItem.type";
 
 export const customerDashboardItems: TUserPath[] = [
@@ -119,17 +118,5 @@ export const customerDashboardItems: TUserPath[] = [
       />
     ),
     element: <div>setting</div>,
-  },
-  {
-    path: "logout",
-    name: "Logout",
-    icon: (
-      <img
-        src={logoutIcon}
-        alt="logout"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>logout</div>,
   },
 ];

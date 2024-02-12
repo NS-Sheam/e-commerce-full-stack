@@ -16,11 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        ),
+        element: <Home />,
       },
       {
         path: "/auth",
@@ -30,15 +26,24 @@ const router = createBrowserRouter([
         path: "/product/:id",
         element: <ProductDetails />,
       },
+
       {
-        path: "dashboard",
-        element: <Dashboard />,
-        children: routesGenerator(vendorDashboardItems),
+        path: "customer/dashboard",
+        element: (
+          <ProtectedRoute role="customer">
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+        children: routesGenerator(customerDashboardItems),
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
-        children: routesGenerator(customerDashboardItems),
+        element: (
+          <ProtectedRoute role="vendor">
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+        children: routesGenerator(vendorDashboardItems),
       },
     ],
   },

@@ -14,6 +14,7 @@ export type TCustomer = {
   gender: "male" | "female" | "other";
   email: string;
   mobileNo: string;
+  wishList: Types.ObjectId[];
   image?: string;
   isDeleted: boolean;
 };

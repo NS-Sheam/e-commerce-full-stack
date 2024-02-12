@@ -1,6 +1,5 @@
 import dashboardIcon from "../assets/icons/dashboard.png";
 import settingIcon from "../assets/icons/settings.png";
-import logoutIcon from "../assets/icons/logout.png";
 import productIcon from "../assets/icons/products.png";
 import addProductIcon from "../assets/icons/add-product.png";
 import orderIcon from "../assets/icons/orders.png";
@@ -81,17 +80,5 @@ export const vendorDashboardItems: TUserPath[] = [
       />
     ),
     element: <div>setting</div>,
-  },
-  {
-    path: "logout",
-    name: "Logout",
-    icon: (
-      <img
-        src={logoutIcon}
-        alt="logout"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>logout</div>,
   },
 ];

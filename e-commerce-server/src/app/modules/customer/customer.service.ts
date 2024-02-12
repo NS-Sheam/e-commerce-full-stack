@@ -8,7 +8,10 @@ import QueryBuilder from "../../builder/QueryBuilder";
 import { customerSearchableFields } from "./customer.const";
 
 const getAllCustomers = async (query: Record<string, unknown>) => {
-  const customerQuery = new QueryBuilder(Customer.find(), query)
+  const customerQuery = new QueryBuilder(
+    Customer.find().populate("wishList"),
+    query,
+  )
     .search(customerSearchableFields)
     .filter()
     .sort()

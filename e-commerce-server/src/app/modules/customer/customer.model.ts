@@ -50,6 +50,12 @@ const customerSchema = new Schema<TCustomer>(
       type: String,
       required: true,
     },
+    wishList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
     image: String,
     isDeleted: {
       type: Boolean,

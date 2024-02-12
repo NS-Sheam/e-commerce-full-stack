@@ -10,8 +10,10 @@ import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
 import GoogleLoginButton from "../ui/GoogleLoginButton";
 
 const defaultValues = {
-  email: "admin@example.com",
-  password: "admin123",
+  // email: "admin@example.com",
+  // password: "admin123",
+  email: "customer321@gmail.com",
+  password: "customer321",
 };
 
 const Login = () => {
