@@ -22,7 +22,7 @@ const Navbar = () => {
       name: "user",
       icon: userData?.image ? (
         <Link
-          to="/dashboard/home"
+          to={`${userData.userType}/home`}
           className="flex items-center justify-center"
         >
           <img

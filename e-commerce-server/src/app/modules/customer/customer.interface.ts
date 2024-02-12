@@ -15,6 +15,7 @@ export type TCustomer = {
   email: string;
   mobileNo: string;
   wishList: Types.ObjectId[];
+  shoppingCart: Types.ObjectId[];
   image?: string;
   isDeleted: boolean;
 };

@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "customer/dashboard",
+        path: "customer",
         element: (
           <ProtectedRoute role="customer">
             <Dashboard />
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         children: routesGenerator(customerDashboardItems),
       },
       {
-        path: "dashboard",
+        path: "vendor",
         element: (
           <ProtectedRoute role="vendor">
             <Dashboard />

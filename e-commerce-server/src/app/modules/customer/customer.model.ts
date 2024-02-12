@@ -50,12 +50,24 @@ const customerSchema = new Schema<TCustomer>(
       type: String,
       required: true,
     },
-    wishList: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Product",
-      },
-    ],
+    wishList: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+        },
+      ],
+      default: [],
+    },
+    shoppingCart: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+        },
+      ],
+      default: [],
+    },
     image: String,
     isDeleted: {
       type: Boolean,

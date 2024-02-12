@@ -17,8 +17,6 @@ const ProtectedRoute = ({ children, role }: TProtectedRouteProps) => {
     user = verifyToken(token);
   }
   if (role && (user as TUser)?.userType !== role) {
-    console.log(role, user.userType);
-
     dispatch(logOut());
     return (
       <Navigate
