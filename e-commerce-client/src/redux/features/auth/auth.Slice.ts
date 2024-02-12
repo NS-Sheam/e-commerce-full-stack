@@ -17,21 +17,14 @@ export type TUser = {
 type TAuthState = {
   user: TUser | null;
   token: string | null;
-  shoppingCart: {
-    product?: {
-      id: string;
-      total: number;
-    }[];
-  };
+  shoppingCart: string[];
   wishList: string[];
 };
 
 const initialState: TAuthState = {
   user: null,
   token: null,
-  shoppingCart: {
-    product: [],
-  },
+  shoppingCart: [],
   wishList: [],
 };
 
@@ -50,41 +43,13 @@ const authSlice = createSlice({
       state.token = null;
     },
     setShoppingCart: (state, action) => {
-      if (action.type === "ADD_TO_CART") {
-        if (state.shoppingCart.product) {
-          const isExist = state.shoppingCart.product.some((item) => item.id === action.payload.id);
-          if (isExist) {
-            state.shoppingCart.product = state.shoppingCart.product.map((item) => {
-              if (item.id === action.payload.id) {
-                return {
-                  id: item.id,
-                  total: item.total + 1,
-                };
-              }
-              return item;
-            });
-          }
-        } else {
-          state.shoppingCart.product = [{ id: action.payload.id, total: 1 }];
-        }
+      const { type, id } = action.payload;
+      if (type === "ADD_TO_CART") {
+        const prevShoppingCart = state.shoppingCart.filter((item) => item !== id);
+        state.shoppingCart = [...prevShoppingCart, id];
       }
-      if (action.type === "REMOVE_FROM_CART") {
-        if (state.shoppingCart.product) {
-          const isExist = state.shoppingCart.product.some((item) => item.id === action.payload.id);
-          if (isExist) {
-            state.shoppingCart.product = state.shoppingCart.product.map((item) => {
-              if (item.id === action.payload.id) {
-                return {
-                  id: item.id,
-                  total: item.total - 1,
-                };
-              }
-              return item;
-            });
-          }
-        } else {
-          state.shoppingCart.product = [{ id: action.payload.id, total: 0 }];
-        }
+      if (type === "REMOVE_FROM_CART") {
+        state.shoppingCart = state.shoppingCart.filter((item) => item !== id);
       }
     },
   },
