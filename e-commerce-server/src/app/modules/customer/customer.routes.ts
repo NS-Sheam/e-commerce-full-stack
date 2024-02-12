@@ -13,6 +13,11 @@ router.get(
 );
 router.get("/", auth(USER_TYPE.admin), CustomerControllers.getAllCustomers);
 router.patch(
+  "/wishlist",
+  auth(USER_TYPE.admin, USER_TYPE.customer),
+  CustomerControllers.updateWishList,
+);
+router.patch(
   "/:id",
   auth(USER_TYPE.admin, USER_TYPE.customer),
   validateRequest(CustomerValidations.updateCustomerValidationSchema),

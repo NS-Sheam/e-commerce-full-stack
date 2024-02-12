@@ -29,6 +29,8 @@ const createCustomerValidationSchema = z.object({
       mobileNo: z.string({
         required_error: "Mobile number is required",
       }),
+      wishList: z.array(z.string()).optional(),
+      shoppingCart: z.array(z.string()).optional(),
       isDeleted: z.boolean().default(false),
     }),
   }),
@@ -47,6 +49,8 @@ const updateCustomerValidationSchema = z.object({
       name: updateNameValidationSchema.optional(),
       email: z.string().email().optional(),
       mobileNo: z.string().optional(),
+      wishList: z.array(z.string()).optional(),
+      shoppingCart: z.array(z.string()).optional(),
       image: z.string().optional(),
       isDeleted: z.boolean().optional(),
     }),

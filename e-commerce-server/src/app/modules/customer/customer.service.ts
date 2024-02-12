@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { TCustomer } from "./customer.interface";
 import { Customer } from "./customer.model";
 import { User } from "../user/user.model";
@@ -51,35 +51,29 @@ const updateCustomer = async (
   return result;
 };
 
-const addWishList = async (customerId: string, productId: string) => {
-  const matchedWithPreviousWishlist = await Customer.aggregate([
-    {
-      $match: {
-        _id: customerId,
-      },
-    },
-    {
-      $project: {
-        wishList: {
-          $filter: {
-            input: "$wishList",
-            as: "wish",
-            cond: { $eq: ["$$wish", productId] },
-          },
-        },
-      },
-    },
-  ]);
-  if (matchedWithPreviousWishlist.length) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Product already in wishlist");
+const updateWishList = async (
+  customerId: string,
+  productId: Types.ObjectId,
+) => {
+  let result;
+  const customer = await Customer.findOne({ user: customerId });
+  if (!customer) {
+    throw new AppError(httpStatus.NOT_FOUND, "Customer not found");
   }
-  const result = Customer.findByIdAndUpdate(
-    customerId,
-    {
-      $push: { wishList: productId },
-    },
-    { new: true },
-  );
+
+  if (customer.wishList.includes(productId)) {
+    result = await Customer.findOneAndUpdate(
+      { user: customerId },
+      { $pull: { wishList: productId } },
+      { new: true },
+    );
+  } else {
+    result = await Customer.findOneAndUpdate(
+      { user: customerId },
+      { $push: { wishList: productId } },
+      { new: true },
+    );
+  }
   return result;
 };
 
@@ -128,4 +122,5 @@ export const CustomerServices = {
   getSingleCustomer,
   updateCustomer,
   deleteCustomer,
+  updateWishList,
 };
