@@ -1,6 +1,6 @@
 import { Button, Col, Row } from "antd";
-import DashboardHeading from "../components/ui/DashboardHeading";
-import { useGetSingleCustomerQuery } from "../redux/features/userManagement/userManagement.api";
+import DashboardHeading from "../../../components/ui/DashboardHeading";
+import { useGetSingleCustomerQuery } from "../../../redux/features/userManagement/userManagement.api";
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 

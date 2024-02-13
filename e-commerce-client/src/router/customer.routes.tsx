@@ -10,7 +10,8 @@ import settingIcon from "../assets/icons/settings.png";
 import { TUserPath } from "../types/dashboardItem.type";
 import Products from "../pages/dashboard/vendor/Products";
 import productIcon from "../assets/icons/products.png";
-import WishList from "../pages/WishList";
+import WishList from "../pages/dashboard/customer/WishList";
+import ShoppingCart from "../pages/dashboard/customer/ShoppingCart";
 
 export const customerDashboardItems: TUserPath[] = [
   {
@@ -72,7 +73,7 @@ export const customerDashboardItems: TUserPath[] = [
         className="w-6 h-6"
       />
     ),
-    element: <div>shopping cart</div>,
+    element: <ShoppingCart />,
   },
   {
     path: "wishlist",
