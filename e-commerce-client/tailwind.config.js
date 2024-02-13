@@ -10,6 +10,7 @@ export default {
         gray: "#5f6c72",
         grayBlack: "#191C1F",
         grayWhite: "#E4E7E9",
+        grayWhite2: "#F2F4F5",
       },
     },
   },
