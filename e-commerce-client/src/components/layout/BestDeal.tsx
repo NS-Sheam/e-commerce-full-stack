@@ -1,0 +1,31 @@
+import { Col, Row } from "antd";
+import { TProduct } from "../../types/product.type";
+import ProductCard from "../ui/ProductCard";
+import BestDealLongCard from "../ui/home/BestDealLongCard";
+
+const BestDeal = ({ productData }: { productData: TProduct[] }) => {
+  return (
+    <Row
+      gutter={[16, 16]}
+      className="py-14"
+    >
+      <Col span={6}>
+        <BestDealLongCard product={productData[0]} />
+      </Col>
+      <Col span={18}>
+        <Row gutter={[16, 16]}>
+          {productData.slice(0, 8).map((product) => (
+            <Col
+              key={product._id}
+              span={6}
+            >
+              <ProductCard product={product} />
+            </Col>
+          ))}
+        </Row>
+      </Col>
+    </Row>
+  );
+};
+
+export default BestDeal;
