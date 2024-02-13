@@ -4,7 +4,10 @@ import { useGetSingleCustomerQuery } from "../../../redux/features/userManagemen
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import CommonBtn from "../../../components/ui/CommonBtn";
-
+/**
+ * TODO:
+ * 1. Don't allow to add product in wishlist and shopping cart if user is not logged in
+ */
 const WishList = () => {
   const { data: customerData } = useGetSingleCustomerQuery(undefined);
   const wishList = customerData?.wishList;
