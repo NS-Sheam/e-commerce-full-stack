@@ -1,9 +1,14 @@
-import { Button } from "antd";
+import { Button, ButtonProps } from "antd";
 import { ReactNode } from "react";
 
-const CommonBtn = ({ children }: { children: ReactNode }) => {
+type TCommonBtnProps = ButtonProps & {
+  children: ReactNode;
+};
+
+const CommonBtn = ({ children, ...fields }: TCommonBtnProps) => {
   return (
     <Button
+      {...fields}
       size="large"
       style={{
         width: "100%",

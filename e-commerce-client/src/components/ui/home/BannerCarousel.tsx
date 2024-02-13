@@ -10,15 +10,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
 
 const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
+  const navigate = useNavigate();
   return (
     <div className="p-14 bg-grayWhite2">
       <Swiper
         pagination={true}
         modules={[Pagination, Autoplay, Navigation]}
         autoplay={{
-          delay: 2500,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         loop={true}
@@ -33,19 +35,21 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
             >
               <Col
                 span={12}
-                className="space-y-4"
+                className="space-y-1 md:space-y-3"
               >
-                <small className="text-[#2DA5F3] font-bold flex items-center justify-center gap-1 text-xl uppercase">
+                <small className="text-[#2DA5F3] font-bold flex items-center justify-center gap-1 text-xs md:text-xl uppercase">
                   <hr className="w-10 h-[3px] bg-[#2DA5F3]" />
                   your best deal
                 </small>
-                <h1 className="text-4xl font-bold text-grayBlack">{product?.name}</h1>
-                <p className="text-grayBlack text-xl">
+                <h1 className="text-base md:text-4xl font-bold text-grayBlack">{product?.name}</h1>
+                <p className="text-grayBlack text-xs md:text-xl">
                   Save upto {discountCalculator(product)}% off and get free shipping on all orders
                 </p>
-                <div className="w-48">
-                  <CommonBtn>
-                    Shop Now <FaArrowRight className="ml-2" />
+                <div className="w-28 md:w-48">
+                  <CommonBtn onClick={() => navigate(`/product/${product._id}`)}>
+                    <span className="text-xs md:text-base">
+                      Shop Now <FaArrowRight className="ml-2" />
+                    </span>
                   </CommonBtn>
                 </div>
               </Col>
