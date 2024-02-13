@@ -14,7 +14,8 @@ const productSlice = createSlice({
       state.products.push(action.payload);
     },
     removeProduct: (state, action: PayloadAction<string>) => {
-      state.products = state.products.filter((product) => product !== action.payload);
+      const indexToRemove = state.products.indexOf(action.payload);
+      state.products.splice(indexToRemove, 1);
     },
   },
 });

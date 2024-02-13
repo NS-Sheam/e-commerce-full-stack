@@ -39,7 +39,7 @@ const ShoppingCart = () => {
     },
     {
       title: "SUB-TOTAL",
-      dataIndex: "address",
+      dataIndex: "total",
       responsive: ["lg"],
       render: (text) => <span>{text}</span>,
     },
@@ -52,6 +52,7 @@ const ShoppingCart = () => {
       <Table
         columns={columns}
         dataSource={productData?.data}
+        rowKey={(record) => record._id}
       />
       ;
     </div>
