@@ -54,7 +54,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
                 </div>
               </Col>
               <Col span={12}>
-                <div className="w-80 h-80">
+                <div className="w-20 md:w-80 h-20 md:h-80">
                   <img
                     className=" w-full h-full"
                     src={product?.images[0]}
