@@ -10,26 +10,80 @@ const ShoppingCart = () => {
   const { shoppingCart } = useAppSelector((state) => state.auth);
   const shoppingCartQuery = shoppingCart?.map((id) => ({ name: "_id", value: id }));
 
-  console.log(shoppingCartQuery);
-
-  const { data: productData } = useGetProductsQuery(shoppingCartQuery);
-
-  console.log(productData);
+  const { data: productData, isLoading: isPLoading } = useGetProductsQuery(shoppingCartQuery);
+  const { products } = useAppSelector((state) => state.product);
 
   const navigate = useNavigate();
   const handleNavigateToProduct = (id: string) => {
     navigate(`/product/${id}`);
   };
+
+  const productTotal = (id: string) => {
+    const productPrice =
+      (productData?.data &&
+        productData.data.length &&
+        productData?.data.find((product) => product._id === id)?.price) ||
+      0;
+    const totalPrice = products?.filter((product) => product === id).length * productPrice;
+    return totalPrice;
+  };
+
   const columns: TableColumnsType<any> = [
     {
       title: "PRODUCTS",
       dataIndex: "name",
-      render: (text) => <a>{text}</a>,
+      render: (_, record) => {
+        return (
+          <Row
+            gutter={[16, 16]}
+            justify="center"
+            align="middle"
+          >
+            <Col
+              span={10}
+              md={{ span: 24 }}
+            >
+              <div className="flex items-center justify-start gap-2">
+                <img
+                  src={record.images[0]}
+                  alt={record.name}
+                  className="w-8 h-4 md:w-32 md:h-20 text-grayBlack"
+                />
+                <span className="text-xs md:text-xl font-semibold">{record.name}</span>
+              </div>
+            </Col>
+            <Col
+              span={4}
+              md={{ span: 4 }}
+              className="md:hidden"
+            >
+              <p className="text-[#2DA5F3] font-bold text-[8px] text-center">Price: ${record.price}</p>
+            </Col>
+            <Col
+              span={6}
+              md={{ span: 4 }}
+              className="md:hidden"
+            >
+              <QuantitySelector productId={record._id} />
+            </Col>
+            <Col
+              span={4}
+              md={{ span: 4 }}
+              className="md:hidden"
+            >
+              <span className="font-bold text-green-500 text-[8px] text-center">
+                Total: ${productTotal(record._id)}
+              </span>
+            </Col>
+          </Row>
+        );
+      },
     },
     {
       title: "PRICE",
       dataIndex: "price",
       responsive: ["lg"],
+      render: (text) => <span className="text-[#2DA5F3]  font-bold">${text}</span>,
     },
     {
       title: "QUANTITY",
@@ -60,75 +114,3 @@ const ShoppingCart = () => {
 };
 
 export default ShoppingCart;
-/** 
-<Row gutter={[16, 16]}>
-{productData?.data?.map((product) => (
-  <Col
-    key={product._id}
-    span={24}
-    style={{
-      border: "1px solid #e5e5e5",
-      padding: "1rem",
-    }}
-    className="shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
-    onClick={() => handleNavigateToProduct(product._id)}
-  >
-    <Row
-      gutter={[16, 16]}
-      justify="center"
-      align="middle"
-    >
-      <Col
-        span={24}
-        md={{ span: 8 }}
-      >
-        <div className="md:flex items-center justify-start gap-2">
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-full md:w-32 md:h-20 text-grayBlack"
-          />
-          <span className="text-2xl md:text-xl font-semibold">{product.name}</span>
-        </div>
-      </Col>
-      <Col
-        span={24}
-        md={{ span: 4 }}
-      >
-        <span className="text-[#2DA5F3] font-bold text-xl">${product.price}</span>
-      </Col>
-      <Col
-        span={24}
-        md={{ span: 4 }}
-      >
-        <span className="font-bold text-green-500">IN STOCK</span>
-      </Col>
-
-      <Col
-        span={24}
-        md={{ span: 8 }}
-        className="flex items-center justify-center gap-2"
-      >
-        <Button
-          size="large"
-          style={{
-            width: "100%",
-            color: "#ffffff",
-            fontWeight: "bold",
-            border: "2px solid #fa8232",
-            backgroundColor: "#fa8232",
-            borderRadius: "0",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
-          
-        </Button>
-      </Col>
-    </Row>
-  </Col>
-
-</Row>
-*/

@@ -12,26 +12,23 @@ const QuantitySelector = ({ productId }: TQuantitySelectorProps) => {
   const productQuantity = products?.filter((product) => product === productId).length;
 
   return (
-    <div className="w-24">
-      <Tag
-        className="grid grid-cols-4 items-center justify-center text-center"
-        style={{ fontWeight: "600", fontSize: "1.2rem", width: "100%" }}
-      >
+    <div className="w-16 md:w-20">
+      <Tag className="grid grid-cols-4 items-center justify-center text-center">
         <span
           onClick={() => dispatch(removeProduct(productId))}
-          style={{ fontSize: "1.5rem", borderRight: "1px solid #5f6c72", padding: "0.3rem 0" }}
+          style={{ borderRight: "1px solid #5f6c72", padding: "0.3rem 0" }}
           className="cursor-pointer col-span-1"
         >
           -
         </span>{" "}
         <span className="col-span-2">{productQuantity}</span>
-        <span
+        <p
           onClick={() => dispatch(setProducts(productId))}
-          style={{ fontSize: "1.5rem", borderLeft: "1px solid #5f6c72", padding: "0.3rem 0" }}
-          className="cursor-pointer col-span-1"
+          style={{ borderLeft: "1px solid #5f6c72", padding: "0.3rem 0" }}
+          className="cursor-pointer col-span-1 text-center"
         >
           +
-        </span>
+        </p>
       </Tag>
     </div>
   );
