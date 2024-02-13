@@ -1,8 +1,9 @@
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
 import { useGetSingleCustomerQuery } from "../../../redux/features/userManagement/userManagement.api";
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import CommonBtn from "../../../components/ui/CommonBtn";
 
 const WishList = () => {
   const { data: customerData } = useGetSingleCustomerQuery(undefined);
@@ -64,23 +65,9 @@ const WishList = () => {
                 md={{ span: 8 }}
                 className="flex items-center justify-center gap-2"
               >
-                <Button
-                  size="large"
-                  style={{
-                    width: "100%",
-                    color: "#ffffff",
-                    fontWeight: "bold",
-                    border: "2px solid #fa8232",
-                    backgroundColor: "#fa8232",
-                    borderRadius: "0",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                  }}
-                >
+                <CommonBtn>
                   Add to Cart <FaShoppingCart />
-                </Button>
+                </CommonBtn>
               </Col>
             </Row>
           </Col>

@@ -112,19 +112,19 @@ const ShoppingCart = () => {
     {
       title: "PRICE",
       dataIndex: "price",
-      responsive: ["lg"],
+      responsive: ["md"],
       render: (text) => <span className="text-[#2DA5F3]  font-bold">${text}</span>,
     },
     {
       title: "QUANTITY",
       dataIndex: "address",
-      responsive: ["lg"],
+      responsive: ["md"],
       render: (_, record) => <QuantitySelector productId={record._id} />,
     },
     {
       title: "SUB-TOTAL",
       dataIndex: "total",
-      responsive: ["lg"],
+      responsive: ["md"],
       render: (_, record) => (
         <span className="font-bold text-green-500 text-center">Total: ${singleProductTotalfn(record._id)}</span>
       ),
