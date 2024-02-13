@@ -9,21 +9,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
   return (
-    <div
-      //   gutter={}
-      className="p-14 bg-grayWhite2"
-    >
+    <div className="p-14 bg-grayWhite2">
       <Swiper
         pagination={true}
-        modules={[Pagination, Autoplay]}
+        modules={[Pagination, Autoplay, Navigation]}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
+        loop={true}
+        navigation={true}
         className="mySwiper bg-black"
       >
         {productData.map((product) => (
@@ -51,7 +50,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
                 </div>
               </Col>
               <Col span={12}>
-                <div className="w-72 h-72">
+                <div className="w-80 h-80">
                   <img
                     className=" w-full h-full"
                     src={product?.images[0]}

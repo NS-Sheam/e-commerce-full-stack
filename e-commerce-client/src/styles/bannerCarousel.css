@@ -1,7 +1,9 @@
 .swiper-pagination {
-  bottom: 0;
-  left: 0;
+  width: 20% !important;
+  bottom: 0 !important;
+  left: 0 !important;
 }
-/* .swiper-pagination-bullet {
-  background-color: #fff;
-} */
+
+.swiper-pagination-bullet-active {
+  background-color: #fa8232 !important;
+}
