@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row, Tag } from "antd";
 import { TProduct } from "../../../types/product.type";
 import { Rating } from "@smastrom/react-rating";
 import CommonBtn from "../CommonBtn";
@@ -12,10 +12,12 @@ import { setShoppingCart } from "../../../redux/features/auth/auth.Slice";
 import { FaEye, FaHeart, FaRegHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { handleAddToShoppingCart } from "../../../utils/setShoppingCart";
+import { discountCalculator } from "../../../utils/product.utils";
 
 /**
  * TODO:
  * 1. Make a reusable function for updating wishlist and shopping cart in both ProductCard and BestDealLongCard
+ * 1. Make total feedbacks dynamic
  */
 
 const BestDealLongCard = ({ product }: { product: TProduct }) => {
@@ -46,9 +48,18 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
   return (
     <Row
       gutter={[16, 16]}
-      className="shadow-lg rounded-md overflow-hidden bg-white h-full"
+      className="shadow-lg rounded-md overflow-hidden bg-white h-full p-2"
     >
-      <Col span={24}>
+      <Col
+        span={24}
+        className="relative"
+      >
+        <div className="absolute top-2 left-3 flex flex-col gap-2 font-bold">
+          <Tag color="#ebc80c">
+            <span className="text-grayBlack">{discountCalculator(product)}% OFF</span>
+          </Tag>
+          <Tag color="#f50">HOT</Tag>
+        </div>
         <div className="h-full">
           <img
             className="w-full h-full"
@@ -59,7 +70,7 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
       </Col>
       <Col
         span={24}
-        className="space-y-2"
+        className="space-y-3 "
       >
         <div className="flex items-center justify-start gap-3">
           <Rating
@@ -76,31 +87,33 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
           <span className={`font-semibold text-gray line-through`}>{product.price + (product?.discount || 0)}</span>
         </p>
         <p className="text-gray">{product?.description}</p>
-        <div>
-          <Row gutter={[6, 6]}>
-            <Col span={4}>
-              <span
-                onClick={handleSubmit}
-                className={`${iconStyle}`}
-              >
-                {doesWishListContainProduct ? <FaHeart /> : <FaRegHeart />}
-              </span>
-            </Col>
-            <Col
-              span={16}
-              onClick={handleShoppingCart}
+
+        <Row
+          className="m-auto"
+          gutter={[6, 6]}
+        >
+          <Col span={4}>
+            <span
+              onClick={handleSubmit}
+              className={`${iconStyle}`}
             >
-              <CommonBtn size="large">Shop Now</CommonBtn>
-            </Col>
-            <Col span={4}>
-              <Link to={`/product/${product._id}`}>
-                <span className={`${iconStyle}`}>
-                  <FaEye />
-                </span>
-              </Link>
-            </Col>
-          </Row>
-        </div>
+              {doesWishListContainProduct ? <FaHeart /> : <FaRegHeart />}
+            </span>
+          </Col>
+          <Col
+            span={16}
+            onClick={handleShoppingCart}
+          >
+            <CommonBtn size="large">Shop Now</CommonBtn>
+          </Col>
+          <Col span={4}>
+            <Link to={`/product/${product._id}`}>
+              <span className={`${iconStyle}`}>
+                <FaEye />
+              </span>
+            </Link>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

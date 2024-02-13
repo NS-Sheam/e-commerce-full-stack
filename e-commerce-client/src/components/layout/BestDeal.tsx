@@ -7,17 +7,24 @@ const BestDeal = ({ productData }: { productData: TProduct[] }) => {
   return (
     <Row
       gutter={[16, 16]}
-      className="py-14"
+      className="py-14 px-4"
     >
-      <Col span={6}>
+      <Col
+        span={24}
+        md={{ span: 6 }}
+      >
         <BestDealLongCard product={productData[0]} />
       </Col>
-      <Col span={18}>
+      <Col
+        span={24}
+        md={{ span: 18 }}
+      >
         <Row gutter={[16, 16]}>
           {productData.slice(0, 8).map((product) => (
             <Col
               key={product._id}
-              span={6}
+              span={12}
+              md={{ span: 6 }}
             >
               <ProductCard product={product} />
             </Col>

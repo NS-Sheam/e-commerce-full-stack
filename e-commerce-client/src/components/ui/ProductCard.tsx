@@ -12,6 +12,7 @@ import { handleAddToWishList } from "../../utils/updateWishList";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { handleAddToShoppingCart, handleRemoveFromShoppingCart } from "../../utils/setShoppingCart";
 import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
+import { discountCalculator } from "../../utils/product.utils";
 const ProductCard = ({ product }: { product: TProduct }) => {
   const { data: customerData } = useGetSingleCustomerQuery(undefined);
   const [updateWishList] = useUpdateWishListMutation();
@@ -88,7 +89,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           className="absolute top-2 right-0"
           color="#f50"
         >
-          {Math.ceil((product?.discount / product?.price) * 100) || 0}% OFF
+          {discountCalculator(product)}% OFF
         </Tag>
       )}
       <h3 className="text-[#191C1F] font-medium">{product.name}</h3>

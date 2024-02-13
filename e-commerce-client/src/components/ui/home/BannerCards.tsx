@@ -21,7 +21,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
         md={{ span: 24 }}
       >
         <Row
-          //   gutter={[0, 16]}
+          gutter={[0, 16]}
           className="bg-grayBlack p-2 rounded-sm"
         >
           <Col
