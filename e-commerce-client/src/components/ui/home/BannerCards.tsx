@@ -4,6 +4,11 @@ import { FaArrowRight } from "react-icons/fa6";
 import { TProduct } from "../../../types/product.type";
 import { useMediaQuery } from "react-responsive";
 
+/**
+ * FIXME:
+ * 1. Have to fix both cards down padding
+ */
+
 const BannerCards = ({ productData }: { productData: TProduct[] }) => {
   const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
   return (
@@ -16,7 +21,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
         md={{ span: 24 }}
       >
         <Row
-          gutter={[0, 16]}
+          //   gutter={[0, 16]}
           className="bg-grayBlack p-2 rounded-sm"
         >
           <Col
@@ -55,7 +60,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
       >
         <Row
           gutter={[0, 16]}
-          className="bg-grayWhite2 p-2 rounded-sm"
+          className="bg-grayWhite2 p-2 rounded-sm "
         >
           <Col
             span={24}

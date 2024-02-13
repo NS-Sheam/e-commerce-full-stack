@@ -33,12 +33,14 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
         {productData.map((product) => (
           <SwiperSlide key={product._id}>
             <Row
+              justify="center"
+              align="middle"
               className="bg-grayWhite2 p-14 rounded-sm"
               gutter={[16, 16]}
             >
               <Col
                 span={12}
-                className="space-y-1 md:space-y-3"
+                className="space-y-2 md:space-y-3"
               >
                 <small className="text-[#2DA5F3] font-bold flex items-center justify-center gap-1 text-xs md:text-xl uppercase">
                   <hr className="w-10 h-[3px] bg-[#2DA5F3]" />
@@ -60,7 +62,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
                 </div>
               </Col>
               <Col span={12}>
-                <div className="w-32 md:w-80 h-32 md:h-80">
+                <div className="w-32 md:w-80 h-32 md:h-80 ">
                   <img
                     className=" w-full h-full"
                     src={product?.images[0]}
