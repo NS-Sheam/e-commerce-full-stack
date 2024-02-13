@@ -34,7 +34,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
           <SwiperSlide key={product._id}>
             <Row
               className="bg-grayWhite2 p-14 rounded-sm"
-              gutter={16}
+              gutter={[16, 16]}
             >
               <Col
                 span={12}

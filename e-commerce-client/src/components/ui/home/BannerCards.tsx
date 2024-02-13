@@ -2,29 +2,44 @@ import { Col, Row } from "antd";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
 import { TProduct } from "../../../types/product.type";
+import { useMediaQuery } from "react-responsive";
 
 const BannerCards = ({ productData }: { productData: TProduct[] }) => {
+  const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
   return (
-    <Row>
-      <Col span={24}>
-        <Row className="bg-grayBlack p-2 rounded-sm">
+    <Row
+      gutter={[6, 6]}
+      className="px-1 md:px-0"
+    >
+      <Col
+        span={12}
+        md={{ span: 24 }}
+      >
+        <Row
+          gutter={[0, 16]}
+          className="bg-grayBlack p-2 rounded-sm"
+        >
           <Col
-            span={12}
-            className="space-y-4 "
+            span={24}
+            md={{ span: 12 }}
+            className="space-y-2 md:space-y-4 "
           >
-            <small className="uppercase text-yellow-400 font-semibold"> Summer Sale</small>
-            <h3 className="text-2xl font-bold text-white">{productData[0]?.name}</h3>
-            <div className="w-36">
-              <CommonBtn>
-                Shop Now <FaArrowRight className="ml-2" />
+            <small className="text-[8px] md:text-base uppercase text-yellow-400 font-semibold"> Summer Sale</small>
+            <h3 className="text-sm md:text-2xl font-bold text-white">{productData[0]?.name}</h3>
+            <div className="w-24 md:w-36">
+              <CommonBtn size={(isSmallDevice && "small") || "large"}>
+                <span className="text-xs md:text-base">
+                  Shop Now <FaArrowRight className="ml-2" />
+                </span>
               </CommonBtn>
             </div>
           </Col>
           <Col
-            span={12}
+            span={24}
+            md={{ span: 12 }}
             className="space-y-4"
           >
-            <div className="w-44 h-44">
+            <div className="w-full md:w-44 h-32 md:h-44 mx-auto">
               <img
                 className=" w-full h-full"
                 src={productData[0].images[0]}
@@ -34,25 +49,35 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
           </Col>
         </Row>
       </Col>
-      <Col span={24}>
-        <Row className="bg-grayWhite2 p-2 rounded-sm mt-4">
+      <Col
+        span={12}
+        md={{ span: 24 }}
+      >
+        <Row
+          gutter={[0, 16]}
+          className="bg-grayWhite2 p-2 rounded-sm"
+        >
           <Col
-            span={12}
-            className="space-y-4"
+            span={24}
+            md={{ span: 12 }}
+            className="space-y-2 md:space-y-4"
           >
-            <h3 className="text-2xl font-bold text-grayBlack">{productData[1]?.name}</h3>
-            <p className="uppercase text-[#2DA5F3] font-bold text-xl">${productData[1]?.price} USD</p>
-            <div className="w-36">
-              <CommonBtn>
-                Shop Now <FaArrowRight className="ml-2" />
+            <h3 className="text-sm md:text-2xl text-grayBlack">{productData[1]?.name}</h3>
+            <p className="uppercase text-[#2DA5F3] font-bold text-sm md:text-xl">${productData[1]?.price} USD</p>
+            <div className="w-24 md:w-36">
+              <CommonBtn size={(isSmallDevice && "small") || "large"}>
+                <span className="text-xs md:text-base">
+                  Shop Now <FaArrowRight className="ml-2" />
+                </span>
               </CommonBtn>
             </div>
           </Col>
           <Col
-            span={12}
+            span={24}
+            md={{ span: 12 }}
             className="space-y-4"
           >
-            <div className="w-44 h-44">
+            <div className="w-full md:w-44 h-32 md:h-44 mx-auto">
               <img
                 className=" w-full h-full"
                 src={productData[1].images[0]}
