@@ -1,32 +1,60 @@
-import { Button, Col, Row, Table, TableColumnsType } from "antd";
+import { Col, Row, Table, TableColumnsType } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
 import { useAppSelector } from "../../../redux/hooks";
 import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
 import { useNavigate } from "react-router-dom";
 import QuantitySelector from "../../../components/ui/QuantitySelector";
-import { useState } from "react";
+import CartTotalComponent from "../../../components/ui/CartTotalComponent";
+import { useEffect, useState } from "react";
+import { TProduct } from "../../../types/product.type";
+
+export type TSubTotal = {
+  total: number;
+  totalDiscount: number;
+};
 
 const ShoppingCart = () => {
+  const [subTotal, setSubTotal] = useState<TSubTotal>({
+    total: 0,
+    totalDiscount: 0,
+  });
+
   const { shoppingCart } = useAppSelector((state) => state.auth);
   const shoppingCartQuery = shoppingCart?.map((id) => ({ name: "_id", value: id }));
 
-  const { data: productData, isLoading: isPLoading } = useGetProductsQuery(shoppingCartQuery);
+  const { data: productData, isFetching: isPFetching } = useGetProductsQuery(shoppingCartQuery);
   const { products } = useAppSelector((state) => state.product);
 
   const navigate = useNavigate();
   const handleNavigateToProduct = (id: string) => {
     navigate(`/product/${id}`);
   };
-
-  const productTotal = (id: string) => {
+  const singleProductTotalfn = (id: string) => {
     const productPrice =
       (productData?.data &&
         productData.data.length &&
-        productData?.data.find((product) => product._id === id)?.price) ||
+        productData?.data.find((product: TProduct) => product._id === id)?.price) ||
       0;
     const totalPrice = products?.filter((product) => product === id).length * productPrice;
     return totalPrice;
   };
+
+  useEffect(() => {
+    let total = 0;
+    let totalDiscount = 0;
+    products?.forEach((product: string) => {
+      const item = productData?.data && productData.data.length && productData?.data.find((p) => p._id === product);
+
+      total += item ? item.price : 0;
+      totalDiscount += item ? item.discount : 0;
+    });
+    setSubTotal(() => {
+      return {
+        total,
+        totalDiscount,
+      };
+    });
+  }, [productData, products]);
 
   const columns: TableColumnsType<any> = [
     {
@@ -38,8 +66,10 @@ const ShoppingCart = () => {
             gutter={[16, 16]}
             justify="center"
             align="middle"
+            className="cursor-pointer"
           >
             <Col
+              onClick={() => handleNavigateToProduct(record._id)}
               span={10}
               md={{ span: 24 }}
             >
@@ -72,7 +102,7 @@ const ShoppingCart = () => {
               className="md:hidden"
             >
               <span className="font-bold text-green-500 text-[8px] text-center">
-                Total: ${productTotal(record._id)}
+                Total: ${singleProductTotalfn(record._id)}
               </span>
             </Col>
           </Row>
@@ -95,7 +125,9 @@ const ShoppingCart = () => {
       title: "SUB-TOTAL",
       dataIndex: "total",
       responsive: ["lg"],
-      render: (text) => <span>{text}</span>,
+      render: (_, record) => (
+        <span className="font-bold text-green-500 text-center">Total: ${singleProductTotalfn(record._id)}</span>
+      ),
     },
   ];
   return (
@@ -103,11 +135,26 @@ const ShoppingCart = () => {
       <DashboardHeading>
         <h3>Shopping Cart</h3>
       </DashboardHeading>
-      <Table
-        columns={columns}
-        dataSource={productData?.data}
-        rowKey={(record) => record._id}
-      />
+      <Row gutter={[16, 16]}>
+        <Col
+          span={24}
+          md={{ span: 16 }}
+        >
+          <Table
+            columns={columns}
+            dataSource={productData?.data}
+            loading={isPFetching}
+            pagination={false}
+            rowKey="_id"
+          />
+        </Col>
+        <Col
+          span={24}
+          md={{ span: 8 }}
+        >
+          <CartTotalComponent subTotal={subTotal} />
+        </Col>
+      </Row>
       ;
     </div>
   );
