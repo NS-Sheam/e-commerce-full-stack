@@ -1,9 +1,16 @@
 .swiper-pagination {
   width: 20% !important;
-  bottom: 0 !important;
-  left: 0 !important;
+  bottom: 1rem !important;
+  left: 1rem !important;
 }
 
 .swiper-pagination-bullet-active {
   background-color: #fa8232 !important;
+}
+
+@media (max-width: 768px) {
+  .swiper-pagination {
+    width: 100% !important;
+    bottom: 1rem !important;
+  }
 }

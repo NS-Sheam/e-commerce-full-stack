@@ -3,13 +3,15 @@ import { ReactNode } from "react";
 
 type TCommonBtnProps = ButtonProps & {
   children: ReactNode;
+  fields?: any;
+  size?: "large" | "middle" | "small";
 };
 
-const CommonBtn = ({ children, ...fields }: TCommonBtnProps) => {
+const CommonBtn = ({ children, fields, size }: TCommonBtnProps) => {
   return (
     <Button
       {...fields}
-      size="large"
+      size={size || "large"}
       style={{
         width: "100%",
         color: "#ffffff",

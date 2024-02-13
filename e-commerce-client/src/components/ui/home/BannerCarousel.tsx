@@ -9,16 +9,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination, Thumbs } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
   const navigate = useNavigate();
+  const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
+
   return (
-    <div className="p-14 bg-grayWhite2">
+    <div className="bg-grayWhite2">
       <Swiper
         pagination={true}
-        modules={[Pagination, Autoplay, Navigation]}
+        modules={[Pagination, Autoplay, Navigation, Thumbs]}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
@@ -30,7 +33,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
         {productData.map((product) => (
           <SwiperSlide key={product._id}>
             <Row
-              className="bg-grayWhite2 p-2 rounded-sm"
+              className="bg-grayWhite2 p-14 rounded-sm"
               gutter={16}
             >
               <Col
@@ -45,8 +48,11 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
                 <p className="text-grayBlack text-xs md:text-xl">
                   Save upto {discountCalculator(product)}% off and get free shipping on all orders
                 </p>
-                <div className="w-28 md:w-48">
-                  <CommonBtn onClick={() => navigate(`/product/${product._id}`)}>
+                <div className=" w-28 md:w-48">
+                  <CommonBtn
+                    size={(isSmallDevice && "small") || "large"}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  >
                     <span className="text-xs md:text-base">
                       Shop Now <FaArrowRight className="ml-2" />
                     </span>
@@ -54,7 +60,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
                 </div>
               </Col>
               <Col span={12}>
-                <div className="w-20 md:w-80 h-20 md:h-80">
+                <div className="w-32 md:w-80 h-32 md:h-80">
                   <img
                     className=" w-full h-full"
                     src={product?.images[0]}
