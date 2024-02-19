@@ -163,7 +163,7 @@ const forgetPassword = async (email: string) => {
     "10m",
   );
 
-  const resetUrlLink = `${config.reset_password_url_link}?email=${user?.email}&token=${resetToken}`;
+  const resetUrlLink = `${config.reset_password_url_link}reset-password?email=${user?.email}&token=${resetToken}`;
   sendEmail(resetUrlLink, user.email);
 };
 
