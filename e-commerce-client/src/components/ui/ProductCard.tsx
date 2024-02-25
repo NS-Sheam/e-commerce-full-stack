@@ -15,6 +15,7 @@ import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
 import { discountCalculator } from "../../utils/product.utils";
 const ProductCard = ({ product }: { product: TProduct }) => {
   const { data: customerData } = useGetSingleCustomerQuery(undefined);
+
   const [updateWishList] = useUpdateWishListMutation();
   const wishList = customerData?.wishList;
   const doesWishListContainProduct = wishList?.some((p) => p._id === product._id) as boolean;

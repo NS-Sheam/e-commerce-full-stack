@@ -6,10 +6,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import "../../../styles/bannerCarousel.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination, Thumbs } from "swiper/modules";
+import { Autoplay, Pagination, Thumbs } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
@@ -21,16 +18,15 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
     <div className="bg-grayWhite2">
       <Swiper
         pagination={true}
-        modules={[Pagination, Autoplay, Navigation, Thumbs]}
+        modules={[Pagination, Autoplay, Thumbs]}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
         }}
         loop={true}
-        navigation={true}
         className="mySwiper bg-black"
       >
-        {productData.map((product) => (
+        {productData?.map((product) => (
           <SwiperSlide key={product._id}>
             <Row
               justify="center"

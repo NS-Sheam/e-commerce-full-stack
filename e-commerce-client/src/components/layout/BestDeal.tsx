@@ -18,14 +18,14 @@ const BestDeal = ({ productData }: { productData: TProduct[] }) => {
         span={24}
         md={{ span: 6 }}
       >
-        <BestDealLongCard product={productData[0]} />
+        <BestDealLongCard product={productData?.[0]} />
       </Col>
       <Col
         span={24}
         md={{ span: 18 }}
       >
         <Row gutter={[16, 16]}>
-          {productData.slice(0, 8).map((product) => (
+          {productData?.slice(0, 8)?.map((product) => (
             <Col
               key={product._id}
               span={12}

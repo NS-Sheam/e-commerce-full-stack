@@ -8,6 +8,9 @@ import { RouterProvider } from "react-router-dom";
 import router from "./router/routes.tsx";
 import { Toaster } from "sonner";
 import { PersistGate } from "redux-persist/integration/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

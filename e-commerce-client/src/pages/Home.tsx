@@ -4,6 +4,7 @@ import { sortByDiscount } from "../utils/product.utils";
 import { TProduct } from "../types/product.type";
 import BestDeal from "../components/layout/BestDeal";
 import Features from "../components/ui/home/Features";
+import ShopWithCategories from "../components/ui/home/ShopWithCategories";
 /**
  * TODO:
  * 1. Handle product loading
@@ -18,12 +19,14 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="container overflow-hidden">
       {/* Banner section  */}
       <Banner />
       <Features />
       {/* Best Deal  */}
       <BestDeal productData={productData} />
+      {/* Shop with categories  */}
+      <ShopWithCategories />
     </div>
   );
 };
