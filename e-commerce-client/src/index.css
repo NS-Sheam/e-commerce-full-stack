@@ -23,3 +23,7 @@ body {
 .my-container {
   @apply xl:mx-20 md:mx-10 mx-4 sm:mx-2;
 }
+
+.add-category-submit-button:hover {
+  @apply hover:border-[#FF8C00] hover:bg-white hover:text-[#FF8C00] !important;
+}

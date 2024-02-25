@@ -1,6 +1,6 @@
 import { FaArrowRight } from "react-icons/fa6";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Flex, Row } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import GenericModal from "../../../components/ui/GenericModal";
@@ -9,6 +9,8 @@ import EComForm from "../../../components/form/EComForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import EComInput from "../../../components/form/EComInput";
 import EComProfileImageUploader from "../../../components/form/EComProfileImageUploader";
+import image from "../../../assets/images/football-shoe.jpeg";
+import CommonBtn from "../../../components/ui/CommonBtn";
 
 const Categories = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -37,6 +39,7 @@ const Categories = () => {
         )}
       </DashboardHeading>
       <GenericModal
+        title="Add Category"
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       >
@@ -52,15 +55,75 @@ const Categories = () => {
             <Col span={24}>
               <EComProfileImageUploader
                 name="image"
-                label="Category Name"
+                label="Image"
               />
             </Col>
             <Col span={24}>
-              <Button htmlType="submit">Add Category</Button>
+              <Flex justify="end">
+                <Button
+                  className="add-category-submit-button bg-[#FF8C00] text-white"
+                  htmlType="submit"
+                >
+                  Add Category
+                </Button>
+              </Flex>
             </Col>
           </Row>
         </EComForm>
       </GenericModal>
+      <Row gutter={[16, 16]}>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Col
+            key={index}
+            span={12}
+            md={{ span: 8 }}
+            lg={{ span: 4 }}
+            style={{
+              border: "1px solid #e5e5e5",
+              padding: "1rem",
+            }}
+            className="shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
+          >
+            <Row
+              gutter={[16, 16]}
+              justify="center"
+              align="middle"
+            >
+              <Col span={24}>
+                <div className="md:flex items-center justify-start gap-2">
+                  <img
+                    src={image}
+                    alt={"product.name"}
+                    className="w-full h-full text-grayBlack"
+                  />
+                </div>
+              </Col>
+
+              <Col span={24}>
+                <span className="text-2xl md:text-xl font-semibold">name</span>
+              </Col>
+
+              <Col
+                span={24}
+                className="flex items-center justify-center gap-2"
+              >
+                <CommonBtn size="small">edit</CommonBtn>
+              </Col>
+              <Col
+                span={24}
+                className="flex items-center justify-center gap-2"
+              >
+                <CommonBtn
+                  backgroundColor="#FF6347"
+                  size="small"
+                >
+                  delete
+                </CommonBtn>
+              </Col>
+            </Row>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

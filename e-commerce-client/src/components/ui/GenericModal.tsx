@@ -1,12 +1,13 @@
 import { Modal } from "antd";
 
 type TGenericModalProps = {
+  title: string;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
 };
 
-const GenericModal = ({ isModalOpen, setIsModalOpen, children }: TGenericModalProps) => {
+const GenericModal = ({ title, isModalOpen, setIsModalOpen, children }: TGenericModalProps) => {
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -17,7 +18,7 @@ const GenericModal = ({ isModalOpen, setIsModalOpen, children }: TGenericModalPr
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title={title}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
