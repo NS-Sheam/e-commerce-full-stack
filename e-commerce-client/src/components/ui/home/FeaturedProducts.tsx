@@ -1,9 +1,9 @@
 import { Col, Row } from "antd";
-import BestDealLongCard from "./BestDealLongCard";
 import ProductCard from "../ProductCard";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { TProduct } from "../../../types/product.type";
+import FeatureProductLargeCard from "./FeatureProductLargeCard";
 
 const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
   const [category, setCategory] = useState("All Products");
@@ -18,7 +18,7 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
         span={24}
         md={{ span: 6 }}
       >
-        <BestDealLongCard product={productData?.[0]} />
+        <FeatureProductLargeCard product={productData?.[3]} />
       </Col>
       <Col
         span={24}
@@ -30,10 +30,16 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
               justify="space-between"
               align="middle"
             >
-              <Col span={4}>
+              <Col
+                span={24}
+                md={{ span: 4 }}
+              >
                 <h3>Featured Products</h3>
               </Col>
-              <Col span={20}>
+              <Col
+                span={24}
+                md={{ span: 20 }}
+              >
                 <Row
                   justify="end"
                   align="middle"
@@ -43,7 +49,8 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
                       onClick={() => {
                         setCategory(item);
                       }}
-                      span={4}
+                      span={6}
+                      md={{ span: 4 }}
                       className="border-b-4 border-orange "
                     >
                       <p
@@ -65,7 +72,7 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
               </Col>
             </Row>
           </Col>
-          {productData?.slice(0, 8)?.map((product) => (
+          {productData?.slice(0, 7)?.map((product) => (
             <Col
               key={product._id}
               span={12}

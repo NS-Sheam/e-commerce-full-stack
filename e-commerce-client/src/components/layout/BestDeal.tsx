@@ -25,7 +25,7 @@ const BestDeal = ({ productData }: { productData: TProduct[] }) => {
         md={{ span: 18 }}
       >
         <Row gutter={[16, 16]}>
-          {productData?.slice(0, 8)?.map((product) => (
+          {productData?.slice(0, 7)?.map((product) => (
             <Col
               key={product._id}
               span={12}
