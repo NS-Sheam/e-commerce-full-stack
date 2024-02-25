@@ -13,7 +13,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { handleAddToShoppingCart, handleRemoveFromShoppingCart } from "../../utils/setShoppingCart";
 import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
 import { discountCalculator } from "../../utils/product.utils";
-const ProductCard = ({ product }: { product: TProduct }) => {
+import { Rating } from "@smastrom/react-rating";
+const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean }) => {
   const { data: customerData } = useGetSingleCustomerQuery(undefined);
 
   const [updateWishList] = useUpdateWishListMutation();
@@ -29,6 +30,9 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       ? handleRemoveFromShoppingCart({ id: product._id, dispatchFn: dispatch, removeFn: setShoppingCart })
       : handleAddToShoppingCart({ id: product._id, shoppingCart, dispatchFn: dispatch, addFn: setShoppingCart });
   };
+  const avgProductRating = product?.productReview.length
+    ? product?.productReview?.reduce((acc, review) => acc + review.rating, 0) / product.productReview.length
+    : 5;
 
   const handleSubmit = async () => {
     await handleAddToWishList({
@@ -92,6 +96,13 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         >
           {discountCalculator(product)}% OFF
         </Tag>
+      )}
+      {rating && (
+        <Rating
+          style={{ maxWidth: 80 }}
+          readOnly
+          value={Math.ceil(avgProductRating)}
+        />
       )}
       <h3 className="text-[#191C1F] font-medium">{product.name}</h3>
       <p className="text-[#2DA5F3] font-semibold">${product.price - product?.discount || 0}</p>

@@ -5,6 +5,7 @@ import { TProduct } from "../types/product.type";
 import BestDeal from "../components/layout/BestDeal";
 import Features from "../components/ui/home/Features";
 import ShopWithCategories from "../components/ui/home/ShopWithCategories";
+import FeaturedProducts from "../components/ui/home/FeaturedProducts";
 /**
  * TODO:
  * 1. Handle product loading
@@ -27,6 +28,7 @@ const Home = () => {
       <BestDeal productData={productData} />
       {/* Shop with categories  */}
       <ShopWithCategories />
+      <FeaturedProducts productData={productData} />
     </div>
   );
 };
