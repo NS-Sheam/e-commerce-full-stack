@@ -45,6 +45,7 @@ router.patch(
 );
 router.get(
   "/me",
+
   auth(USER_TYPE.admin, USER_TYPE.customer, USER_TYPE.vendor),
   UserControllers.getMe,
 );

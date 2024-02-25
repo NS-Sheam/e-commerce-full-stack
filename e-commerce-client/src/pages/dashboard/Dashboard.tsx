@@ -7,13 +7,16 @@ import { vendorDashboardItems } from "../../router/vendor.routes";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/auth.Slice";
 import { customerDashboardItems } from "../../router/customer.routes";
+import { adminDashboardItems } from "../../router/admin.routes";
 
 const { Content } = Layout;
 
 const Dashboard = () => {
   const user = useAppSelector(selectCurrentUser);
   const items =
-    user?.userType === "vendor"
+    user?.userType === "admin"
+      ? sidebarItemGenerator(adminDashboardItems)
+      : user?.userType === "vendor"
       ? sidebarItemGenerator(vendorDashboardItems)
       : sidebarItemGenerator(customerDashboardItems);
 

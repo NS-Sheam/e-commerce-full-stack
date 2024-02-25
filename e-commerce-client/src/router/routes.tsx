@@ -8,6 +8,7 @@ import { routesGenerator } from "../utils/routeGenerator";
 import { customerDashboardItems } from "./customer.routes";
 import { vendorDashboardItems } from "./vendor.routes";
 import ProductDetails from "../pages/ProductDetails";
+import { adminDashboardItems } from "./admin.routes";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,15 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         children: routesGenerator(vendorDashboardItems),
+      },
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoute role="admin">
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+        children: routesGenerator(adminDashboardItems),
       },
     ],
   },

@@ -246,12 +246,10 @@ const getMe = async (token: string) => {
     );
   } else if (userType === "vendor") {
     result = await Vendor.findOne({ user: userId }).populate(
-      "user wishList shoppingCart",
+      "user orderHistory",
     );
   } else if (userType === "admin") {
-    result = await Admin.findOne({ user: userId }).populate(
-      "user wishList shoppingCart",
-    );
+    result = await Admin.findOne({ user: userId }).populate("user");
   }
 
   return result;
