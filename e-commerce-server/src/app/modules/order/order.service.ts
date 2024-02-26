@@ -11,6 +11,7 @@ import { Customer } from "../customer/customer.model";
 import { sendOrderConfirmation } from "../../utils/sendOrderConfirmationEmail";
 import { Vendor } from "../vendor/vendor.model";
 import { TVendor } from "../vendor/vendor.interface";
+import QueryBuilder from "../../builder/QueryBuilder";
 
 const addOrder = async (user: JwtPayload, payload: TOrder) => {
   let totalPrice = 0;
@@ -74,6 +75,33 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
   }
 };
 
+const getAllOrders = async (query: Record<string, unknown>) => {
+  const orderSearchableFields = ["status", "invoice"];
+  const orderQuery = new QueryBuilder(
+    Order.find()
+      .populate({
+        path: "products",
+        populate: {
+          path: "vendor",
+          populate: {
+            path: "user",
+          },
+        },
+      })
+      .populate("customer"),
+    query,
+  )
+    .search(orderSearchableFields)
+    .filter()
+    .sort()
+    .paginate();
+
+  const result = await orderQuery.modelQuery;
+  const meta = await orderQuery.countTotal();
+  return { result, meta };
+};
+
 export const OrderServices = {
   addOrder,
+  getAllOrders,
 };
