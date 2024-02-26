@@ -26,7 +26,7 @@ export const sendOrderConfirmation = async (
     to: customer.email,
     subject: "Your order has been placed", // Subject line for Customer
     html: `
-          <p>Hello ${customer.name.firstName},</p>
+          <p>Hello ${`${customer?.name?.firstName} ${customer?.name?.middleName} ${customer?.name?.lastName}`},</p>
           <p>Your order has been confirmed.</p>
           <p>Please find the details below:</p>
           <p>Order Details:</p>
@@ -62,7 +62,7 @@ export const sendOrderConfirmation = async (
       to: vendor.email,
       subject: "New order has been placed", // Subject line for Vendor
       html: `
-          <p>Hello ${vendor.name.firstName},</p>
+          <p>Hello ${`${vendor?.name?.firstName} ${vendor?.name?.middleName} ${vendor?.name?.lastName}`},</p>
           <p>A new order has been placed.</p>
           <p>Please find the details below:</p>
           <p>Order Details:</p>

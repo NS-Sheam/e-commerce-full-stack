@@ -19,11 +19,10 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
   if (!customer) {
     throw new AppError(httpStatus.BAD_REQUEST, "Customer not found");
   }
-
+  const vendors: TVendor[] = [];
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
-
     // Transaction 1: Update Product Inventory
     for (const productId of payload.products) {
       const product = (await Product.findById(productId)) as TProduct;
@@ -32,6 +31,14 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       }
       if (product.inventory.quantity < 1) {
         throw new AppError(httpStatus.BAD_REQUEST, "Product out of stock");
+      }
+      const user = product?.vendor;
+      const vendor = await Vendor.findOne({ user });
+      if (!vendor) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
+      }
+      if (!vendors.find((v) => v.user === vendor.user)) {
+        vendors.push(vendor);
       }
       totalPrice += product.price;
       const updatedProduct = await Product.findByIdAndUpdate(
@@ -56,17 +63,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
     await session.commitTransaction();
     await session.endSession();
 
-    const vendors: TVendor[] = [];
     const products = await Product.find({ _id: { $in: payload.products } });
-
-    for (const product of products) {
-      const user = product.vendor;
-      const vendor = await Vendor.findOne({ user });
-      if (!vendor) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
-      }
-      vendors.push(vendor);
-    }
 
     sendOrderConfirmation(customer, vendors, products, payload.invoice);
     return newOrder[0];
