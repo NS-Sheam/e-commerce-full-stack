@@ -50,6 +50,7 @@ const productManagementApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TReduxResponse<TCatgeory[]>) => response.data,
+      providesTags: ["category"],
     }),
     addCategory: builder.mutation({
       query: (categoryInfo) => ({
@@ -57,6 +58,7 @@ const productManagementApi = baseApi.injectEndpoints({
         method: "POST",
         body: categoryInfo,
       }),
+      invalidatesTags: ["category"],
     }),
     updateCategory: builder.mutation({
       query: (categoryInfo) => ({
@@ -64,9 +66,24 @@ const productManagementApi = baseApi.injectEndpoints({
         method: "PUT",
         body: categoryInfo,
       }),
+      invalidatesTags: ["category"],
+    }),
+    deleteCategory: builder.mutation({
+      query: (id: string) => ({
+        url: `categories/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["category"],
     }),
   }),
 });
 
-export const { useGetProductsQuery, useGetCategoriesQuery, useAddProductMutation, useGetSingleProductQuery } =
-  productManagementApi;
+export const {
+  useGetProductsQuery,
+  useGetCategoriesQuery,
+  useAddProductMutation,
+  useGetSingleProductQuery,
+  useAddCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+} = productManagementApi;

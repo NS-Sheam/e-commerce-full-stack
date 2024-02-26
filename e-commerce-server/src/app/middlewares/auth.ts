@@ -30,6 +30,7 @@ const auth = (...requiredTypes: TUserType[]) => {
 
       throw new AppError(httpStatus.UNAUTHORIZED, "Invalid token");
     }
+
     const { email, userType } = decoded;
 
     // check if user exists

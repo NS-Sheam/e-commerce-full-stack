@@ -7,24 +7,74 @@ import GenericModal from "../../../components/ui/GenericModal";
 import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import CommonBtn from "../../../components/ui/CommonBtn";
-import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
+import {
+  useAddCategoryMutation,
+  useDeleteCategoryMutation,
+  useGetCategoriesQuery,
+} from "../../../redux/features/productManagement/productManagement.api";
 import CategoryForm from "../../../components/ui/CategoryForm";
 import { TCatgeory } from "../../../types/product.type";
+import { toast } from "sonner";
+import { TReduxResponse } from "../../../types/global";
 /**
  * FIXME: When click edit button once default value is setting but when chick another edit button then the default value is remain same
+ * TODO: make update category
  */
 const Categories = () => {
   const user = useAppSelector(selectCurrentUser);
   const { data: categories, isLoading: cIsLoading } = useGetCategoriesQuery(undefined);
+  const [addCategory] = useAddCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
+
   const [action, setAction] = useState<"add" | "edit">("add");
   const [defaltCategory, setDefaultCategory] = useState<TCatgeory | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-  const handleAddCategory: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const handleCategory: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Adding Category...");
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+
+    if (data.image) formData.append("file", data.image?.originFileObj);
+
+    try {
+      const res = (await addCategory(formData)) as TReduxResponse<TCatgeory>;
+      if (!res.error) {
+        toast.success(res.message || "Category added successfully", { id: toastId, duration: 2000 });
+      } else {
+        toast.error(res.error.data.errorSources[0].message || res.error.message || "Category adding failed", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Category adding failed", { id: toastId, duration: 2000 });
+    }
     setDefaultCategory(null);
+    setIsModalOpen(false);
+  };
+  const handleDeleteCategory = async (id: string) => {
+    const toastId = toast.loading("Deleting Category...");
+
+    try {
+      const res = (await deleteCategory(id)) as TReduxResponse<TCatgeory>;
+      console.log(res);
+      if (!res.error) {
+        toast.success(res.message || "Category deleted successfully", { id: toastId, duration: 2000 });
+      } else {
+        toast.error(res.error.data.errorSources[0].message || res.error.message || "Category deletion failed", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Category deletion failed", { id: toastId, duration: 2000 });
+    }
+    setDefaultCategory(null);
+    setIsModalOpen(false);
   };
 
   return (
@@ -63,7 +113,7 @@ const Categories = () => {
         <CategoryForm
           defaultValues={defaltCategory}
           action={action}
-          handlerFn={handleAddCategory}
+          handlerFn={handleCategory}
         />
       </GenericModal>
       <Row gutter={[16, 16]}>
@@ -120,6 +170,7 @@ const Categories = () => {
                 <CommonBtn
                   backgroundColor="#FF6347"
                   size="small"
+                  onClick={() => handleDeleteCategory(item?._id)}
                 >
                   delete
                 </CommonBtn>

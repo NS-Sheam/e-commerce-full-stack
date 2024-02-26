@@ -38,8 +38,14 @@ const updateCategory = async (id: string, file: any, payload: TCategory) => {
   return result;
 };
 
+const deleteCategory = async (id: string) => {
+  const result = await Category.findByIdAndDelete(id);
+  return result;
+};
+
 export const CategoryServices = {
   createCategory,
   getAllCategories,
   updateCategory,
+  deleteCategory,
 };
