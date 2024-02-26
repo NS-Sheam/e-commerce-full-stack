@@ -39,7 +39,11 @@ const updateCategory = async (id: string, file: any, payload: TCategory) => {
 };
 
 const deleteCategory = async (id: string) => {
-  const result = await Category.findByIdAndDelete(id);
+  const result = await Category.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  );
   return result;
 };
 
