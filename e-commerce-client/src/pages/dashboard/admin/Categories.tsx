@@ -1,25 +1,30 @@
 import { FaArrowRight } from "react-icons/fa6";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { Button, Col, Flex, Row } from "antd";
+import { Button, Col, Flex, Row, Spin } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import GenericModal from "../../../components/ui/GenericModal";
 import { useState } from "react";
-import EComForm from "../../../components/form/EComForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import EComInput from "../../../components/form/EComInput";
-import EComProfileImageUploader from "../../../components/form/EComProfileImageUploader";
-import image from "../../../assets/images/football-shoe.jpeg";
 import CommonBtn from "../../../components/ui/CommonBtn";
-
+import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
+import CategoryForm from "../../../components/ui/CategoryForm";
+import { TCatgeory } from "../../../types/product.type";
+/**
+ * FIXME: When click edit button once default value is setting but when chick another edit button then the default value is remain same
+ */
 const Categories = () => {
   const user = useAppSelector(selectCurrentUser);
+  const { data: categories, isLoading: cIsLoading } = useGetCategoriesQuery(undefined);
+  const [action, setAction] = useState<"add" | "edit">("add");
+  const [defaltCategory, setDefaultCategory] = useState<TCatgeory | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
   const handleAddCategory: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+    setDefaultCategory(null);
   };
 
   return (
@@ -28,7 +33,10 @@ const Categories = () => {
         <h3>Categories</h3>
         {user?.userType === "admin" && (
           <Button
-            onClick={handleModalOpen}
+            onClick={() => {
+              setAction("add");
+              handleModalOpen();
+            }}
             style={{ color: "#FF8C00", border: "FF8C00" }}
           >
             <p className="flex items-center justify-center gap-2">
@@ -38,43 +46,30 @@ const Categories = () => {
           </Button>
         )}
       </DashboardHeading>
+      {cIsLoading && (
+        <Flex
+          justify="center"
+          align="center"
+          gap="middle"
+        >
+          <Spin size="large" />
+        </Flex>
+      )}
       <GenericModal
-        title="Add Category"
+        title={action === "add" ? "Add Category" : "Edit Category"}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       >
-        <EComForm onSubmit={handleAddCategory}>
-          <Row gutter={[12, 12]}>
-            <Col span={24}>
-              <EComInput
-                type="text"
-                name="category"
-                label="Category Name"
-              />
-            </Col>
-            <Col span={24}>
-              <EComProfileImageUploader
-                name="image"
-                label="Image"
-              />
-            </Col>
-            <Col span={24}>
-              <Flex justify="end">
-                <Button
-                  className="add-category-submit-button bg-[#FF8C00] text-white"
-                  htmlType="submit"
-                >
-                  Add Category
-                </Button>
-              </Flex>
-            </Col>
-          </Row>
-        </EComForm>
+        <CategoryForm
+          defaultValues={defaltCategory}
+          action={action}
+          handlerFn={handleAddCategory}
+        />
       </GenericModal>
       <Row gutter={[16, 16]}>
-        {Array.from({ length: 6 }).map((_, index) => (
+        {categories?.map((item) => (
           <Col
-            key={index}
+            key={item?._id}
             span={12}
             md={{ span: 8 }}
             lg={{ span: 4 }}
@@ -92,7 +87,7 @@ const Categories = () => {
               <Col span={24}>
                 <div className="md:flex items-center justify-start gap-2">
                   <img
-                    src={image}
+                    src={item?.image}
                     alt={"product.name"}
                     className="w-full h-full text-grayBlack"
                   />
@@ -100,14 +95,23 @@ const Categories = () => {
               </Col>
 
               <Col span={24}>
-                <span className="text-2xl md:text-xl font-semibold">name</span>
+                <span className="text-2xl md:text-xl font-semibold">{item?.name}</span>
               </Col>
 
               <Col
                 span={24}
                 className="flex items-center justify-center gap-2"
               >
-                <CommonBtn size="small">edit</CommonBtn>
+                <CommonBtn
+                  onClick={() => {
+                    setDefaultCategory(item);
+                    setAction("edit");
+                    handleModalOpen();
+                  }}
+                  size="small"
+                >
+                  edit
+                </CommonBtn>
               </Col>
               <Col
                 span={24}

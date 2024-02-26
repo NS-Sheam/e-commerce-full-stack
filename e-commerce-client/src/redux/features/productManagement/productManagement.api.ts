@@ -51,6 +51,20 @@ const productManagementApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: TReduxResponse<TCatgeory[]>) => response.data,
     }),
+    addCategory: builder.mutation({
+      query: (categoryInfo) => ({
+        url: `categories`,
+        method: "POST",
+        body: categoryInfo,
+      }),
+    }),
+    updateCategory: builder.mutation({
+      query: (categoryInfo) => ({
+        url: `categories/${categoryInfo.id}`,
+        method: "PUT",
+        body: categoryInfo,
+      }),
+    }),
   }),
 });
 

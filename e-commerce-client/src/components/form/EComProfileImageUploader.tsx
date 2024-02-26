@@ -6,16 +6,19 @@ import { useState } from "react";
 type TEComProfileImageUploaderProps = {
   name: string;
   label: string;
+  defaultImageUrl?: string; // Add defaultImageUrl as an optional prop
 };
 
-const EComProfileImageUploader = ({ name, label }: TEComProfileImageUploaderProps) => {
+const EComProfileImageUploader = ({ name, label, defaultImageUrl }: TEComProfileImageUploaderProps) => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [imageUrl, setImageUrl] = useState<string | undefined>(defaultImageUrl); // Initialize with defaultImageUrl
+
   const getBase64 = (img: any, callback: (url: string) => void) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result as string));
     reader.readAsDataURL(img);
   };
+
   const beforeUpload = (file: any) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {

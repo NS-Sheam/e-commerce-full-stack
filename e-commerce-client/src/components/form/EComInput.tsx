@@ -1,4 +1,5 @@
 import { Form, Input } from "antd";
+import { useEffect } from "react";
 import { Controller } from "react-hook-form";
 
 type TEComInputProps = {
@@ -9,6 +10,7 @@ type TEComInputProps = {
 };
 
 const EComInput = ({ type, name, label, disabled }: TEComInputProps) => {
+  useEffect(() => {}, []);
   return (
     <div>
       <Controller

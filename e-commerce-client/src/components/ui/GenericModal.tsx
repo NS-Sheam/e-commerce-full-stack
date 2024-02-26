@@ -5,9 +5,10 @@ type TGenericModalProps = {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
+  remaining?: Record<string, unknown>;
 };
 
-const GenericModal = ({ title, isModalOpen, setIsModalOpen, children }: TGenericModalProps) => {
+const GenericModal = ({ title, isModalOpen, setIsModalOpen, children, ...remaining }: TGenericModalProps) => {
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -18,6 +19,7 @@ const GenericModal = ({ title, isModalOpen, setIsModalOpen, children }: TGeneric
   return (
     <>
       <Modal
+        {...remaining}
         title={title}
         open={isModalOpen}
         onOk={handleOk}

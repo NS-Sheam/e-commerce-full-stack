@@ -1,8 +1,9 @@
 import { TUser } from "./userManagement.type";
 
 export type TCatgeory = {
-  name: string;
   _id: string;
+  name: string;
+  image: string;
 };
 
 export type TProductReview = {
