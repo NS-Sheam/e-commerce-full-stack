@@ -7,6 +7,7 @@ import httpStatus from "http-status";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { productSearchableFields } from "./product.const";
 import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
+import { Vendor } from "../vendor/vendor.model";
 //TODO: Populate review and rating
 const getAllProducts = async (query: Record<string, unknown>) => {
   const resultQuery = new QueryBuilder(
@@ -54,8 +55,12 @@ const createProduct = async (
     }
   }
   payload.images = images;
+  const vendor = await Vendor.findOne({ user: user.userId });
+  if (!vendor) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
+  }
 
-  payload.vendor = user.userId;
+  payload.vendor = vendor?._id;
   const result = await Product.create(payload);
   return result;
 };

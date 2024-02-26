@@ -83,9 +83,6 @@ const getAllOrders = async (query: Record<string, unknown>) => {
         path: "products",
         populate: {
           path: "vendor",
-          populate: {
-            path: "user",
-          },
         },
       })
       .populate("customer"),
