@@ -13,6 +13,18 @@ router.post(
   validateRequest(OrderValidations.addOrderValidationSchema),
   OrderControllers.addOrder,
 );
+router.get(
+  "/customer",
+  auth(USER_TYPE.customer),
+  OrderControllers.getOrderForCustomer,
+);
+router.get(
+  "/vendor",
+  auth(USER_TYPE.vendor),
+  OrderControllers.getOrderForVendor,
+);
+
+router.get("/:id", auth(USER_TYPE.admin), OrderControllers.getSingleOrder);
 
 router.get("/", auth(USER_TYPE.admin), OrderControllers.getAllOrders);
 

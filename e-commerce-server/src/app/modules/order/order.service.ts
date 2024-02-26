@@ -12,6 +12,7 @@ import { sendOrderConfirmation } from "../../utils/sendOrderConfirmationEmail";
 import { Vendor } from "../vendor/vendor.model";
 import { TVendor } from "../vendor/vendor.interface";
 import QueryBuilder from "../../builder/QueryBuilder";
+import { orderSearchableFields } from "./order.const";
 
 const addOrder = async (user: JwtPayload, payload: TOrder) => {
   let totalPrice = 0;
@@ -33,8 +34,9 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       if (product.inventory.quantity < 1) {
         throw new AppError(httpStatus.BAD_REQUEST, "Product out of stock");
       }
-      const user = product?.vendor;
-      const vendor = await Vendor.findOne({ user });
+      const vendorId = product?.vendor;
+
+      const vendor = await Vendor.findById(vendorId);
       if (!vendor) {
         throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
       }
@@ -52,6 +54,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
         throw new AppError(httpStatus.BAD_REQUEST, "Product update failed");
       }
     }
+
     payload.customer = customer._id;
     payload.totalPrice = totalPrice;
     payload.invoice = `INV-${Date.now()}`;
@@ -76,7 +79,6 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
 };
 
 const getAllOrders = async (query: Record<string, unknown>) => {
-  const orderSearchableFields = ["status", "invoice"];
   const orderQuery = new QueryBuilder(
     Order.find()
       .populate({
@@ -98,7 +100,78 @@ const getAllOrders = async (query: Record<string, unknown>) => {
   return { result, meta };
 };
 
+const getSingleOrder = async (orderId: string) => {
+  const result = await Order.findById(orderId)
+    .populate({
+      path: "products",
+      populate: {
+        path: "vendor",
+      },
+    })
+    .populate("customer");
+  return result;
+};
+
+const getOrderForCustomer = async (
+  userId: string,
+  query: Record<string, unknown>,
+) => {
+  const customer = await Customer.findOne({ user: userId });
+  if (!customer) {
+    throw new AppError(httpStatus.NOT_FOUND, "Customer not found");
+  }
+  const customerOrderQuery = new QueryBuilder(
+    Order.find({
+      customer: customer._id,
+    })
+      .populate({
+        path: "products",
+        populate: {
+          path: "vendor",
+        },
+      })
+      .populate("customer"),
+    query,
+  );
+  const result = await customerOrderQuery.modelQuery;
+  const meta = await customerOrderQuery.countTotal();
+  return { result, meta };
+};
+
+const getOrderForVendor = async (
+  userId: string,
+  query: Record<string, unknown>,
+) => {
+  const vendor = await Vendor.findOne({ user: userId });
+  if (!vendor) {
+    throw new AppError(httpStatus.NOT_FOUND, "Vendor not found");
+  }
+
+  const products = await Product.find({ vendor: vendor._id });
+
+  const vendorOrderQuery = new QueryBuilder(
+    Order.find({
+      products: { $in: products.map((p) => p._id) },
+    })
+      .populate({
+        path: "products",
+        populate: {
+          path: "vendor",
+        },
+      })
+      .populate("customer"),
+    query,
+  );
+
+  const result = await vendorOrderQuery.modelQuery;
+  const meta = await vendorOrderQuery.countTotal();
+  return { result, meta };
+};
+
 export const OrderServices = {
   addOrder,
   getAllOrders,
+  getSingleOrder,
+  getOrderForCustomer,
+  getOrderForVendor,
 };

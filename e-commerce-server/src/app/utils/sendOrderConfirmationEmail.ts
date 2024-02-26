@@ -1,12 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import nodemailer from "nodemailer";
 import config from "../config";
 import { TCustomer } from "../modules/customer/customer.interface";
 import { TVendor } from "../modules/vendor/vendor.interface";
 import { TProduct } from "../modules/product/product.interface";
 
+type TMailOption = {
+  from: string | undefined;
+  to: string;
+  subject: string;
+  html: string;
+};
+
 export const sendOrderConfirmation = async (
   customer: TCustomer,
-  vendors: TVendor[],
+  vendors: any,
   products: TProduct[],
   invoice: string,
 ) => {
@@ -56,12 +64,13 @@ export const sendOrderConfirmation = async (
   };
 
   // Email to vendors
-  const vendorMailOptions = vendors?.map((vendor) => {
-    return {
-      from: config.email_from,
-      to: vendor.email,
-      subject: "New order has been placed", // Subject line for Vendor
-      html: `
+  const vendorMailOptions: TMailOption[] = vendors?.map(
+    (vendor: TVendor & { _id: string }) => {
+      return {
+        from: config.email_from,
+        to: vendor.email,
+        subject: "New order has been placed", // Subject line for Vendor
+        html: `
           <p>Hello ${`${vendor?.name?.firstName} ${vendor?.name?.middleName} ${vendor?.name?.lastName}`},</p>
           <p>A new order has been placed.</p>
           <p>Please find the details below:</p>
@@ -71,7 +80,7 @@ export const sendOrderConfirmation = async (
               ? `
             <ul>
               ${products.map((product) => {
-                if (product.vendor.toString() === vendor.user.toString()) {
+                if (product.vendor.toString() === vendor?._id.toString()) {
                   return `
                     <li>
                       <strong>Product Name:</strong> ${product.name}
@@ -82,7 +91,7 @@ export const sendOrderConfirmation = async (
               })}
             </ul>
             <p>Total Price: <strong>${products.reduce((acc, product) => {
-              if (product.vendor.toString() === vendor.user.toString()) {
+              if (product.vendor.toString() === vendor._id.toString()) {
                 return acc + product.price;
               }
               return acc;
@@ -93,8 +102,9 @@ export const sendOrderConfirmation = async (
           }
           <p>Thank you for shopping with us.</p>
         `,
-    };
-  });
+      };
+    },
+  );
 
   try {
     // Send emails to both customer and provider
