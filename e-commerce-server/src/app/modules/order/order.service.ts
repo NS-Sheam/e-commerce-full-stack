@@ -14,8 +14,9 @@ import { TVendor } from "../vendor/vendor.interface";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { orderSearchableFields } from "./order.const";
 import SSLCommerzPayment from "sslcommerz-lts";
-const store_id = "<your_store_id>";
-const store_passwd = "<your_store_password>";
+import config from "../../config";
+const store_id = config.sslc_store_id;
+const store_passwd = config.sslc_store_password;
 const is_live = false;
 const addOrder = async (user: JwtPayload, payload: TOrder) => {
   let totalPrice = 0;
@@ -27,6 +28,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
   const transactionId = new mongoose.Types.ObjectId().toString();
 
   const session = await mongoose.startSession();
+  const products = await Product.find({ _id: { $in: payload.products } });
   try {
     session.startTransaction();
     const productsForSSLCommerz: any[] = []; // Array to store products for sslcommerz data
@@ -75,6 +77,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
 
     // Transaction 1: Create Order
     const newOrder = await Order.create([payload], { session });
+
     if (!newOrder) {
       throw new AppError(httpStatus.BAD_REQUEST, "Order creation failed");
     }
@@ -89,15 +92,18 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       cancel_url: "http://localhost:3030/cancel",
       ipn_url: "http://localhost:3030/ipn",
       shipping_method: "Courier",
-      products: productsForSSLCommerz, // Array of products
-      cus_name: customer.name,
+      // products: productsForSSLCommerz, // Array of products
+      product_name: "Computer.",
+      product_category: "Electronic",
+      product_profile: "general",
+      cus_name: `${customer.name.firstName} ${customer.name.lastName}`,
       cus_email: customer.email,
       cus_add1: payload.shippingInfo?.address,
       cus_add2: payload.shippingInfo?.address,
       cus_city: payload.shippingInfo?.city,
       cus_state: payload.shippingInfo?.state,
-      cus_postcode: payload.shippingInfo?.postalCode,
-      cus_country: payload.shippingInfo?.country,
+      cus_postcode: payload.shippingInfo?.postalCode || 1216,
+      cus_country: payload.shippingInfo?.country || "Bangladesh",
       cus_phone: customer.mobileNo,
       cus_fax: customer.mobileNo,
       ship_name: `${customer.name.firstName} ${customer.name.lastName}`,
@@ -105,26 +111,62 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       ship_add2: payload.shippingInfo?.address,
       ship_city: payload.shippingInfo?.city,
       ship_state: payload.shippingInfo?.state,
-      ship_postcode: payload.shippingInfo?.postalCode,
-      ship_country: payload.shippingInfo?.country,
+      ship_postcode: payload.shippingInfo?.postalCode || 1216,
+      ship_country: payload.shippingInfo?.country || "Bangladesh",
     };
+    // console.log(sslCommerzData);
+    // const sslCommerzData = {
+    //   total_amount: 100,
+    //   currency: "BDT",
+    //   tran_id: "REF123", // use unique tran_id for each api call
+    //   success_url: "http://localhost:3030/success",
+    //   fail_url: "http://localhost:3030/fail",
+    //   cancel_url: "http://localhost:3030/cancel",
+    //   ipn_url: "http://localhost:3030/ipn",
+    //   shipping_method: "Courier",
+    //   product_name: "Computer.",
+    //   product_category: "Electronic",
+    //   product_profile: "general",
+    //   cus_name: "Customer Name",
+    //   cus_email: "customer@example.com",
+    //   cus_add1: "Dhaka",
+    //   cus_add2: "Dhaka",
+    //   cus_city: "Dhaka",
+    //   cus_state: "Dhaka",
+    //   cus_postcode: "1000",
+    //   cus_country: "Bangladesh",
+    //   cus_phone: "01711111111",
+    //   cus_fax: "01711111111",
+    //   ship_name: "Customer Name",
+    //   ship_add1: "Dhaka",
+    //   ship_add2: "Dhaka",
+    //   ship_city: "Dhaka",
+    //   ship_state: "Dhaka",
+    //   ship_postcode: 1000,
+    //   ship_country: "Bangladesh",
+    // };
 
     const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
     const apiResponse = await sslcz.init(sslCommerzData);
 
+    console.log("hitting");
     // Redirect the user to payment gateway
+    console.log(apiResponse);
+
     let GatewayPageURL = apiResponse.GatewayPageURL;
-    // Assuming `res` is available in this scope
-    res.redirect(GatewayPageURL);
+
     console.log("Redirecting to: ", GatewayPageURL);
+    throw new AppError(404, "error");
 
     // Send order confirmation
-    sendOrderConfirmation(customer, vendors, payload.products, payload.invoice);
+    sendOrderConfirmation(customer, vendors, products, payload.invoice);
 
     await session.commitTransaction();
     await session.endSession();
-
-    return newOrder[0];
+    // return {
+    //   data: newOrder,
+    //   GatewayPageURL,
+    // };
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
