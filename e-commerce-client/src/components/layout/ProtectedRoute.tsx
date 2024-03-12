@@ -6,7 +6,7 @@ import { verifyToken } from "../../utils/verifyToken";
 
 type TProtectedRouteProps = {
   children: ReactNode;
-  role?: string;
+  role?: string[] | string;
 };
 
 const ProtectedRoute = ({ children, role }: TProtectedRouteProps) => {
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children, role }: TProtectedRouteProps) => {
   if (token) {
     user = verifyToken(token);
   }
-  if (role && (user as TUser)?.userType !== role) {
+  if (role && user && !role.includes((user as TUser).userType)) {
     dispatch(logOut());
     return (
       <Navigate

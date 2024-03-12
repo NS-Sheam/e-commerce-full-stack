@@ -12,6 +12,7 @@ type TEComFormProps = {
 } & TFormConfig;
 const EComForm = ({ onSubmit, children, defaultValues, resolver }: TEComFormProps) => {
   const formConfig: TFormConfig = {};
+
   if (defaultValues) {
     formConfig.defaultValues = defaultValues;
   }

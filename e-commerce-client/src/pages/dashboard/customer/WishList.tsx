@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { useGetSingleCustomerQuery } from "../../../redux/features/userManagement/userManagement.api";
+import { useGetMeQuery } from "../../../redux/features/userManagement/userManagement.api";
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import CommonBtn from "../../../components/ui/CommonBtn";
@@ -9,7 +9,7 @@ import CommonBtn from "../../../components/ui/CommonBtn";
  * 1. Don't allow to add product in wishlist and shopping cart if user is not logged in
  */
 const WishList = () => {
-  const { data: customerData } = useGetSingleCustomerQuery(undefined);
+  const { data: customerData } = useGetMeQuery(undefined);
   const wishList = customerData?.wishList;
   const navigate = useNavigate();
   const handleNavigateToProduct = (id: string) => {

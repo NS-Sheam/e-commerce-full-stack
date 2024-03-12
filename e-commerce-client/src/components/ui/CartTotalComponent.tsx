@@ -3,12 +3,19 @@ import { FaArrowRight } from "react-icons/fa6";
 import { TSubTotal } from "../../pages/dashboard/customer/ShoppingCart";
 import CommonBtn from "./CommonBtn";
 
-const CartTotalComponent = ({ subTotal }: { subTotal: TSubTotal }) => {
+type TCartTotalComponentProps = {
+  subTotal: TSubTotal;
+  title: string;
+  btnTitle: string;
+  btnProps?: Record<string, unknown>;
+};
+
+const CartTotalComponent = ({ subTotal, title, btnTitle, btnProps }: TCartTotalComponentProps) => {
   const titleCss = "flex items-center justify-between gap-2";
   const itemCss = "font-bold";
   return (
     <Card
-      title="Cart Total"
+      title={title}
       bordered={false}
     >
       <p className={`${titleCss}`}>
@@ -32,8 +39,9 @@ const CartTotalComponent = ({ subTotal }: { subTotal: TSubTotal }) => {
         <span>Total</span>
         <span className={`${itemCss}`}>{subTotal.total}</span>
       </p>
-      <CommonBtn>
-        Proceed to Checkout <FaArrowRight />
+      <CommonBtn {...btnProps}>
+        {btnTitle}
+        <FaArrowRight />
       </CommonBtn>
     </Card>
   );

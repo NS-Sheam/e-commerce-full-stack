@@ -2,10 +2,7 @@ import { Col, Row, Tag } from "antd";
 import { TProduct } from "../../../types/product.type";
 import { Rating } from "@smastrom/react-rating";
 import CommonBtn from "../CommonBtn";
-import {
-  useGetSingleCustomerQuery,
-  useUpdateWishListMutation,
-} from "../../../redux/features/userManagement/userManagement.api";
+import { useGetMeQuery, useUpdateWishListMutation } from "../../../redux/features/userManagement/userManagement.api";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { handleAddToWishList } from "../../../utils/updateWishList";
 import { setShoppingCart } from "../../../redux/features/auth/auth.Slice";
@@ -21,7 +18,7 @@ import { discountCalculator } from "../../../utils/product.utils";
  */
 
 const BestDealLongCard = ({ product }: { product: TProduct }) => {
-  const { data: customerData } = useGetSingleCustomerQuery(undefined);
+  const { data: customerData } = useGetMeQuery(undefined);
   const [updateWishList] = useUpdateWishListMutation();
   const wishList = customerData?.wishList;
 

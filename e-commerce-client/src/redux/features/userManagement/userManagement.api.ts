@@ -10,7 +10,7 @@ const userManagementApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getSingleCustomer: builder.query({
+    getMe: builder.query({
       query: () => {
         return {
           url: "/users/me",
@@ -36,4 +36,4 @@ const userManagementApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetCustomersQuery, useGetSingleCustomerQuery, useUpdateWishListMutation } = userManagementApi;
+export const { useGetCustomersQuery, useGetMeQuery, useUpdateWishListMutation } = userManagementApi;

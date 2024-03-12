@@ -1,12 +1,14 @@
 import { Col, Row, Table, TableColumnsType } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
 import { useNavigate } from "react-router-dom";
 import QuantitySelector from "../../../components/ui/QuantitySelector";
 import CartTotalComponent from "../../../components/ui/CartTotalComponent";
 import { useEffect, useState } from "react";
 import { TProduct } from "../../../types/product.type";
+import { subTotalFn } from "../../../utils/subTotal";
+import { setOrders } from "../../../redux/features/order/order.Slice";
 
 export type TSubTotal = {
   total: number;
@@ -20,10 +22,12 @@ const ShoppingCart = () => {
   });
 
   const { shoppingCart } = useAppSelector((state) => state.auth);
-  const shoppingCartQuery = shoppingCart?.map((id) => ({ name: "_id", value: id }));
 
-  const { data: productData, isFetching: isPFetching } = useGetProductsQuery(shoppingCartQuery);
+  const shoppingCartQuery = shoppingCart?.map((id) => ({ name: "_id", value: id }));
+  const { data, isFetching: isPFetching } = useGetProductsQuery(shoppingCartQuery);
   const { products } = useAppSelector((state) => state.product);
+  const dispatch = useAppDispatch();
+  const productData = data?.data;
 
   const navigate = useNavigate();
   const handleNavigateToProduct = (id: string) => {
@@ -31,29 +35,16 @@ const ShoppingCart = () => {
   };
   const singleProductTotalfn = (id: string) => {
     const productPrice =
-      (productData?.data &&
-        productData.data.length &&
-        productData?.data.find((product: TProduct) => product._id === id)?.price) ||
-      0;
+      (productData && productData && productData?.find((product: TProduct) => product._id === id)?.price) || 0;
     const totalPrice = products?.filter((product) => product === id).length * productPrice;
     return totalPrice;
   };
 
   useEffect(() => {
-    let total = 0;
-    let totalDiscount = 0;
-    products?.forEach((product: string) => {
-      const item = productData?.data && productData.data.length && productData?.data.find((p) => p._id === product);
-
-      total += item ? item.price : 0;
-      totalDiscount += item ? item.discount : 0;
-    });
-    setSubTotal(() => {
-      return {
-        total,
-        totalDiscount,
-      };
-    });
+    if (productData) {
+      const { total, totalDiscount } = subTotalFn(products, productData);
+      setSubTotal({ total, totalDiscount });
+    }
   }, [productData, products]);
 
   const columns: TableColumnsType<any> = [
@@ -130,6 +121,10 @@ const ShoppingCart = () => {
       ),
     },
   ];
+  const handleNavigateToCheckout = () => {
+    dispatch(setOrders([...products]));
+    navigate("/checkout");
+  };
   return (
     <div className="p-4 space-y-4">
       <DashboardHeading>
@@ -142,7 +137,7 @@ const ShoppingCart = () => {
         >
           <Table
             columns={columns}
-            dataSource={productData?.data}
+            dataSource={productData}
             loading={isPFetching}
             pagination={false}
             rowKey="_id"
@@ -152,7 +147,14 @@ const ShoppingCart = () => {
           span={24}
           md={{ span: 8 }}
         >
-          <CartTotalComponent subTotal={subTotal} />
+          <CartTotalComponent
+            subTotal={subTotal}
+            title="Cart Total"
+            btnTitle="Proceed to Checkout"
+            btnProps={{
+              onClick: handleNavigateToCheckout,
+            }}
+          />
         </Col>
       </Row>
       ;

@@ -9,6 +9,7 @@ import { customerDashboardItems } from "./customer.routes";
 import { vendorDashboardItems } from "./vendor.routes";
 import ProductDetails from "../pages/ProductDetails";
 import { adminDashboardItems } from "./admin.routes";
+import Checkout from "../pages/dashboard/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,14 @@ const router = createBrowserRouter([
         path: "/product/:id",
         element: <ProductDetails />,
       },
-
+      {
+        path: "checkout",
+        element: (
+          <ProtectedRoute role={["customer", "vendor"]}>
+            <Checkout />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "customer",
         element: (

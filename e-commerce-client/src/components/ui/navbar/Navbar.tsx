@@ -12,7 +12,14 @@ const Navbar = () => {
   const rightMenu = [
     {
       name: "cart",
-      icon: <CiShoppingCart />,
+      icon: (
+        <Link
+          to="/customer/shopping-cart"
+          className="text-white hover:text-primary flex justify-center items-center "
+        >
+          <CiShoppingCart />
+        </Link>
+      ),
     },
     {
       name: "wishlist",
@@ -39,7 +46,12 @@ const Navbar = () => {
           />
         </Link>
       ) : (
-        <CiUser />
+        <Link
+          to={`/auth`}
+          className="text-white hover:text-primary flex justify-center items-center "
+        >
+          <CiUser />
+        </Link>
       ),
     },
   ];

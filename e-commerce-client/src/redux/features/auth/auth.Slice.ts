@@ -51,6 +51,9 @@ const authSlice = createSlice({
       if (type === "REMOVE_FROM_CART") {
         state.shoppingCart = state.shoppingCart.filter((item) => item !== id);
       }
+      if (type === "CLEAR_CART") {
+        state.shoppingCart = [];
+      }
     },
   },
 });

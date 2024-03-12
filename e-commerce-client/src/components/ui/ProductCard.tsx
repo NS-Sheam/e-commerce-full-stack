@@ -4,18 +4,16 @@ import { FaEye, FaRegHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import "../../styles/ProductCard.css";
 import { Link } from "react-router-dom";
-import {
-  useGetSingleCustomerQuery,
-  useUpdateWishListMutation,
-} from "../../redux/features/userManagement/userManagement.api";
+import { useGetMeQuery, useUpdateWishListMutation } from "../../redux/features/userManagement/userManagement.api";
 import { handleAddToWishList } from "../../utils/updateWishList";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { handleAddToShoppingCart, handleRemoveFromShoppingCart } from "../../utils/setShoppingCart";
 import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
 import { discountCalculator } from "../../utils/product.utils";
 import { Rating } from "@smastrom/react-rating";
+import { toast } from "sonner";
 const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean }) => {
-  const { data: customerData } = useGetSingleCustomerQuery(undefined);
+  const { data: customerData } = useGetMeQuery(undefined);
 
   const [updateWishList] = useUpdateWishListMutation();
   const wishList = customerData?.wishList;
@@ -26,6 +24,10 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
   const dispatch = useAppDispatch();
   const doesProductExistToShoppingCart = shoppingCart.some((item) => item === product._id);
   const handleShoppingCart = () => {
+    if (!customerData || !customerData._id) {
+      toast.error("Please login to add to cart");
+      return;
+    }
     doesProductExistToShoppingCart
       ? handleRemoveFromShoppingCart({ id: product._id, dispatchFn: dispatch, removeFn: setShoppingCart })
       : handleAddToShoppingCart({ id: product._id, shoppingCart, dispatchFn: dispatch, addFn: setShoppingCart });
@@ -35,6 +37,10 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
     : 5;
 
   const handleSubmit = async () => {
+    if (!customerData || !customerData._id) {
+      toast.error("Please login to add to wishlist");
+      return;
+    }
     await handleAddToWishList({
       productId: product._id,
       doesWishListContainProduct,

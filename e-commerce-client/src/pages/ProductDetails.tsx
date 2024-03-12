@@ -11,10 +11,7 @@ import { FiCopy } from "react-icons/fi";
 import ProductDetailsTab from "../components/ui/ProductDetailsTab";
 import AddToCartBtnComponent from "../components/ui/AddToCartBtnComponent";
 import { handleAddToWishList } from "../utils/updateWishList";
-import {
-  useGetSingleCustomerQuery,
-  useUpdateWishListMutation,
-} from "../redux/features/userManagement/userManagement.api";
+import { useGetMeQuery, useUpdateWishListMutation } from "../redux/features/userManagement/userManagement.api";
 import { TProduct } from "../types/product.type";
 
 const ProductDetails = () => {
@@ -110,7 +107,7 @@ const ProductDetails = () => {
 export default ProductDetails;
 
 export const WishListComponent = ({ product }: { product: TProduct }) => {
-  const { data: customerData } = useGetSingleCustomerQuery(undefined);
+  const { data: customerData } = useGetMeQuery(undefined);
   const [updateWishList] = useUpdateWishListMutation();
   const wishList = customerData?.wishList;
   const doesWishListContainProduct = wishList?.some((p) => p._id === product._id) as boolean;
