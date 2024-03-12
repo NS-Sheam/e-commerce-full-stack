@@ -26,6 +26,7 @@ const Checkout = () => {
     lastName: myInfo?.name?.lastName,
     email: myInfo?.email,
     phone: myInfo?.mobileNo,
+    country: "Bangladesh",
   };
 
   useEffect(() => {
@@ -36,11 +37,20 @@ const Checkout = () => {
   }, [productData, products]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    const orderData = {
+      products,
+      shippingInfo: {
+        address: data.address,
+        country: data.country,
+        state: data.state,
+        city: data.city,
+        postalCode: data?.postalCode,
+      },
+    };
+
+    console.log(orderData);
   };
-  const handlePlaceOrder = () => {
-    console.log("Order Placed");
-  };
+
   if (isMyInfoLoading || isMyInfoFecthing || isPLoading || isPFetching) {
     return <div>Loading...</div>;
   }
@@ -98,6 +108,7 @@ const Checkout = () => {
                   type="text"
                   name="country"
                   label="Country"
+                  disabled
                 />
               </Col>
               <Col
@@ -108,6 +119,7 @@ const Checkout = () => {
                   type="text"
                   name="state"
                   label="Region/State"
+                  required
                 />
               </Col>
               <Col
@@ -118,6 +130,7 @@ const Checkout = () => {
                   type="text"
                   name="city"
                   label="City"
+                  required
                 />
               </Col>
               <Col

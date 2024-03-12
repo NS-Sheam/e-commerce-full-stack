@@ -8,20 +8,21 @@ type TEComInputProps = {
   label: string;
   disabled?: boolean;
   defaultValue?: string;
-  required?: boolean;
+  [key: string]: any;
 };
 
-const EComInput = ({ type, name, label, disabled, defaultValue, required }: TEComInputProps) => {
+const EComInput = ({ type, name, label, disabled, defaultValue, ...remainingProps }: TEComInputProps) => {
   useEffect(() => {}, []);
   return (
     <div>
       <Controller
         name={name}
         defaultValue={defaultValue}
-        rules={{ required }}
+        rules={{ required: "This field is required" }}
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
             <Input
+              {...remainingProps}
               {...field}
               type={type}
               disabled={disabled}

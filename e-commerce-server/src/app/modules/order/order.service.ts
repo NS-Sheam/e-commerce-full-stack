@@ -13,19 +13,24 @@ import { Vendor } from "../vendor/vendor.model";
 import { TVendor } from "../vendor/vendor.interface";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { orderSearchableFields } from "./order.const";
-
+import SSLCommerzPayment from "sslcommerz-lts";
+const store_id = "<your_store_id>";
+const store_passwd = "<your_store_password>";
+const is_live = false;
 const addOrder = async (user: JwtPayload, payload: TOrder) => {
   let totalPrice = 0;
-
   const customer = await Customer.findOne({ user: user.userId });
   if (!customer) {
     throw new AppError(httpStatus.BAD_REQUEST, "Customer not found");
   }
   const vendors: TVendor[] = [];
+  const transactionId = new mongoose.Types.ObjectId().toString();
+
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
-    // Transaction 1: Update Product Inventory
+    const productsForSSLCommerz: any[] = []; // Array to store products for sslcommerz data
+
     for (const productId of payload.products) {
       const product = (await Product.findById(productId)) as TProduct;
       if (!product) {
@@ -44,6 +49,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
         vendors.push(vendor);
       }
       totalPrice += product.price;
+
       const updatedProduct = await Product.findByIdAndUpdate(
         productId,
         { $inc: { "inventory.quantity": -1 } },
@@ -53,23 +59,71 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       if (!updatedProduct) {
         throw new AppError(httpStatus.BAD_REQUEST, "Product update failed");
       }
+
+      // Add product details to array for sslcommerz data
+      productsForSSLCommerz.push({
+        name: product.name,
+        category: product.category,
+        quantity: 1, // Assuming quantity is always 1 for each product in this example
+        price: product.price,
+      });
     }
 
     payload.customer = customer._id;
     payload.totalPrice = totalPrice;
     payload.invoice = `INV-${Date.now()}`;
+
     // Transaction 1: Create Order
     const newOrder = await Order.create([payload], { session });
-
     if (!newOrder) {
       throw new AppError(httpStatus.BAD_REQUEST, "Order creation failed");
     }
+
+    // SSLCommerz data
+    const sslCommerzData = {
+      total_amount: totalPrice,
+      currency: "BDT",
+      tran_id: transactionId,
+      success_url: "http://localhost:3030/success",
+      fail_url: "http://localhost:3030/fail",
+      cancel_url: "http://localhost:3030/cancel",
+      ipn_url: "http://localhost:3030/ipn",
+      shipping_method: "Courier",
+      products: productsForSSLCommerz, // Array of products
+      cus_name: customer.name,
+      cus_email: customer.email,
+      cus_add1: payload.shippingInfo?.address,
+      cus_add2: payload.shippingInfo?.address,
+      cus_city: payload.shippingInfo?.city,
+      cus_state: payload.shippingInfo?.state,
+      cus_postcode: payload.shippingInfo?.postalCode,
+      cus_country: payload.shippingInfo?.country,
+      cus_phone: customer.mobileNo,
+      cus_fax: customer.mobileNo,
+      ship_name: `${customer.name.firstName} ${customer.name.lastName}`,
+      ship_add1: payload.shippingInfo?.address,
+      ship_add2: payload.shippingInfo?.address,
+      ship_city: payload.shippingInfo?.city,
+      ship_state: payload.shippingInfo?.state,
+      ship_postcode: payload.shippingInfo?.postalCode,
+      ship_country: payload.shippingInfo?.country,
+    };
+
+    const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+    const apiResponse = await sslcz.init(sslCommerzData);
+
+    // Redirect the user to payment gateway
+    let GatewayPageURL = apiResponse.GatewayPageURL;
+    // Assuming `res` is available in this scope
+    res.redirect(GatewayPageURL);
+    console.log("Redirecting to: ", GatewayPageURL);
+
+    // Send order confirmation
+    sendOrderConfirmation(customer, vendors, payload.products, payload.invoice);
+
     await session.commitTransaction();
     await session.endSession();
 
-    const products = await Product.find({ _id: { $in: payload.products } });
-
-    sendOrderConfirmation(customer, vendors, products, payload.invoice);
     return newOrder[0];
   } catch (error) {
     await session.abortTransaction();
