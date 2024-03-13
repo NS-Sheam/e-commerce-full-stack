@@ -3,11 +3,12 @@ import { CiHeart, CiShoppingCart, CiUser } from "react-icons/ci";
 import { FaFacebook, FaInstagram, FaMagnifyingGlass, FaPinterest, FaTwitter, FaYoutube } from "react-icons/fa6";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const userData = useAppSelector(selectCurrentUser);
+  const navigate = useNavigate();
 
   const rightMenu = [
     {
@@ -97,7 +98,10 @@ const Navbar = () => {
       </div>
       <hr className="bg-white h-[1px]" />
       <div className="relative grid grid-cols-5 justify-between py-2 inner-container">
-        <div className="flex justify-start items-center gap-2 col-span-1 text-white font-bold text-xl lg:text-2xl">
+        <div
+          onClick={() => navigate("/")}
+          className="flex justify-start items-center gap-2 col-span-1 text-white font-bold text-xl lg:text-2xl cursor-pointer"
+        >
           <h2
             className="bg-white rounded-full p-1 lg:w-12 lg:h-12 flex justify-center items-center"
             style={{ color: "#f44336" }}
