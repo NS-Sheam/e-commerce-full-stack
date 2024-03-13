@@ -30,10 +30,6 @@ const CartTotalComponent = ({ subTotal, title, btnTitle, btnProps }: TCartTotalC
         <span>Discount</span>
         <span className={`${itemCss}`}>{subTotal.totalDiscount}</span>
       </p>
-      <p className={`${titleCss}`}>
-        <span>Tax</span>
-        <span className={`${itemCss}`}>{(subTotal.total * 5) / 100}</span>
-      </p>
       <Divider style={{ margin: "1rem" }} />
       <p className={`${titleCss} text-xl py-2`}>
         <span>Total</span>

@@ -13,8 +13,8 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
   const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
   return (
     <Row
-      gutter={[6, 6]}
-      className="px-1 md:px-0"
+      gutter={[8, 22]}
+      className="px-1 md:px-0  py-2"
     >
       <Col
         span={12}
@@ -22,7 +22,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
       >
         <Row
           gutter={[0, 16]}
-          className="bg-grayBlack p-2 rounded-sm"
+          className="bg-grayBlack p-3 rounded-sm"
         >
           <Col
             span={24}
@@ -60,7 +60,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
       >
         <Row
           gutter={[0, 16]}
-          className="bg-grayWhite2 p-2 rounded-sm "
+          className="bg-grayWhite2 p-3 rounded-sm "
         >
           <Col
             span={24}
