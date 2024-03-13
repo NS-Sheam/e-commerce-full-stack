@@ -1,6 +1,7 @@
-import { Row } from "antd";
+import { Col, Row, Tag } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
 import { useCustomerOrderQuery } from "../../../redux/features/order/order.api";
+import moment from "moment";
 
 const Orders = () => {
   const {
@@ -13,13 +14,16 @@ const Orders = () => {
       value: "true",
     },
   ]);
-  const orderedProducts = orders?.data?.map((order) => {
-    return {
-      ...order,
-      products: order.products,
-    };
-  });
-  console.log(orderedProducts);
+  const orderedProducts = orders?.data
+    ?.map((order) => {
+      return order.products.map((product) => {
+        return {
+          ...product,
+          order,
+        };
+      });
+    })
+    .flat();
 
   console.log(orderedProducts);
 
@@ -28,14 +32,75 @@ const Orders = () => {
       <DashboardHeading>
         <h3>Order History</h3>
       </DashboardHeading>
-      <Row
-        gutter={[16, 16]}
-        className="space-y-4"
-      >
+      <Row gutter={[16, 16]}>
         {orderedProducts?.map((product) => (
-          <div key={product._id}>
-            <p>{product.name}</p>
-          </div>
+          <Col
+            key={product._id}
+            span={12}
+            md={{ span: 24 }}
+            style={{
+              border: "1px solid #e5e5e5",
+              padding: "1rem",
+            }}
+            className="shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
+            // onClick={() => handleNavigateToProduct(product._id)}
+          >
+            <Row
+              gutter={[16, 16]}
+              justify="center"
+              align="middle"
+            >
+              <Col
+                span={24}
+                md={{ span: 8 }}
+              >
+                <div className="md:flex items-center justify-start gap-2">
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full md:w-32 md:h-20 text-grayBlack"
+                  />
+                  <span className="text-2xl md:text-xl font-semibold">{product.name}</span>
+                </div>
+              </Col>
+              <Col
+                span={24}
+                md={{ span: 5 }}
+              >
+                <span className="text-[#2DA5F3] font-bold text-xl">${product.price}</span>
+              </Col>
+              <Col
+                span={24}
+                md={{ span: 5 }}
+              >
+                {/* placed" | "shipped" | "delivered" | "canceled"; */}
+                <Tag
+                  className="text-base font-semibold"
+                  color={
+                    product.order.status === "placed"
+                      ? "gold"
+                      : product.order.status === "shipped"
+                      ? "blue"
+                      : product.order.status === "delivered"
+                      ? "green"
+                      : "red"
+                  }
+                >
+                  {product.order.status}
+                </Tag>
+              </Col>
+
+              <Col
+                span={24}
+                md={{ span: 6 }}
+                className="flex items-center justify-center gap-2"
+              >
+                <span className="text-grayBlack font-bold text-lg">
+                  {moment(product.order.createdAt).format("MMMM Do YYYY")}
+                </span>
+              </Col>
+            </Row>
+          </Col>
         ))}
       </Row>
     </div>
