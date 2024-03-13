@@ -1,4 +1,5 @@
-import { TUser } from "./userManagement.type";
+import { TVendor } from ".";
+import { TUser } from "./userManagement.types";
 
 export type TCatgeory = {
   _id: string;
@@ -21,7 +22,7 @@ export type TProduct = {
   price: number;
   images: string[];
   category: TCatgeory;
-  vendor: string;
+  vendor: TVendor;
   inventory: {
     quantity: number;
     lowSockNotification: string;

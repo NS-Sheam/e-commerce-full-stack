@@ -11,7 +11,7 @@ import EComMultipleImageUploader from "../../../components/form/EComMultipleImag
 import EComTextAreaInput from "../../../components/form/EComTextAreaInput";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../../types/global";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 
 /**
  * TODO:

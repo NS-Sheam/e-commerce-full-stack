@@ -3,7 +3,7 @@
  * - make type for order history and review
  */
 
-import { TProduct } from "./product.type";
+import { TProduct } from "./product.types";
 
 export type TName = {
   firstName: string;

@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import { discountCalculator } from "../../../utils/product.utils";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
 import "../../../styles/bannerCarousel.css";

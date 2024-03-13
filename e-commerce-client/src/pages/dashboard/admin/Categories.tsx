@@ -13,7 +13,7 @@ import {
   useGetCategoriesQuery,
 } from "../../../redux/features/productManagement/productManagement.api";
 import CategoryForm from "../../../components/ui/CategoryForm";
-import { TCatgeory } from "../../../types/product.type";
+import { TCatgeory } from "../../../types/product.types";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../../types/global";
 /**

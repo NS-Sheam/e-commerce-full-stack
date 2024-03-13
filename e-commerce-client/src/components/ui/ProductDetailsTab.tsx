@@ -5,7 +5,7 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import { MdOutlinePayment } from "react-icons/md";
 import { SlBadge } from "react-icons/sl";
 import ProductReview from "./ProductReview";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 import { useState } from "react";
 
 const ProductDetailsTab = ({ product }: { product: TProduct }) => {

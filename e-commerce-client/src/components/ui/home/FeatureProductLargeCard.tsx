@@ -1,5 +1,5 @@
 import { Col, Row, Tag } from "antd";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 import CommonBtn from "../CommonBtn";
 
 import { discountCalculator } from "../../../utils/product.utils";

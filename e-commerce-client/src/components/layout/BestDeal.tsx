@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 import ProductCard from "../ui/ProductCard";
 import BestDealLongCard from "../ui/home/BestDealLongCard";
 

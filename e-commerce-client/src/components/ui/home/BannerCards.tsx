@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 import { useMediaQuery } from "react-responsive";
 
 /**

@@ -1,6 +1,6 @@
 import { Button, Col, Flex, Row, Tag } from "antd";
 import { FaShoppingCart } from "react-icons/fa";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
 import { handleAddToShoppingCart } from "../../utils/setShoppingCart";

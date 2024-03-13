@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import { useGetProductsQuery } from "../../redux/features/productManagement/productManagement.api";
 import { sortByDiscount } from "../../utils/product.utils";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 
 import BannerCarousel from "../ui/home/BannerCarousel";
 import BannerCards from "../ui/home/BannerCards";

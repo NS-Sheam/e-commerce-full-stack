@@ -198,7 +198,8 @@ const getAllOrders = async (query: Record<string, unknown>) => {
     .search(orderSearchableFields)
     .filter()
     .sort()
-    .paginate();
+    .paginate()
+    .fields();
 
   const result = await orderQuery.modelQuery;
   const meta = await orderQuery.countTotal();
@@ -237,7 +238,12 @@ const getOrderForCustomer = async (
       })
       .populate("customer"),
     query,
-  );
+  )
+    .search(orderSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
   const result = await customerOrderQuery.modelQuery;
   const meta = await customerOrderQuery.countTotal();
   return { result, meta };
@@ -266,7 +272,12 @@ const getOrderForVendor = async (
       })
       .populate("customer"),
     query,
-  );
+  )
+    .search(orderSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
   const result = await vendorOrderQuery.modelQuery;
   const meta = await vendorOrderQuery.countTotal();

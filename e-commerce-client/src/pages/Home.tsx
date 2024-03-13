@@ -1,7 +1,7 @@
 import { useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
 import Banner from "../components/layout/Banner";
 import { sortByDiscount } from "../utils/product.utils";
-import { TProduct } from "../types/product.type";
+import { TProduct } from "../types/product.types";
 import BestDeal from "../components/layout/BestDeal";
 import Features from "../components/ui/home/Features";
 import ShopWithCategories from "../components/ui/home/ShopWithCategories";

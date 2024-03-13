@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import QuantitySelector from "../../../components/ui/QuantitySelector";
 import CartTotalComponent from "../../../components/ui/CartTotalComponent";
 import { useEffect, useState } from "react";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 import { subTotalFn } from "../../../utils/subTotal";
 import { setOrders } from "../../../redux/features/order/order.Slice";
 

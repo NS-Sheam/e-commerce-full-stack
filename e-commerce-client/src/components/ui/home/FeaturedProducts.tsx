@@ -2,7 +2,7 @@ import { Col, Row } from "antd";
 import ProductCard from "../ProductCard";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 import FeatureProductLargeCard from "./FeatureProductLargeCard";
 
 const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {

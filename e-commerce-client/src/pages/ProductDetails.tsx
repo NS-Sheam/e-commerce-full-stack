@@ -12,7 +12,7 @@ import ProductDetailsTab from "../components/ui/ProductDetailsTab";
 import AddToCartBtnComponent from "../components/ui/AddToCartBtnComponent";
 import { handleAddToWishList } from "../utils/updateWishList";
 import { useGetMeQuery, useUpdateWishListMutation } from "../redux/features/userManagement/userManagement.api";
-import { TProduct } from "../types/product.type";
+import { TProduct } from "../types/product.types";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();

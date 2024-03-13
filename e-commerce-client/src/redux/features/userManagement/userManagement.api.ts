@@ -1,5 +1,5 @@
 import { TReduxResponse } from "../../../types/global";
-import { TUser } from "../../../types/userManagement.type";
+import { TUser } from "../../../types/userManagement.types";
 import { baseApi } from "../../api/baseApi";
 
 const userManagementApi = baseApi.injectEndpoints({

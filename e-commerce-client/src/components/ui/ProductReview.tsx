@@ -1,6 +1,6 @@
 import { Rating } from "@smastrom/react-rating";
 import { Col, Progress, Row, Tag } from "antd";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 /**
  * TODO:
  * 1. Complete product review component

@@ -1,5 +1,5 @@
 import { Card, Tag } from "antd";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 import { FaEye, FaRegHeart } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import "../../styles/ProductCard.css";

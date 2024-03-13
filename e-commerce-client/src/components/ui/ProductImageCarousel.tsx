@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import { TProduct } from "../../types/product.type";
+import { TProduct } from "../../types/product.types";
 import { Col, Flex, Row } from "antd";
 import { GlassMagnifier } from "react-image-magnifiers";
 

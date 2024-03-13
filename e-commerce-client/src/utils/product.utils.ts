@@ -1,4 +1,4 @@
-import { TProduct } from "../types/product.type";
+import { TProduct } from "../types/product.types";
 
 export const discountCalculator = (product: TProduct) => {
   const { price, discount } = product;

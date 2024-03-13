@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { TResponse } from "../types/global";
-import { TUser } from "../types/userManagement.type";
+import { TUser } from "../types/userManagement.types";
 
 type TUpdateWishList = {
   productId: string;

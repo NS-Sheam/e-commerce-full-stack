@@ -1,5 +1,5 @@
 import { Col, Row, Tag } from "antd";
-import { TProduct } from "../../../types/product.type";
+import { TProduct } from "../../../types/product.types";
 import { Rating } from "@smastrom/react-rating";
 import CommonBtn from "../CommonBtn";
 import { useGetMeQuery, useUpdateWishListMutation } from "../../../redux/features/userManagement/userManagement.api";
