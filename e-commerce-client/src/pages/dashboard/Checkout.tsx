@@ -8,10 +8,15 @@ import { useAppSelector } from "../../redux/hooks";
 import { useEffect, useState } from "react";
 import { subTotalFn } from "../../utils/subTotal";
 import { useGetProductsQuery } from "../../redux/features/productManagement/productManagement.api";
+import { usePlaceOrderMutation } from "../../redux/features/order/order.api";
+import { TResponse } from "../../types/global";
+import { toast } from "sonner";
 
 const Checkout = () => {
   const { data: mInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFecthing } = useGetMyInfoQuery(undefined);
   const { products } = useAppSelector((state) => state.order);
+  const [placeOrder] = usePlaceOrderMutation();
+
   const shoppingCartQuery = products?.map((id) => ({ name: "_id", value: id }));
   const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(shoppingCartQuery);
   const [subTotal, setSubTotal] = useState({
@@ -36,7 +41,8 @@ const Checkout = () => {
     }
   }, [productData, products]);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Placing order...", { duration: 2000 });
     const orderData = {
       products,
       shippingInfo: {
@@ -47,8 +53,18 @@ const Checkout = () => {
         postalCode: data?.postalCode,
       },
     };
+    try {
+      const res = (await placeOrder(orderData)) as TResponse<any>;
+      console.log(res);
 
-    console.log(orderData);
+      if (!res.error) {
+        window.location.replace(res.data?.GatewayPageURL);
+      } else {
+        toast.error(res.error.message, { id: toastId });
+      }
+    } catch (error: any) {
+      toast.error(error.message, { id: toastId });
+    }
   };
 
   if (isMyInfoLoading || isMyInfoFecthing || isPLoading || isPFetching) {

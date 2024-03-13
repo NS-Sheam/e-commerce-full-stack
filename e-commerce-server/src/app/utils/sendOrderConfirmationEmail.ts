@@ -18,6 +18,11 @@ export const sendOrderConfirmation = async (
   products: TProduct[],
   invoice: string,
 ) => {
+  console.log(
+    "Sending order confirmation email",
+    products[0].vendor._id.toString(),
+  );
+
   const transporter = nodemailer.createTransport({
     host: config.email_host,
     port: Number(config.email_port),
@@ -80,7 +85,7 @@ export const sendOrderConfirmation = async (
               ? `
             <ul>
               ${products.map((product) => {
-                if (product.vendor.toString() === vendor?._id.toString()) {
+                if (product.vendor._id.toString() === vendor?._id.toString()) {
                   return `
                     <li>
                       <strong>Product Name:</strong> ${product.name}
@@ -91,7 +96,7 @@ export const sendOrderConfirmation = async (
               })}
             </ul>
             <p>Total Price: <strong>${products.reduce((acc, product) => {
-              if (product.vendor.toString() === vendor._id.toString()) {
+              if (product.vendor._id.toString() === vendor._id.toString()) {
                 return acc + product.price;
               }
               return acc;

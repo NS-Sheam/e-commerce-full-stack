@@ -13,6 +13,7 @@ export default {
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
   reset_password_url_link: process.env.RESET_PASSWORD_URL_LINK,
+  server_url: process.env.SERVER_URL,
   email_user: process.env.EMAIL_USER,
   email_password: process.env.EMAIL_PASSWORD,
   email_from: process.env.EMAIL_FROM,

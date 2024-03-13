@@ -95,9 +95,9 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       total_amount: totalPrice,
       currency: "BDT",
       tran_id: transactionId,
-      success_url: `${config.reset_password_url_link}/orders/payment/success/${transactionId}`,
-      fail_url: `${config.reset_password_url_link}/orders/payment/fail/${transactionId}`,
-      cancel_url: `${config.reset_password_url_link}/orders/payment/fail/${transactionId}`,
+      success_url: `${config.server_url}/orders/payment/success/${transactionId}`,
+      fail_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
+      cancel_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
       ipn_url: "http://localhost:3030/ipn",
       shipping_method: "Courier",
       // products: productsForSSLCommerz, // Array of products
@@ -132,9 +132,6 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
 
     const GatewayPageURL = apiResponse.GatewayPageURL;
 
-    // Send order confirmation
-    sendOrderConfirmation(customer, vendors, products, payload.invoice);
-
     await session.commitTransaction();
     await session.endSession();
     return {
@@ -149,16 +146,41 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
 };
 
 const paymentSuccess = async (transactionId: string) => {
-  const result = await Order.findOneAndUpdate(
+  const order = await Order.findOneAndUpdate(
     { transactionId },
     { paymentStatus: true },
     { new: true },
   );
-  return result;
+
+  if (!order) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Payment failed");
+  }
+  const customer = await Customer.findById(order.customer);
+  if (!customer) {
+    throw new AppError(httpStatus.NOT_FOUND, "Customer not found");
+  }
+  const products = await Product.find({
+    _id: { $in: order.products.map((p) => p) },
+  }).populate("vendor");
+
+  const vendors = await Vendor.find({
+    _id: { $in: products.map((p) => p.vendor) },
+  });
+
+  // Send order confirmation
+  sendOrderConfirmation(customer, vendors, products, order.invoice);
+  return {
+    url: `${config.reset_password_url_link}/payment/success/${transactionId}`,
+  };
 };
 const paymentFailed = async (transactionId: string) => {
-  const result = await Order.findOne({ transactionId });
-  return result;
+  const result = await Order.deleteOne({ transactionId }, { new: true });
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Payment failed");
+  }
+  return {
+    url: `${config.reset_password_url_link}/payment/failed/${transactionId}`,
+  };
 };
 
 const getAllOrders = async (query: Record<string, unknown>) => {

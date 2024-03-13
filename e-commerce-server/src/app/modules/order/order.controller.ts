@@ -16,21 +16,12 @@ const addOrder = catchAsync(async (req: Request, res: Response) => {
 
 const paymentSuccess = catchAsync(async (req: Request, res: Response) => {
   const result = await OrderServices.paymentSuccess(req.params.transactionId);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Payment successful",
-    data: result,
-  });
+
+  return res.redirect(result.url);
 });
 const paymentFailed = catchAsync(async (req: Request, res: Response) => {
   const result = await OrderServices.paymentFailed(req.params.transactionId);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Payment failed",
-    data: result,
-  });
+  res.redirect(result.url);
 });
 
 const getAllOrders = catchAsync(async (req: Request, res: Response) => {
