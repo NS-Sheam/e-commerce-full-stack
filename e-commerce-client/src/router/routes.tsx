@@ -10,6 +10,8 @@ import { vendorDashboardItems } from "./vendor.routes";
 import ProductDetails from "../pages/ProductDetails";
 import { adminDashboardItems } from "./admin.routes";
 import Checkout from "../pages/dashboard/Checkout";
+import PaymentSuccess from "../pages/payment/PaymentSuccess";
+import PaymentFailed from "../pages/payment/PaymentFailed";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
         children: routesGenerator(adminDashboardItems),
+      },
+      {
+        path: "/payment/success/:transactionId",
+        element: (
+          <ProtectedRoute role={["customer"]}>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/payment/failed/:transactionId",
+        element: (
+          <ProtectedRoute role={["customer"]}>
+            <PaymentFailed />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
