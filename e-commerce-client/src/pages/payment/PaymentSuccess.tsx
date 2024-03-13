@@ -11,6 +11,9 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
   const myInfo = mInfo?.data;
   const { transactionId } = useParams<{ transactionId: string }>();
+  if (isMyInfoLoading || isMyInfoFetching) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Row
