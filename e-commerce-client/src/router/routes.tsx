@@ -12,6 +12,7 @@ import { adminDashboardItems } from "./admin.routes";
 import Checkout from "../pages/dashboard/Checkout";
 import PaymentSuccess from "../pages/payment/PaymentSuccess";
 import PaymentFailed from "../pages/payment/PaymentFailed";
+import SingleOrder from "../pages/dashboard/order/SingleOrder";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute role={["customer"]}>
             <PaymentFailed />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/order/:orderId/:productId",
+        element: (
+          <ProtectedRoute role={["customer"]}>
+            <SingleOrder />
           </ProtectedRoute>
         ),
       },

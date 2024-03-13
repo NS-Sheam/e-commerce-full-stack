@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export type TUserPath = {
   path: string;
-  name: string;
+  name?: string;
   icon?: ReactNode;
   element: ReactNode;
 };

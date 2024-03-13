@@ -12,7 +12,7 @@ const orderApi = baseApi.injectEndpoints({
       transformResponse: (response: any) => response.data,
     }),
     allOrders: builder.query({
-      query: (args: TQueryParams[]) => {
+      query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
         if (args) {
           args.forEach((item) => {
@@ -33,7 +33,7 @@ const orderApi = baseApi.injectEndpoints({
       },
     }),
     customerOrder: builder.query({
-      query: (args: TQueryParams[]) => {
+      query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
         if (args) {
           args.forEach((item) => {
@@ -54,7 +54,7 @@ const orderApi = baseApi.injectEndpoints({
       },
     }),
     vendorOrder: builder.query({
-      query: (args: TQueryParams[]) => {
+      query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
         if (args) {
           args.forEach((item) => {

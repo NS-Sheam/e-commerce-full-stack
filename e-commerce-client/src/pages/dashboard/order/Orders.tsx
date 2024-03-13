@@ -2,6 +2,7 @@ import { Col, Row, Tag } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
 import { useCustomerOrderQuery } from "../../../redux/features/order/order.api";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const {
@@ -14,6 +15,7 @@ const Orders = () => {
       value: "true",
     },
   ]);
+  const navigate = useNavigate();
   const orderedProducts = orders?.data
     ?.map((order) => {
       return order.products.map((product) => {
@@ -25,8 +27,13 @@ const Orders = () => {
     })
     .flat();
 
-  console.log(orderedProducts);
+  const handleNavigateProductOrder = (orderId: string, productId: string) => {
+    navigate(`/order/${orderId}/${productId}`);
+  };
 
+  if (customerOrderLoading || customerOrderFetching) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="p-4">
       <DashboardHeading>
@@ -43,7 +50,7 @@ const Orders = () => {
               padding: "1rem",
             }}
             className="shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
-            // onClick={() => handleNavigateToProduct(product._id)}
+            onClick={() => handleNavigateProductOrder(product.order._id, product._id)}
           >
             <Row
               gutter={[16, 16]}
