@@ -59,6 +59,11 @@ const orderSchema = new Schema<TOrder>(
       type: shippingInfoSchema,
       required: true,
     },
+    transactionId: String,
+    paymentStatus: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -15,4 +15,6 @@ export type TOrder = {
   status: TStatus;
   invoice: string;
   shippingInfo: TShippingInfo;
+  transactionId?: string;
+  paymentStatus: boolean;
 };

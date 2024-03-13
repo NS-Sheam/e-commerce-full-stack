@@ -13,6 +13,9 @@ router.post(
   validateRequest(OrderValidations.addOrderValidationSchema),
   OrderControllers.addOrder,
 );
+
+router.post("/payment/success/:transactionId", OrderControllers.paymentSuccess);
+router.post("/payment/failed/:transactionId", OrderControllers.paymentFailed);
 router.get(
   "/customer",
   auth(USER_TYPE.customer),

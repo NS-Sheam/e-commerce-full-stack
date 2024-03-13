@@ -13,6 +13,26 @@ const addOrder = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
+const paymentSuccess = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderServices.paymentSuccess(req.params.transactionId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Payment successful",
+    data: result,
+  });
+});
+const paymentFailed = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderServices.paymentFailed(req.params.transactionId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Payment failed",
+    data: result,
+  });
+});
+
 const getAllOrders = catchAsync(async (req: Request, res: Response) => {
   const result = await OrderServices.getAllOrders(req?.query);
   sendResponse(res, {
@@ -61,6 +81,8 @@ const getOrderForVendor = catchAsync(async (req: Request, res: Response) => {
 
 export const OrderControllers = {
   addOrder,
+  paymentSuccess,
+  paymentFailed,
   getAllOrders,
   getSingleOrder,
   getOrderForCustomer,
