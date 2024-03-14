@@ -9,6 +9,7 @@ import FeaturedProducts from "../components/ui/home/FeaturedProducts";
 import HomeAds1 from "../components/ui/home/HomeAds1";
 import ComputerAccessories from "../components/ui/home/ComputerAccessries";
 import HomeAds2 from "../components/ui/home/HomeAds2";
+import Subscribe from "../components/ui/home/Subscribe";
 /**
  * TODO:
  * 1. Handle product loading
@@ -37,7 +38,9 @@ const Home = () => {
       <HomeAds1 productData={productData} />
       {/* Comuter Accessories */}
       <ComputerAccessories />
+      {/* Home Ads 2 */}
       <HomeAds2 product={productData[1]} />
+      <Subscribe />
     </div>
   );
 };
