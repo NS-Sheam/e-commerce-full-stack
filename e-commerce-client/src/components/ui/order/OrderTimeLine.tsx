@@ -4,8 +4,8 @@ import { FaHandshake, FaTruck } from "react-icons/fa6";
 
 const OrderTimeLine = ({ order }: { order: TOrder }) => {
   const orderBoxCommonCss = "flex flex-col justify-center items-center gap-2";
-  const timeLineCircleCss = "w-8 md:w-12 h-3 md:h-5 bg-orange rounded-full";
-  const timeLineLineCss = "bg-orange h-3 rounded-full w-full";
+  const timeLineCircleCss = "w-8 md:w-12 h-3 md:h-5 rounded-full";
+  const timeLineLineCss = " h-3 rounded-full w-full";
   const timeLineIconCss = "text-2xl md:text-4xl";
   const timeLineTextCss = "text-sm md:text-xl font-semibold";
   return (
@@ -14,7 +14,7 @@ const OrderTimeLine = ({ order }: { order: TOrder }) => {
         className="flex items-center justify-start gap-1 "
         style={{ padding: "1rem 2rem " }}
       >
-        <div className={`${timeLineCircleCss} `}></div>
+        <div className={`${timeLineCircleCss} bg-orange `}></div>
         <hr
           className={`${timeLineLineCss} ${
             order?.status === "shipped" || order?.status === "delivered" ? "bg-orange" : "bg-[#FFE7D6] border-none"

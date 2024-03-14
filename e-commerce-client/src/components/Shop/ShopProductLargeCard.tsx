@@ -1,10 +1,8 @@
 import { Col, Row, Tag } from "antd";
-import { TProduct } from "../../../types/product.types";
-import CommonBtn from "../CommonBtn";
 
-import { discountCalculator } from "../../../utils/product.utils";
-import { FaArrowRight } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
+import { TProduct } from "../../types";
+import CommonBtn from "../ui/CommonBtn";
 
 /**
  * TODO:
@@ -14,7 +12,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const ShopProductLargeCard = ({ product }: { product: TProduct }) => {
   return (
-    <Row className="shadow-lg rounded-md overflow-hidden bg-white h-full">
+    <Row className="shadow-lg rounded-md overflow-hidden bg-white ">
       <Col
         span={24}
         className="relative bg-warning"
@@ -35,8 +33,8 @@ const ShopProductLargeCard = ({ product }: { product: TProduct }) => {
         <div>
           <span>Only for: </span>
           <Tag
-            color="#ebc80c"
-            style={{ fontWeight: "600", fontSize: "1rem" }}
+            color="#ffffff"
+            style={{ color: "#191C1F", fontWeight: "600", fontSize: "1rem" }}
           >
             {product.price} BDT
           </Tag>

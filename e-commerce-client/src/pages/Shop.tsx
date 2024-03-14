@@ -5,6 +5,7 @@ import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
 import BrandFilter from "../components/Shop/BrandFilter";
 import PopularTag from "../components/Shop/PopularTag";
+import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -67,6 +68,7 @@ const Shop = () => {
           setter={setBrands}
         />
         <PopularTag />
+        <ShopProductLargeCard product={products[1]} />
       </Col>
     </Row>
   );
