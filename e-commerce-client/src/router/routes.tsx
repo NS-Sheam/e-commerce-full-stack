@@ -13,6 +13,7 @@ import Checkout from "../pages/dashboard/Checkout";
 import PaymentSuccess from "../pages/payment/PaymentSuccess";
 import PaymentFailed from "../pages/payment/PaymentFailed";
 import SingleOrder from "../pages/dashboard/order/SingleOrder";
+import Shop from "../pages/Shop";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
             <SingleOrder />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
       },
     ],
   },

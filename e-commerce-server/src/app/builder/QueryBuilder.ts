@@ -23,6 +23,24 @@ class QueryBuilder<T> {
     }
     return this;
   }
+  // Price range query
+  async priceRange() {
+    const minPrice = Number(this?.query?.minPrice);
+    const maxPrice = Number(this?.query?.maxPrice);
+
+    if (minPrice && maxPrice) {
+      this.modelQuery = this.modelQuery.find({
+        price: { $gte: minPrice, $lte: maxPrice },
+      });
+    } else if (minPrice) {
+      this.modelQuery = this.modelQuery.find({ price: { $gte: minPrice } });
+    } else if (maxPrice) {
+      this.modelQuery = this.modelQuery.find({ price: { $lte: maxPrice } });
+    }
+
+    return this;
+  }
+
   //   filter query
   filter() {
     const queryObject = { ...this.query };
