@@ -4,6 +4,7 @@ import { FaFacebook, FaInstagram, FaMagnifyingGlass, FaPinterest, FaTwitter, FaY
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import { Link, useNavigate } from "react-router-dom";
+import { Input } from "antd";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -89,7 +90,7 @@ const Navbar = () => {
           {followIcons.map((item) => (
             <span
               key={item.name}
-              className="mx-2 inline-flex justify-center items-center lg:w-8 lg:h-8 text-sm rounded-full lg:bg-white text-white lg:text-primary hover:bg-primary hover:text-white transition-all duration-300 ease-in-out cursor-pointer"
+              className="mx-2 inline-flex justify-center items-center lg:w-8 lg:h-8  rounded-full  text-white lg:hover:bg-white transition-all lg:hover:text-primary duration-300 ease-in-out cursor-pointer"
             >
               {item.icon}
             </span>
@@ -116,15 +117,17 @@ const Navbar = () => {
             showSearch ? "block" : "hidden lg:block"
           }`}
         >
-          <input
+          <Input
             type="text"
-            className="w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="z-10 w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Search"
           />
-          <FaMagnifyingGlass
-            onClick={() => setShowSearch(!showSearch)}
-            className={`absolute top-3 lg:top-2 right-4 text-xl lg:text-2xl text-gray`}
-          />
+          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center justify-center">
+            <FaMagnifyingGlass
+              onClick={() => setShowSearch(!showSearch)}
+              className={`text-xl lg:text-2xl text-gray`}
+            />
+          </div>
         </div>
         <div className="flex justify-end items-center gap-8 col-span-4 lg:col-span-1 text-3xl font-bold">
           {rightMenu.map((item) => (
