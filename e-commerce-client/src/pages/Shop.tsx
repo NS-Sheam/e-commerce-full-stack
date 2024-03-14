@@ -4,6 +4,7 @@ import { useState } from "react";
 import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
 import BrandFilter from "../components/Shop/BrandFilter";
+import PopularTag from "../components/Shop/PopularTag";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -65,37 +66,7 @@ const Shop = () => {
           products={products || []}
           setter={setBrands}
         />
-        <div>
-          <h3 className="text-xl font-bold">Popular Tag</h3>
-          <div>
-            {[
-              "Game",
-              "Phone",
-              "Laptop",
-              "Camera",
-              "Watch",
-              "Headphone",
-              "TV",
-              "Smartphone",
-              "Computer",
-              "Camera",
-              "Watch",
-              "Headphone",
-              "TV",
-              "Smartphone",
-            ].map((item, index) => {
-              return (
-                <Tag
-                  key={index}
-                  color="default"
-                  className="m-1 hover:border-orange hover:text-orange cursor-pointer"
-                >
-                  {item}
-                </Tag>
-              );
-            })}
-          </div>
-        </div>
+        <PopularTag />
       </Col>
     </Row>
   );
