@@ -24,7 +24,7 @@ class QueryBuilder<T> {
     return this;
   }
   // Price range query
-  async priceRange() {
+  priceRange() {
     const minPrice = Number(this?.query?.minPrice);
     const maxPrice = Number(this?.query?.maxPrice);
 
@@ -45,7 +45,15 @@ class QueryBuilder<T> {
   filter() {
     const queryObject = { ...this.query };
     // remove unwanted fields
-    const excludeFields = ["searchTerm", "limit", "sort", "page", "fields"];
+    const excludeFields = [
+      "searchTerm",
+      "limit",
+      "sort",
+      "page",
+      "fields",
+      "minPrice",
+      "maxPrice",
+    ];
     excludeFields.forEach((field) => delete queryObject[field]);
     this.modelQuery = this.modelQuery.find(queryObject as FilterQuery<T>);
     return this;
