@@ -7,6 +7,7 @@ import Features from "../components/ui/home/Features";
 import ShopWithCategories from "../components/ui/home/ShopWithCategories";
 import FeaturedProducts from "../components/ui/home/FeaturedProducts";
 import HomeAds1 from "../components/ui/home/HomeAds1";
+import ComputerAccessories from "../components/ui/home/ComputerAccessries";
 /**
  * TODO:
  * 1. Handle product loading
@@ -29,8 +30,11 @@ const Home = () => {
       <BestDeal productData={productData} />
       {/* Shop with categories  */}
       <ShopWithCategories />
+      {/* Feature Products  */}
       <FeaturedProducts productData={productData} />
+      {/* Home Ads 1 */}
       <HomeAds1 productData={productData} />
+      <ComputerAccessories />
     </div>
   );
 };
