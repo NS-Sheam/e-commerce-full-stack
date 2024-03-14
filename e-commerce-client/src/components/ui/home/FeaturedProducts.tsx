@@ -44,8 +44,9 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
                   justify="end"
                   align="middle"
                 >
-                  {categories.map((item) => (
+                  {categories.map((item, index) => (
                     <Col
+                      key={index}
                       onClick={() => {
                         setCategory(item);
                       }}
