@@ -1,5 +1,9 @@
 import { Checkbox, Col, Input, InputNumber, Row, Select, Tag } from "antd";
-import { useGetCategoriesQuery, useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
+import {
+  useGetCategoriesQuery,
+  useGetProductBrandsQuery,
+  useGetProductsQuery,
+} from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
 import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
@@ -10,6 +14,7 @@ import { FaArrowLeft, FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
 import ProductCard from "../components/ui/ProductCard";
 import "../styles/shop.css";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import ShopCardsSide from "../components/Shop/ShopCardsSide";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -17,19 +22,41 @@ type TPriceRange = {
 };
 
 const Shop = () => {
-  const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
-  const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
-
   const [brands, setBrands] = useState<string[]>([]);
+  const [page, setPage] = useState(1);
   const [categories, setCategories] = useState<string[]>([]);
+  const [meta, setMeta] = useState();
+  const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
+  const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
+  const searchQuery = [
+    {
+      name: "limit",
+      value: 2,
+    },
+    {
+      name: "page",
+      value: page,
+    },
+  ];
+  if (brands.length > 0) {
+    searchQuery.push({
+      name: "brand",
+      value: brands.join(","),
+    });
+  }
+  if (categories.length > 0) {
+    searchQuery.push({
+      name: "category",
+      value: categories.join(","),
+    });
+  }
 
-  const products = pData?.data;
   const [priceRange, setPriceRange] = useState<TPriceRange>({
     minPrice: 0,
     maxPrice: null,
   });
 
-  if (isCLoading || isCFetching || isPLoading || isPFetching) {
+  if (isCLoading || isCFetching || isBLoading || isBFetching) {
     return <div>Loading...</div>;
   }
 
@@ -68,11 +95,11 @@ const Shop = () => {
           isAllPriceSelected={isAllPriceSelected}
         />
         <BrandFilter
-          products={products || []}
+          brands={bData || []}
           setter={setBrands}
         />
         <PopularTag />
-        <ShopProductLargeCard product={products![1]} />
+        {/* <ShopProductLargeCard product={products[1]} /> */}
       </Col>
       <Col
         span={18}
@@ -128,32 +155,11 @@ const Shop = () => {
             </p>
           </Col>
         </Row>
-        <div
-          style={{
-            border: "1px solid #e5e5e5",
-            padding: "1rem",
-          }}
-          className="h-full"
-        >
-          <Row
-            gutter={[16, 16]}
-            justify={"start"}
-            align={"top"}
-          >
-            {products?.map((product) => (
-              <Col
-                key={product._id}
-                span={12}
-                md={{ span: 6 }}
-              >
-                <ProductCard
-                  product={product}
-                  rating
-                />
-              </Col>
-            ))}
-          </Row>
-        </div>
+        {/* Product section  */}
+        <ShopCardsSide
+          setMeta={setMeta}
+          searchQuery={searchQuery}
+        />
         {/* Pagination section */}
         <Row
           gutter={[16, 16]}
@@ -174,7 +180,7 @@ const Shop = () => {
               <FaArrowLeft className="text-orange text-3xl p-1" />
             </div>
 
-            {Array.from({ length: pData?.meta?.page as number }).map((_, index) => (
+            {Array.from({ length: meta?.totalPages as number }).map((_, index) => (
               <Tag
                 key={index}
                 className="cursor-pointer text-2xl"

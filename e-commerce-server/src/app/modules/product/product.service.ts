@@ -8,6 +8,7 @@ import QueryBuilder from "../../builder/QueryBuilder";
 import { productSearchableFields } from "./product.const";
 import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 import { Vendor } from "../vendor/vendor.model";
+import { Category } from "../category/category.model";
 //TODO: Populate review and rating
 const getAllProducts = async (query: Record<string, unknown>) => {
   const resultQuery = new QueryBuilder(
@@ -22,7 +23,28 @@ const getAllProducts = async (query: Record<string, unknown>) => {
     .fields()
     .priceRange();
 
-  const result = await resultQuery.modelQuery;
+  let result = await resultQuery.modelQuery;
+
+  if (query.category) {
+    const categories = Object.values(query.category.split(","));
+    console.log(categories);
+    const categoryIds = await Category.find({
+      name: { $in: categories },
+    }).select("_id");
+
+    result = result.map((product) => {
+      return categoryIds.forEach((categoryId) => {
+        if (categoryId._id.toString() === product.category._id.toString()) {
+          console.log("hititng");
+
+          return product;
+        }
+      });
+    });
+
+    console.log(result);
+  }
+
   const meta = await resultQuery.countTotal();
   return {
     result,

@@ -54,6 +54,7 @@ class QueryBuilder<T> {
       "fields",
       "minPrice",
       "maxPrice",
+      "category",
     ];
 
     excludeFields.forEach((field) => delete queryObject[field]);

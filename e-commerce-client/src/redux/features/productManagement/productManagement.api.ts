@@ -52,6 +52,18 @@ const productManagementApi = baseApi.injectEndpoints({
       transformResponse: (response: TReduxResponse<TCatgeory[]>) => response.data,
       providesTags: ["category"],
     }),
+    getProductBrands: builder.query({
+      query: () => {
+        return {
+          url: `products`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TReduxResponse<TProduct[]>) => {
+        const brands = response.data?.map((product) => product.brand);
+        return brands;
+      },
+    }),
     addCategory: builder.mutation({
       query: (categoryInfo) => ({
         url: `categories`,
@@ -84,6 +96,7 @@ export const {
   useAddProductMutation,
   useGetSingleProductQuery,
   useAddCategoryMutation,
+  useGetProductBrandsQuery,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 } = productManagementApi;
