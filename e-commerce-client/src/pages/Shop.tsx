@@ -1,5 +1,5 @@
 import { Checkbox, Col, InputNumber, Row } from "antd";
-import { useGetCategoriesQuery } from "../redux/features/productManagement/productManagement.api";
+import { useGetCategoriesQuery, useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
 
 type TPriceRange = {
@@ -9,12 +9,15 @@ type TPriceRange = {
 
 const Shop = () => {
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
+  const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
+
+  const products = pData?.data;
   const [priceRange, setPriceRange] = useState<TPriceRange>({
     minPrice: 0,
     maxPrice: null,
   });
 
-  if (isCLoading || isCFetching) {
+  if (isCLoading || isCFetching || isPLoading || isPFetching) {
     return <div>Loading...</div>;
   }
 
@@ -33,7 +36,6 @@ const Shop = () => {
   const handlePriceRangeClick = (min: number | null, max: number | null) => {
     setPriceRange({ minPrice: min, maxPrice: max });
   };
-  console.log(priceRange);
 
   const isAllPriceSelected = priceRange.minPrice === 0 && priceRange.maxPrice === null;
 
@@ -85,6 +87,16 @@ const Shop = () => {
                   className="h-4 w-4 rounded-full bg-white"
                 ></div>
                 {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Popular Brands</h3>
+          <ul>
+            {products?.map((product) => (
+              <li key={product._id}>
+                <Checkbox>{product.brand}</Checkbox>
               </li>
             ))}
           </ul>

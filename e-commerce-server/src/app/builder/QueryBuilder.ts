@@ -44,6 +44,7 @@ class QueryBuilder<T> {
   //   filter query
   filter() {
     const queryObject = { ...this.query };
+
     // remove unwanted fields
     const excludeFields = [
       "searchTerm",
@@ -54,8 +55,25 @@ class QueryBuilder<T> {
       "minPrice",
       "maxPrice",
     ];
+
     excludeFields.forEach((field) => delete queryObject[field]);
-    this.modelQuery = this.modelQuery.find(queryObject as FilterQuery<T>);
+
+    // Get the remaining query fields
+    const fields = Object.entries(queryObject);
+
+    // Create an array of objects for each key-value pair
+    const fieldQuery = fields
+      .map(([key, value]) => {
+        const values = Array.isArray(value)
+          ? value
+          : (value as string).split(",");
+        return values.map((v) => ({ [key]: v.trim() }));
+      })
+      .flat();
+
+    this.modelQuery = this.modelQuery.find({
+      $or: fieldQuery as FilterQuery<T>[],
+    });
     return this;
   }
 
