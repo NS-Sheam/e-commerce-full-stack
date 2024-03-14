@@ -9,13 +9,13 @@ const ComputerAccessories = () => {
   const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
 
   const [category, setCategory] = useState("All Products");
-  const categories = ["All Products", "Electronics", "Fashion", "Home & Kitchen", "Health & Beauty"];
+  const categories = ["All Products", "Electric", "Fashion", "Home & Kitchen", "Health & Beauty"];
 
   const productData = pData?.data?.filter((product: TProduct) => {
     if (category === "All Products") {
       return product;
     } else {
-      return product.category.name === category;
+      return product.category.name.toLocaleLowerCase() === category.toLocaleLowerCase();
     }
   }) as TProduct[];
 
