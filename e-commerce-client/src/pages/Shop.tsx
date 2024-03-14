@@ -1,6 +1,9 @@
-import { Checkbox, Col, InputNumber, Row } from "antd";
+import { Checkbox, Col, InputNumber, Row, Tag } from "antd";
 import { useGetCategoriesQuery, useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
+import CategoryFilter from "../components/Shop/CategoryFilter";
+import PriceFilter from "../components/Shop/PriceFilter";
+import BrandFilter from "../components/Shop/BrandFilter";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -10,6 +13,9 @@ type TPriceRange = {
 const Shop = () => {
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
   const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
+
+  const [brands, setBrands] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
 
   const products = pData?.data;
   const [priceRange, setPriceRange] = useState<TPriceRange>({
@@ -33,73 +39,62 @@ const Shop = () => {
     { text: "10000-", min: 10000, max: null },
   ];
 
-  const handlePriceRangeClick = (min: number | null, max: number | null) => {
-    setPriceRange({ minPrice: min, maxPrice: max });
-  };
-
   const isAllPriceSelected = priceRange.minPrice === 0 && priceRange.maxPrice === null;
 
   return (
-    <Row>
+    <Row
+      gutter={[16, 16]}
+      className="w-full inner-container pt-4"
+    >
       {/* Filter section  */}
-      <Col span={6}>
+      <Col
+        span={6}
+        className="bg-white space-y-3"
+      >
+        <CategoryFilter
+          categories={cData || []}
+          setter={setCategories}
+        />
+        <PriceFilter
+          priceRange={priceRange}
+          setter={setPriceRange}
+          priceRangeTexts={priceRangeTexts}
+          isAllPriceSelected={isAllPriceSelected}
+        />
+        <BrandFilter
+          products={products || []}
+          setter={setBrands}
+        />
         <div>
-          <h3>Category</h3>
-          <ul>
-            {cData?.map((category) => (
-              <li key={category._id}>
-                <Checkbox>{category.name}</Checkbox>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3>Price Range</h3>
-          <div className="flex justify-start items-center gap-2">
-            <InputNumber
-              placeholder="Min Price"
-              onChange={(value) => setPriceRange({ ...priceRange, minPrice: value ? value : null })}
-              value={priceRange.minPrice}
-            />
-            <InputNumber
-              placeholder="Max Price"
-              onChange={(value) => setPriceRange({ ...priceRange, maxPrice: value ? value : null })}
-              value={priceRange.maxPrice}
-            />
+          <h3 className="text-xl font-bold">Popular Tag</h3>
+          <div>
+            {[
+              "Game",
+              "Phone",
+              "Laptop",
+              "Camera",
+              "Watch",
+              "Headphone",
+              "TV",
+              "Smartphone",
+              "Computer",
+              "Camera",
+              "Watch",
+              "Headphone",
+              "TV",
+              "Smartphone",
+            ].map((item, index) => {
+              return (
+                <Tag
+                  key={index}
+                  color="default"
+                  className="m-1 hover:border-orange hover:text-orange cursor-pointer"
+                >
+                  {item}
+                </Tag>
+              );
+            })}
           </div>
-          <ul>
-            {priceRangeTexts.map(({ text, min, max }, index) => (
-              <li
-                key={index}
-                className="flex justify-start items-center gap-2"
-                onClick={() => handlePriceRangeClick(min, max)}
-              >
-                <div
-                  style={{
-                    border: isAllPriceSelected
-                      ? text === "All Price"
-                        ? "2px solid #fa8232"
-                        : "1px solid #000000"
-                      : priceRange.minPrice === min && priceRange.maxPrice === max
-                      ? "2px solid #fa8232"
-                      : "1px solid #000000",
-                  }}
-                  className="h-4 w-4 rounded-full bg-white"
-                ></div>
-                {text}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3>Popular Brands</h3>
-          <ul>
-            {products?.map((product) => (
-              <li key={product._id}>
-                <Checkbox>{product.brand}</Checkbox>
-              </li>
-            ))}
-          </ul>
         </div>
       </Col>
     </Row>

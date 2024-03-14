@@ -59,6 +59,7 @@ class QueryBuilder<T> {
     excludeFields.forEach((field) => delete queryObject[field]);
 
     // Get the remaining query fields
+
     const fields = Object.entries(queryObject);
 
     // Create an array of objects for each key-value pair
@@ -70,10 +71,8 @@ class QueryBuilder<T> {
         return values.map((v) => ({ [key]: v.trim() }));
       })
       .flat();
-
-    this.modelQuery = this.modelQuery.find({
-      $or: fieldQuery as FilterQuery<T>[],
-    });
+    const filterFieldQuery = fields.length ? { $or: fieldQuery } : queryObject;
+    this.modelQuery = this.modelQuery.find(filterFieldQuery as FilterQuery<T>);
     return this;
   }
 
