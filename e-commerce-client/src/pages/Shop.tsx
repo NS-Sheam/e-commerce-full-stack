@@ -41,7 +41,7 @@ const Shop = () => {
   const searchQuery: TQueryParams[] = [
     {
       name: "limit",
-      value: 2 + "",
+      value: 20 + "",
     },
     {
       name: "page",
@@ -198,7 +198,7 @@ const Shop = () => {
         {/* Filter show section  */}
         <Row
           gutter={[4, 4]}
-          className="py-4 bg-[#F2F4F5] rounded-md"
+          className="p-4 bg-[#F2F4F5] rounded-md"
         >
           <ActiveFilter
             categories={categories}
@@ -210,7 +210,7 @@ const Shop = () => {
             span={24}
             md={{ span: 6 }}
           >
-            <p className="text-grayBlack">
+            <p className="text-grayBlack text-right">
               <span className="font-bold">{meta?.total}</span> Results Found
             </p>
           </Col>

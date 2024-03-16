@@ -28,7 +28,7 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     userType: {
       type: String,
-      enum: ["customer", "vendor", "admin"],
+      enum: ["customer", "vendor", "admin", "superAdmin"],
       required: true,
     },
     isDeleted: {

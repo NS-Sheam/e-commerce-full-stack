@@ -40,8 +40,13 @@ router.post(
 );
 router.patch(
   "/make-vendor/:id",
-  auth(USER_TYPE.admin),
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
   UserControllers.makeVendor,
+);
+router.patch(
+  "/make-admin/:id",
+  auth(USER_TYPE.superAdmin),
+  UserControllers.makeAdmin,
 );
 router.get(
   "/me",

@@ -14,6 +14,7 @@ import config from "../../config";
 import { verifyToken } from "../Auth/auth.utils";
 import { JwtPayload } from "jsonwebtoken";
 import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
+import { Product } from "../product/product.model";
 
 // create customer without image file upload
 /*
@@ -234,6 +235,61 @@ const makeVendor = async (customerId: string) => {
   }
 };
 
+const makeAdmin = async (vendorId: string) => {
+  const session = await mongoose.startSession();
+
+  try {
+    // Starting Session
+    session.startTransaction();
+
+    // Transaction 1: Change Vendor to Admin
+    const vendor = await Vendor.findById(vendorId);
+    if (!vendor) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
+    }
+
+    await Product.deleteMany({ vendor: vendorId }, { session });
+
+    await Vendor.findByIdAndDelete(vendorId, { session });
+
+    const newUpdatedUser = await User.findByIdAndUpdate(
+      vendor.user,
+      { userType: "admin" },
+      { new: true, session },
+    );
+
+    if (!newUpdatedUser) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User updation failed");
+    }
+
+    const newAdmin = await Admin.create(
+      [
+        {
+          user: vendor.user,
+          userName: vendor.userName,
+          name: vendor.name,
+          email: vendor.email,
+          mobileNo: vendor.mobileNo,
+          image: vendor.image,
+        },
+      ],
+      { session },
+    );
+
+    if (!newAdmin) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Admin creation failed");
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+    return newAdmin[0];
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw error;
+  }
+};
+
 const getMe = async (token: string) => {
   const decoded = verifyToken(token, config.jwt_access_secret as string);
 
@@ -260,5 +316,6 @@ export const UserServices = {
   createVendor,
   createAdmin,
   makeVendor,
+  makeAdmin,
   getMe,
 };

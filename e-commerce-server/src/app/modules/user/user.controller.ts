@@ -71,6 +71,17 @@ const makeVendor = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const makeAdmin = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await UserServices.makeAdmin(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User status changed to admin successfully",
+    data: result,
+  });
+});
 
 const getMe = catchAsync(async (req: Request, res: Response) => {
   const token = req.headers.authorization;
@@ -89,5 +100,6 @@ export const UserControllers = {
   createVendor,
   createAdmin,
   makeVendor,
+  makeAdmin,
   getMe,
 };
