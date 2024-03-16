@@ -6,9 +6,8 @@ import CommonBtn from "../../components/ui/CommonBtn";
 import { BsMenuButton } from "react-icons/bs";
 
 const PaymentFailed = () => {
-  const { data: mInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
+  const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
   const navigate = useNavigate();
-  const myInfo = mInfo?.data;
   const { transactionId } = useParams<{ transactionId: string }>();
   if (isMyInfoLoading || isMyInfoFetching) {
     return <div>Loading...</div>;

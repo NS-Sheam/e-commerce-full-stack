@@ -13,7 +13,7 @@ import { TResponse } from "../../types/global";
 import { toast } from "sonner";
 
 const Checkout = () => {
-  const { data: mInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFecthing } = useGetMyInfoQuery(undefined);
+  const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFecthing } = useGetMyInfoQuery(undefined);
   const { products } = useAppSelector((state) => state.order);
   const [placeOrder] = usePlaceOrderMutation();
 
@@ -24,7 +24,6 @@ const Checkout = () => {
     totalDiscount: 0,
   });
   const productData = pData?.data;
-  const myInfo = mInfo?.data;
 
   const defaultValues = {
     firstName: myInfo?.name?.firstName,

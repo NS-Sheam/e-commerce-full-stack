@@ -7,9 +7,9 @@ import { BsMenuButton } from "react-icons/bs";
 import { FaArrowRight } from "react-icons/fa6";
 
 const PaymentSuccess = () => {
-  const { data: mInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
+  const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
   const navigate = useNavigate();
-  const myInfo = mInfo?.data;
+
   const { transactionId } = useParams<{ transactionId: string }>();
   if (isMyInfoLoading || isMyInfoFetching) {
     return <div>Loading...</div>;
