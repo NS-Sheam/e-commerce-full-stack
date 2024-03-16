@@ -11,10 +11,11 @@ import { Vendor } from "../vendor/vendor.model";
 import { TAdmin } from "../admin/admin.interface";
 import { Admin } from "../admin/admin.model";
 import config from "../../config";
-import { verifyToken } from "../Auth/auth.utils";
+import { createToken, verifyToken } from "../Auth/auth.utils";
 import { JwtPayload } from "jsonwebtoken";
 import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 import { Product } from "../product/product.model";
+import { sendEmail } from "../../utils/sendEmail";
 
 // create customer without image file upload
 /*
@@ -94,6 +95,25 @@ const createCustomer = async (
     if (!newCustomer) {
       throw new AppError(httpStatus.BAD_REQUEST, "Customer creation failed");
     }
+    const jwtPayload = {
+      userId: newUser[0]._id,
+      email: newUser[0].email,
+      userType: newUser[0].userType,
+    };
+
+    const verifyEmailToken = createToken(
+      jwtPayload,
+      config.jwt_access_secret as string,
+      "10d",
+    );
+    const verifyUrl = `${config.client_url}/auth/verify-email?token=${verifyEmailToken}`;
+    sendEmail(
+      verifyUrl,
+      newUser[0].email,
+      "Verify your email",
+      "Verify Email",
+      "Verify your email by clicking the link below:",
+    );
     await session.commitTransaction();
     await session.endSession();
     return newCustomer[0];

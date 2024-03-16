@@ -31,6 +31,12 @@ const userSchema = new Schema<TUser, UserModel>(
       enum: ["customer", "vendor", "admin", "superAdmin"],
       required: true,
     },
+
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+
     isDeleted: {
       type: Boolean,
       default: false,

@@ -68,9 +68,15 @@ const createProduct = async (
     }
   }
   payload.images = images;
-  const vendor = await Vendor.findOne({ user: user.userId });
+  const vendor = await Vendor.findOne({ user: user.userId }).populate("user");
   if (!vendor) {
     throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
+  }
+  if (!(vendor.user as any).isVerified) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Please verify your email first",
+    );
   }
 
   payload.vendor = vendor?._id;

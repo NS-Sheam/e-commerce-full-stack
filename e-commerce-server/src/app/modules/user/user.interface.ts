@@ -8,6 +8,7 @@ export type TUser = {
   passwordChangedAt: Date;
   email: string;
   userType: "customer" | "vendor" | "admin";
+  isVerified: boolean;
   isDeleted: boolean;
 };
 

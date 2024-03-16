@@ -56,6 +56,33 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
+const verifyEmail = async (token: string) => {
+  // verify the token
+  const decoded = verifyToken(token, config.jwt_access_secret as string);
+
+  const { email, role } = decoded as JwtPayload;
+  // check if the user exists
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  // check if the user is deleted
+  if (user?.isDeleted) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User is deleted");
+  }
+
+  // check if the user is already verified
+  if (user.isVerified) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User is already verified");
+  }
+
+  // update the user
+  await User.findOneAndUpdate({ email, role }, { isVerified: true });
+  return null;
+};
+
 const changePassword = async (
   userData: JwtPayload,
   payload: { oldPassword: string; newPassword: string },
@@ -163,8 +190,14 @@ const forgetPassword = async (email: string) => {
     "10m",
   );
 
-  const resetUrlLink = `${config.reset_password_url_link}reset-password?email=${user?.email}&token=${resetToken}`;
-  sendEmail(resetUrlLink, user.email);
+  const resetUrlLink = `${config.client_url}/auth/reset-password?email=${user?.email}&token=${resetToken}`;
+  sendEmail(
+    resetUrlLink,
+    user.email,
+    "Reset your password within 10 minutes!",
+    "Reset Password",
+    "Reset your password within 10 minutes! Click the link below to reset your password:",
+  );
 };
 
 const resetPassword = async (
@@ -209,6 +242,7 @@ const resetPassword = async (
 
 export const AuthServices = {
   loginUser,
+  verifyEmail,
   changePassword,
   refreshToken,
   forgetPassword,

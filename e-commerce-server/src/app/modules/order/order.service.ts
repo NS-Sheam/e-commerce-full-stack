@@ -18,10 +18,16 @@ import config from "../../config";
 import { Category } from "../category/category.model";
 const addOrder = async (user: JwtPayload, payload: TOrder) => {
   let totalPrice = 0;
-  const customer = await Customer.findOne({ user: user.userId });
+  const customer = await Customer.findOne({ user: user.userId }).populate(
+    "user",
+  );
   if (!customer) {
     throw new AppError(httpStatus.BAD_REQUEST, "Customer not found");
   }
+  if (!(customer.user as any).isverified) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Please verify your email");
+  }
+
   const vendors: TVendor[] = [];
   const transactionId = new mongoose.Types.ObjectId().toString();
 
@@ -170,7 +176,7 @@ const paymentSuccess = async (transactionId: string) => {
   // Send order confirmation
   sendOrderConfirmation(customer, vendors, products, order.invoice);
   return {
-    url: `${config.reset_password_url_link}/payment/success/${transactionId}`,
+    url: `${config.client_url}/payment/success/${transactionId}`,
   };
 };
 const paymentFailed = async (transactionId: string) => {
@@ -179,7 +185,7 @@ const paymentFailed = async (transactionId: string) => {
     throw new AppError(httpStatus.BAD_REQUEST, "Payment failed");
   }
   return {
-    url: `${config.reset_password_url_link}/payment/failed/${transactionId}`,
+    url: `${config.client_url}/payment/failed/${transactionId}`,
   };
 };
 
