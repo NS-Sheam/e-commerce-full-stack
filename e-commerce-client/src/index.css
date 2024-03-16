@@ -27,3 +27,6 @@ body {
 .add-category-submit-button:hover {
   @apply hover:border-[#FF8C00] hover:bg-white hover:text-[#FF8C00] !important;
 }
+.ant-layout-sider-zero-width-trigger {
+  background-color: #ff8c00 !important;
+}
