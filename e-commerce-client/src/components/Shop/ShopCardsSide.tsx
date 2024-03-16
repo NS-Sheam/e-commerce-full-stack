@@ -22,7 +22,6 @@ const ShopCardsSide = ({ searchQuery, setMeta }: TShopCardsSideProps) => {
       }}
       className="h-full"
     >
-      {}
       <Row
         gutter={[16, 16]}
         justify={"start"}

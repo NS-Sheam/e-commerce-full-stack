@@ -2,6 +2,7 @@ import { Col, Input, Row, Select, Tag } from "antd";
 import {
   useGetCategoriesQuery,
   useGetProductBrandsQuery,
+  useGetProductsQuery,
 } from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
 import CategoryFilter from "../components/Shop/CategoryFilter";
@@ -13,6 +14,7 @@ import { FaArrowLeft, FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
 import "../styles/shop.css";
 import ShopCardsSide from "../components/Shop/ShopCardsSide";
 import { TQueryParams } from "../types";
+import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -21,9 +23,11 @@ type TPriceRange = {
 
 const Shop = () => {
   const [brands, setBrands] = useState<string[]>([]);
+  const { data: pData, isLoading: pIsLoading, isFetching: pIsFetching } = useGetProductsQuery(undefined);
   const [page, setPage] = useState(1);
   const [categories, setCategories] = useState<string[]>([]);
   const [meta, setMeta] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
   const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
   const searchQuery: TQueryParams[] = [
@@ -49,6 +53,12 @@ const Shop = () => {
       value: categories.join(","),
     });
   }
+  if (searchTerm) {
+    searchQuery.push({
+      name: "searchTerm",
+      value: searchTerm,
+    });
+  }
 
   const [priceRange, setPriceRange] = useState<TPriceRange>({
     minPrice: 0,
@@ -68,7 +78,7 @@ const Shop = () => {
     });
   }
 
-  if (isCLoading || isCFetching || isBLoading || isBFetching) {
+  if (isCLoading || isCFetching || isBLoading || isBFetching || pIsLoading || pIsFetching) {
     return <div>Loading...</div>;
   }
 
@@ -111,7 +121,7 @@ const Shop = () => {
           setter={setBrands}
         />
         <PopularTag />
-        {/* <ShopProductLargeCard product={products[1]} /> */}
+        <ShopProductLargeCard product={pData?.data && pData?.data[0]} />
       </Col>
       <Col
         span={18}
@@ -127,6 +137,7 @@ const Shop = () => {
             className="shop-searchbar relative w-full"
           >
             <Input
+              onChange={(e) => setSearchTerm(e.target.value)}
               type="text"
               placeholder="Enter your search keyword here..."
               className="w-full h-12 px-4 rounded-sm"

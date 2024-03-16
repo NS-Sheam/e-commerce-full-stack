@@ -11,16 +11,16 @@ class QueryBuilder<T> {
   //   search query
   search(searchableFields: string[]) {
     const { searchTerm } = this.query;
+
     if (searchTerm) {
+      const searchRegex = new RegExp(searchTerm as string, "i");
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map(
-          (field) =>
-            ({
-              [field]: { $regex: searchTerm, $options: "i" },
-            }) as FilterQuery<T>,
+          (field) => ({ [field]: searchRegex }) as FilterQuery<T>,
         ),
       });
     }
+
     return this;
   }
   // Price range query
