@@ -9,6 +9,7 @@ import { Input } from "antd";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const userData = useAppSelector(selectCurrentUser);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const rightMenu = [
@@ -118,13 +119,23 @@ const Navbar = () => {
           }`}
         >
           <Input
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setShowSearch(!showSearch);
+                navigate(`/shop?searchTerm=${searchTerm}`);
+              }
+            }}
             type="text"
             className="z-10 w-full py-2 px-4 border border-gray focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Search"
           />
           <div className="absolute z-10 right-2 top-1/2 transform -translate-y-1/2 flex items-center justify-center">
             <FaMagnifyingGlass
-              onClick={() => setShowSearch(!showSearch)}
+              onClick={() => {
+                setShowSearch(!showSearch);
+                navigate(`/shop?searchTerm=${searchTerm}`);
+              }}
               className={`text-xl lg:text-2xl text-gray`}
             />
           </div>
