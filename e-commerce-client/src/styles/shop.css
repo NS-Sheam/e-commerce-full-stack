@@ -2,3 +2,8 @@
   border: 1px solid #d9d9d9;
   border-radius: 4px;
 }
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #fa8232 !important;
+  border-color: #fa8232 !important;
+}

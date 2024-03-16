@@ -30,6 +30,7 @@ const ShopPagination = ({ page, setPage, meta }: TShopPaginationProps) => {
       {Array.from({ length: meta?.totalPages }).map((_, index) => (
         <Tag
           key={index}
+          onClick={() => setPage(index + 1)}
           className="cursor-pointer text-2xl"
           style={{
             border: "2px solid #fa8232",

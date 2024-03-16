@@ -80,7 +80,6 @@ const Orders = () => {
                 span={24}
                 md={{ span: 5 }}
               >
-                {/* placed" | "shipped" | "delivered" | "canceled"; */}
                 <Tag
                   className="text-base font-semibold"
                   color={
