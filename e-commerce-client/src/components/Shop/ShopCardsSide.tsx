@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Flex, Row, Spin } from "antd";
 import { useGetProductsQuery } from "../../redux/features/productManagement/productManagement.api";
 import ProductCard from "../ui/ProductCard";
 import { useEffect } from "react";
@@ -8,7 +8,7 @@ type TShopCardsSideProps = {
   setMeta: any;
 };
 const ShopCardsSide = ({ searchQuery, setMeta }: TShopCardsSideProps) => {
-  const { data: pData } = useGetProductsQuery(searchQuery);
+  const { data: pData, isLoading: pIsLoading, isFetching: pIsFetching } = useGetProductsQuery(searchQuery);
 
   const products = pData?.data;
   useEffect(() => {
@@ -22,23 +22,35 @@ const ShopCardsSide = ({ searchQuery, setMeta }: TShopCardsSideProps) => {
       }}
       className="h-full"
     >
+      {}
       <Row
         gutter={[16, 16]}
         justify={"start"}
         align={"top"}
       >
-        {products?.map((product) => (
-          <Col
-            key={product._id}
-            span={12}
-            md={{ span: 6 }}
+        {pIsLoading || pIsFetching ? (
+          <Flex
+            justify="center"
+            align="center"
+            gap="middle"
+            className="h-full w-full"
           >
-            <ProductCard
-              product={product}
-              rating
-            />
-          </Col>
-        ))}
+            <Spin size="large" />
+          </Flex>
+        ) : (
+          products?.map((product) => (
+            <Col
+              key={product._id}
+              span={12}
+              md={{ span: 6 }}
+            >
+              <ProductCard
+                product={product}
+                rating
+              />
+            </Col>
+          ))
+        )}
       </Row>
     </div>
   );
