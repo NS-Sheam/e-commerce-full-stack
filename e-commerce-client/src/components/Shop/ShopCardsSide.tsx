@@ -9,7 +9,6 @@ type TShopCardsSideProps = {
 };
 const ShopCardsSide = ({ searchQuery, setMeta }: TShopCardsSideProps) => {
   const { data: pData } = useGetProductsQuery(searchQuery);
-  console.log({ pData, searchQuery });
 
   const products = pData?.data;
   useEffect(() => {
