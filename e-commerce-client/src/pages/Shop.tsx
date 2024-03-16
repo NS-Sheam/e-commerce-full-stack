@@ -31,13 +31,14 @@ const Shop = () => {
   const searchQuery = [
     {
       name: "limit",
-      value: 2,
+      value: 10,
     },
     {
       name: "page",
       value: page,
     },
   ];
+
   if (brands.length > 0) {
     searchQuery.push({
       name: "brand",

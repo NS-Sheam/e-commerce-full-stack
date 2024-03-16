@@ -23,27 +23,17 @@ const getAllProducts = async (query: Record<string, unknown>) => {
     .fields()
     .priceRange();
 
-  let result = await resultQuery.modelQuery;
-
   if (query.category) {
-    const categories = Object.values(query.category.split(","));
-    console.log(categories);
+    const categories = Object.values((query.category as string).split(","));
+
     const categoryIds = await Category.find({
       name: { $in: categories },
     }).select("_id");
 
-    result = result.map((product) => {
-      return categoryIds.forEach((categoryId) => {
-        if (categoryId._id.toString() === product.category._id.toString()) {
-          console.log("hititng");
-
-          return product;
-        }
-      });
-    });
-
-    console.log(result);
+    resultQuery.modelQuery.find({ category: { $in: categoryIds } });
   }
+
+  const result = await resultQuery.modelQuery;
 
   const meta = await resultQuery.countTotal();
   return {
