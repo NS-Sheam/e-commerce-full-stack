@@ -13,8 +13,9 @@ import { FaArrowLeft, FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
 
 import "../styles/shop.css";
 import ShopCardsSide from "../components/Shop/ShopCardsSide";
-import { TQueryParams } from "../types";
+import { TMeta, TQueryParams } from "../types";
 import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
+import ActiveFilter from "../components/Shop/ActiveFilter";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -22,12 +23,14 @@ type TPriceRange = {
 };
 
 const Shop = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+
   const [brands, setBrands] = useState<string[]>([]);
   const { data: pData, isLoading: pIsLoading, isFetching: pIsFetching } = useGetProductsQuery(undefined);
   const [page, setPage] = useState(1);
   const [categories, setCategories] = useState<string[]>([]);
-  const [meta, setMeta] = useState();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [meta, setMeta] = useState<TMeta>();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") || "");
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
   const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
   const searchQuery: TQueryParams[] = [
@@ -165,16 +168,15 @@ const Shop = () => {
           gutter={[16, 16]}
           className="py-4 bg-[#F2F4F5] rounded-md"
         >
-          <Col span={18}>
-            <p>
-              Active Filters:
-              <span className="text-primary">Clear All</span>
-              <span className="text-primary">Clear All</span>
-            </p>
-          </Col>
+          <ActiveFilter
+            categories={categories}
+            brands={brands}
+            setCategories={setCategories}
+            setBrands={setBrands}
+          />
           <Col span={6}>
             <p className="text-grayBlack">
-              <span className="font-bold">10000</span> Results Found
+              <span className="font-bold">{meta?.total}</span> Results Found
             </p>
           </Col>
         </Row>
