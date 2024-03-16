@@ -9,11 +9,9 @@ import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
 import BrandFilter from "../components/Shop/BrandFilter";
 import PopularTag from "../components/Shop/PopularTag";
-import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
 import { FaArrowLeft, FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
-import ProductCard from "../components/ui/ProductCard";
+
 import "../styles/shop.css";
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import ShopCardsSide from "../components/Shop/ShopCardsSide";
 
 type TPriceRange = {
@@ -56,6 +54,19 @@ const Shop = () => {
     minPrice: 0,
     maxPrice: null,
   });
+
+  if (priceRange.minPrice) {
+    searchQuery.push({
+      name: "minPrice",
+      value: priceRange.minPrice,
+    });
+  }
+  if (priceRange.maxPrice) {
+    searchQuery.push({
+      name: "maxPrice",
+      value: priceRange.maxPrice,
+    });
+  }
 
   if (isCLoading || isCFetching || isBLoading || isBFetching) {
     return <div>Loading...</div>;
