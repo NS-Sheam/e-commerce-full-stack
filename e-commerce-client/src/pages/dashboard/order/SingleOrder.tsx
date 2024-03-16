@@ -5,14 +5,15 @@ import moment from "moment";
 
 import OrderTimeLine from "../../../components/ui/order/OrderTimeLine";
 import OrderActivity from "../../../components/ui/order/OrderActivity";
+import { TProduct } from "../../../types";
 
 const SingleOrder = () => {
-  const { orderId, productId } = useParams();
+  const { orderId } = useParams();
   const navigate = useNavigate();
   const { data: oData, isLoading: orderLoading, isFetching: orderFetching } = useCustomerOrderQuery(undefined);
   const order = oData?.data?.find((order) => order._id === orderId);
   const productsWithQuantity = order?.products.reduce((acc, product) => {
-    const existingProduct = acc.find((p) => p._id === product._id);
+    const existingProduct = acc.find((p: TProduct) => p._id === product._id);
     if (existingProduct) {
       existingProduct.quantity += 1;
       return acc;
@@ -98,4 +99,4 @@ const SingleOrder = () => {
   );
 };
 
-export default SingleOrder;
+export default SingleOrder

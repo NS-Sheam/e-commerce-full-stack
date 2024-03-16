@@ -17,6 +17,8 @@ import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
 import ActiveFilter from "../components/Shop/ActiveFilter";
 import ShopSearchBar from "../components/Shop/ShopSearchBar";
 import ShopPagination from "../components/Shop/ShopPagination";
+import { RxCross2 } from "react-icons/rx";
+import { CiFilter } from "react-icons/ci";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -33,6 +35,7 @@ const Shop = () => {
   const [meta, setMeta] = useState<TMeta>();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") || "");
   const [sort, setSort] = useState<string>("price");
+  const [showFilter, setShowFilter] = useState(false);
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
   const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
   const searchQuery: TQueryParams[] = [
@@ -108,13 +111,22 @@ const Shop = () => {
   return (
     <Row
       gutter={[16, 16]}
-      className="w-full inner-container pt-4"
+      className="w-full inner-container py-4 relative"
     >
       {/* Filter section  */}
       <Col
-        span={6}
-        className="bg-white space-y-3"
+        span={24}
+        md={{ span: 6 }}
+        className={`bg-white space-y-3 absolute md:static ${
+          !showFilter ? "hidden" : "block"
+        } md:block top-0 left-0 right-0 z-10`}
       >
+        <p
+          onClick={() => setShowFilter(false)}
+          className="text-white bg-orange p-1 flex md:hidden items-center justify-center rounded-full text-xl absolute top-3 right-3"
+        >
+          <RxCross2 />
+        </p>
         <CategoryFilter
           categories={cData || []}
           setter={setCategories}
@@ -133,8 +145,9 @@ const Shop = () => {
         <ShopProductLargeCard product={pData?.data && pData?.data[0]} />
       </Col>
       <Col
-        span={18}
-        className="bg-white space-y-2 h-full"
+        span={24}
+        md={{ span: 18 }}
+        className="bg-white space-y-4 h-full"
       >
         {/* Search section  */}
         <Row
@@ -142,31 +155,49 @@ const Shop = () => {
           justify="space-between"
         >
           <ShopSearchBar setSearchTerm={setSearchTerm} />
-          <Col span={6}>
-            <Select
-              className="w-full h-12"
-              defaultValue="featured"
-              onChange={(value) => {
-                value === "price-asc"
-                  ? setSort("price")
-                  : value === "price-desc"
-                  ? setSort("-price")
-                  : value === "newest"
-                  ? setSort("-createdAt")
-                  : setSort("createdAt");
-              }}
-              options={[
-                { value: "featured", label: "Featured" },
-                { value: "newest", label: "Newest" },
-                { value: "price-asc", label: "Price: Low to High" },
-                { value: "price-desc", label: "Price: High to Low" },
-              ]}
-            />
+          <Col
+            span={24}
+            md={{ span: 6 }}
+          >
+            <Row
+              gutter={[4, 4]}
+              align="middle"
+              justify="space-between"
+            >
+              <Col span={4}>
+                <CiFilter
+                  onClick={() => setShowFilter(!showFilter)}
+                  className="text-orange text-4xl font-bold"
+                />
+              </Col>
+
+              <Col span={20}>
+                <Select
+                  className="w-full h-12"
+                  defaultValue="featured"
+                  onChange={(value) => {
+                    value === "price-asc"
+                      ? setSort("price")
+                      : value === "price-desc"
+                      ? setSort("-price")
+                      : value === "newest"
+                      ? setSort("-createdAt")
+                      : setSort("createdAt");
+                  }}
+                  options={[
+                    { value: "featured", label: "Featured" },
+                    { value: "newest", label: "Newest" },
+                    { value: "price-asc", label: "Price: Low to High" },
+                    { value: "price-desc", label: "Price: High to Low" },
+                  ]}
+                />
+              </Col>
+            </Row>
           </Col>
         </Row>
         {/* Filter show section  */}
         <Row
-          gutter={[16, 16]}
+          gutter={[4, 4]}
           className="py-4 bg-[#F2F4F5] rounded-md"
         >
           <ActiveFilter
@@ -175,7 +206,10 @@ const Shop = () => {
             setCategories={setCategories}
             setBrands={setBrands}
           />
-          <Col span={6}>
+          <Col
+            span={24}
+            md={{ span: 6 }}
+          >
             <p className="text-grayBlack">
               <span className="font-bold">{meta?.total}</span> Results Found
             </p>

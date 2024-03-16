@@ -15,7 +15,11 @@ const ActiveFilter = ({
   setBrands,
 }: TActiveFilterProps) => {
   return (
-    <Col span={18}>
+    <Col
+      className="hidden md:block"
+      span={24}
+      md={{ span: 18 }}
+    >
       <div>
         Active Filters: &nbsp;
         {categories.length > 0 || brands.length > 0 ? (

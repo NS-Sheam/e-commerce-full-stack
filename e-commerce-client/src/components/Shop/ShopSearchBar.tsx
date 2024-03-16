@@ -8,7 +8,8 @@ type TShopSearchBarProps = {
 const ShopSearchBar = ({ setSearchTerm }: TShopSearchBarProps) => {
   return (
     <Col
-      span={12}
+      span={24}
+      md={{ span: 12 }}
       className="shop-searchbar relative w-full"
     >
       <Input

@@ -27,7 +27,7 @@ const ShopProductLargeCard = ({ product }: TShopProductLargeCardProps) => {
     handleAddToShoppingCart({ id: product!._id, shoppingCart, dispatchFn: dispatch, addFn: setShoppingCart });
   };
   return (
-    <Row className="shadow-lg rounded-md overflow-hidden bg-white ">
+    <Row className="hidden lg:block shadow-lg rounded-md overflow-hidden bg-white ">
       <Col
         span={24}
         className="relative bg-warning"
