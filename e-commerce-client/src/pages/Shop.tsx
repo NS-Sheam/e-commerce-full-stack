@@ -1,4 +1,4 @@
-import { Col, Input, Row, Select, Tag } from "antd";
+import { Col, Row, Select } from "antd";
 import {
   useGetCategoriesQuery,
   useGetProductBrandsQuery,
@@ -9,13 +9,14 @@ import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
 import BrandFilter from "../components/Shop/BrandFilter";
 import PopularTag from "../components/Shop/PopularTag";
-import { FaArrowLeft, FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
 
 import "../styles/shop.css";
 import ShopCardsSide from "../components/Shop/ShopCardsSide";
 import { TMeta, TQueryParams } from "../types";
 import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
 import ActiveFilter from "../components/Shop/ActiveFilter";
+import ShopSearchBar from "../components/Shop/ShopSearchBar";
+import ShopPagination from "../components/Shop/ShopPagination";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -31,6 +32,7 @@ const Shop = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [meta, setMeta] = useState<TMeta>();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") || "");
+  const [sort, setSort] = useState<string>("price");
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
   const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
   const searchQuery: TQueryParams[] = [
@@ -41,6 +43,10 @@ const Shop = () => {
     {
       name: "page",
       value: page + "",
+    },
+    {
+      name: "sort",
+      value: sort,
     },
   ];
 
@@ -135,25 +141,20 @@ const Shop = () => {
           gutter={[16, 16]}
           justify="space-between"
         >
-          <Col
-            span={12}
-            className="shop-searchbar relative w-full"
-          >
-            <Input
-              onChange={(e) => setSearchTerm(e.target.value)}
-              type="text"
-              placeholder="Enter your search keyword here..."
-              className="w-full h-12 px-4 rounded-sm"
-            />
-            <div className="absolute inset-y-0 right-0 px-6 flex items-center bg-slate-200 cursor-pointer">
-              <FaMagnifyingGlass className={` text-xl lg:text-2xl text-gray`} />
-            </div>
-          </Col>
+          <ShopSearchBar setSearchTerm={setSearchTerm} />
           <Col span={6}>
             <Select
               className="w-full h-12"
               defaultValue="featured"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => {
+                value === "price-asc"
+                  ? setSort("price")
+                  : value === "price-desc"
+                  ? setSort("-price")
+                  : value === "newest"
+                  ? setSort("-createdAt")
+                  : setSort("createdAt");
+              }}
               options={[
                 { value: "featured", label: "Featured" },
                 { value: "newest", label: "Newest" },
@@ -191,54 +192,11 @@ const Shop = () => {
           justify="center"
           align="middle"
         >
-          <Col
-            span={24}
-            className="flex justify-center items-center gap-3"
-          >
-            <div
-              onClick={() => {
-                if (page > 1) {
-                  setPage(page - 1);
-                }
-              }}
-              style={{
-                border: "2px solid #fa8232",
-                borderRadius: "100%",
-              }}
-              className="flex justify-center items-center cursor-pointer"
-            >
-              <FaArrowLeft className="text-orange text-3xl p-1" />
-            </div>
-
-            {Array.from({ length: (meta as any)?.totalPages }).map((_, index) => (
-              <Tag
-                key={index}
-                className="cursor-pointer text-2xl"
-                style={{
-                  border: "2px solid #fa8232",
-                  backgroundColor: index + 1 === page ? "#fa8232" : "white",
-                  color: index + 1 === page ? "white" : "black",
-                  borderRadius: "100%",
-                }}
-              >
-                {index + 1}
-              </Tag>
-            ))}
-            <div
-              onClick={() => {
-                if (page < (meta as any)?.totalPages) {
-                  setPage(page + 1);
-                }
-              }}
-              style={{
-                border: "2px solid #fa8232",
-                borderRadius: "100%",
-              }}
-              className="flex justify-center items-center cursor-pointer"
-            >
-              <FaArrowRight className="text-orange text-3xl p-1" />
-            </div>
-          </Col>
+          <ShopPagination
+            page={page}
+            setPage={setPage}
+            meta={meta!}
+          />
         </Row>
       </Col>
     </Row>
