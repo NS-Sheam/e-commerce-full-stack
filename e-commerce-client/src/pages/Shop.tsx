@@ -1,8 +1,7 @@
-import { Checkbox, Col, Input, InputNumber, Row, Select, Tag } from "antd";
+import { Col, Input, Row, Select, Tag } from "antd";
 import {
   useGetCategoriesQuery,
   useGetProductBrandsQuery,
-  useGetProductsQuery,
 } from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
 import CategoryFilter from "../components/Shop/CategoryFilter";
@@ -13,6 +12,7 @@ import { FaArrowLeft, FaArrowRight, FaMagnifyingGlass } from "react-icons/fa6";
 
 import "../styles/shop.css";
 import ShopCardsSide from "../components/Shop/ShopCardsSide";
+import { TQueryParams } from "../types";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -26,14 +26,14 @@ const Shop = () => {
   const [meta, setMeta] = useState();
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
   const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
-  const searchQuery = [
+  const searchQuery: TQueryParams[] = [
     {
       name: "limit",
-      value: 10,
+      value: 2 + "",
     },
     {
       name: "page",
-      value: page,
+      value: page + "",
     },
   ];
 
@@ -58,13 +58,13 @@ const Shop = () => {
   if (priceRange.minPrice) {
     searchQuery.push({
       name: "minPrice",
-      value: priceRange.minPrice,
+      value: priceRange.minPrice + "",
     });
   }
   if (priceRange.maxPrice) {
     searchQuery.push({
       name: "maxPrice",
-      value: priceRange.maxPrice,
+      value: priceRange.maxPrice + "",
     });
   }
 
@@ -183,6 +183,11 @@ const Shop = () => {
             className="flex justify-center items-center gap-3"
           >
             <div
+              onClick={() => {
+                if (page > 1) {
+                  setPage(page - 1);
+                }
+              }}
               style={{
                 border: "2px solid #fa8232",
                 borderRadius: "100%",
@@ -192,12 +197,14 @@ const Shop = () => {
               <FaArrowLeft className="text-orange text-3xl p-1" />
             </div>
 
-            {Array.from({ length: meta?.totalPages as number }).map((_, index) => (
+            {Array.from({ length: (meta as any)?.totalPages }).map((_, index) => (
               <Tag
                 key={index}
                 className="cursor-pointer text-2xl"
                 style={{
-                  border: "1px solid #000000",
+                  border: "2px solid #fa8232",
+                  backgroundColor: index + 1 === page ? "#fa8232" : "white",
+                  color: index + 1 === page ? "white" : "black",
                   borderRadius: "100%",
                 }}
               >
@@ -205,6 +212,11 @@ const Shop = () => {
               </Tag>
             ))}
             <div
+              onClick={() => {
+                if (page < (meta as any)?.totalPages) {
+                  setPage(page + 1);
+                }
+              }}
               style={{
                 border: "2px solid #fa8232",
                 borderRadius: "100%",
