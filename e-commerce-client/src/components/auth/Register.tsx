@@ -44,6 +44,8 @@ const Register = () => {
       const res = (await registerUser(formData)) as TReduxResponse<any>;
       if (!res.error) {
         toast.success("Registered successfully");
+      } else {
+        toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong");
       }
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");

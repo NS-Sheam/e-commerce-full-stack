@@ -53,7 +53,10 @@ const AddProduct = () => {
       if (!res.error) {
         toast.success(res.message || "Product added successfully", { id: toastId, duration: 2000 });
       } else {
-        toast.error(res.error.message || "Product adding failed", { id: toastId, duration: 2000 });
+        toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Product adding failed", {
+          id: toastId,
+          duration: 2000,
+        });
       }
     } catch (error: any) {
       toast.error(error.message || "Product adding failed", { id: toastId, duration: 2000 });

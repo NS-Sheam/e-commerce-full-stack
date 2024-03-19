@@ -15,6 +15,8 @@ import PaymentFailed from "../pages/payment/PaymentFailed";
 import SingleOrder from "../pages/dashboard/order/SingleOrder";
 import Shop from "../pages/Shop";
 import ForgetPassword from "../pages/auth/ForgetPassword";
+import ResetPassword from "../pages/auth/ResetPassword";
+import ChangePassword from "../pages/auth/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "/auth/forget-password",
         element: <ForgetPassword />,
+      },
+      {
+        path: "/auth/reset-password",
+        element: <ResetPassword />,
+      },
+      {
+        path: "/auth/change-password",
+        element: <ChangePassword />,
       },
       {
         path: "/product/:id",

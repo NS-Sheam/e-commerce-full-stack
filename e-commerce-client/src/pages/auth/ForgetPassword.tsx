@@ -7,6 +7,7 @@ import { IoIosCloudDone } from "react-icons/io";
 import EComForm from "../../components/form/EComForm";
 import EComInput from "../../components/form/EComInput";
 import { useForgetPasswordMutation } from "../../redux/features/auth/auth.api";
+import { TReduxResponse } from "../../types";
 
 const ForgetPassword = () => {
   const [sentEmail, setSentEmail] = useState(false);
@@ -17,12 +18,19 @@ const ForgetPassword = () => {
     const toastId = toast.loading("Changing password...");
 
     try {
-      await forgetPassword(data);
+      const res = (await forgetPassword(data)) as TReduxResponse<any>;
 
-      toast.success("Password changed successfully", { id: toastId });
-      setSentEmail(true);
+      if (!res.error) {
+        toast.success("Password changed successfully", { id: toastId, duration: 2000 });
+        setSentEmail(true);
+      } else {
+        toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong", {
+          id: toastId,
+          duration: 2000,
+        });
+      }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
+      toast.error(error.message, { id: toastId, duration: 2000 });
     }
   };
   const commonInputStyle = {

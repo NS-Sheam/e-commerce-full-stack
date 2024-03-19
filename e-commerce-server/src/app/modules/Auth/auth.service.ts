@@ -223,7 +223,10 @@ const resetPassword = async (
     config.jwt_access_secret as string,
   ) as JwtPayload;
   if (decoded.email !== email) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Invalid token");
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "You are not authorized to reset the password",
+    );
   }
 
   // hashing the new password

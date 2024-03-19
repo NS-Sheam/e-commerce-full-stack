@@ -8,22 +8,25 @@ import { useLoginMutation } from "../../redux/features/auth/auth.api";
 import { verifyToken } from "../../utils/verifyToken";
 import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
 import GoogleLoginButton from "../ui/GoogleLoginButton";
+import { useNavigate } from "react-router-dom";
+import { TReduxResponse } from "../../types";
 
 const defaultValues = {
   // email: "admin@example.com",
   // password: "admin123",
   email: "customer321@gmail.com",
-  password: "customer321",
+  password: "customer123",
 };
 
 const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Logging in...");
     try {
-      const res: any = await login(data);
+      const res = (await login(data)) as TReduxResponse<any>;
       if (!res.error) {
         const user = verifyToken(res.data.data.accessToken) as TUser;
 
@@ -37,12 +40,16 @@ const Login = () => {
         const userInfo = await data.json();
         dispatch(setUser({ user: { ...user, image: userInfo?.data?.image }, token: res.data.data.accessToken }));
 
-        toast.success("Logged in successfully", { id: toastId });
+        toast.success("Logged in successfully", { id: toastId, duration: 2000 });
+        navigate("/");
       } else {
-        toast.error(res.error.message, { id: toastId });
+        toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong", {
+          id: toastId,
+          duration: 2000,
+        });
       }
     } catch (error: any) {
-      toast.error(error.message, { id: toastId });
+      toast.error(error.message, { id: toastId, duration: 2000 });
     }
   };
   return (
