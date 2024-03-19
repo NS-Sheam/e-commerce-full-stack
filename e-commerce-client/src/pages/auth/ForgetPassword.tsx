@@ -21,7 +21,7 @@ const ForgetPassword = () => {
       const res = (await forgetPassword(data)) as TReduxResponse<any>;
 
       if (!res.error) {
-        toast.success("Password changed successfully", { id: toastId, duration: 2000 });
+        toast.success("Check your email for reset password link", { id: toastId, duration: 2000 });
         setSentEmail(true);
       } else {
         toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong", {

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import config from "../config";
 
 export const sendEmail = async (
-  clientUrl: string,
+  resetUrlLink: string,
   email: string,
   heading: string,
   buttonText: string,
@@ -16,6 +16,9 @@ export const sendEmail = async (
       user: config.email_user,
       pass: config.email_password,
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
   // send mail with defined transport object
@@ -24,6 +27,6 @@ export const sendEmail = async (
     to: email, // list of receivers
     subject: heading, // Subject line
     text: "", // plain text body
-    html: `<p>${message}</p><a href="${clientUrl}">${buttonText}</a>`, // html body
+    html: `<p>${message}</p><a href="${resetUrlLink}">${buttonText}</a>`, // html body
   });
 };

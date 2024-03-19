@@ -6,12 +6,14 @@ import { useLocation } from "react-router-dom";
 import EComForm from "../../components/form/EComForm";
 import EComInput from "../../components/form/EComInput";
 import { useResetPasswordMutation } from "../../redux/features/auth/auth.api";
+import { verifyToken } from "../../utils/verifyToken";
 
 const ResetPassword = () => {
   const [resetPassword] = useResetPasswordMutation();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token") || "";
+  const { email } = verifyToken(token) as any;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Resetting password...");
@@ -55,6 +57,8 @@ const ResetPassword = () => {
                       type="email"
                       name="email"
                       label="Email"
+                      disabled
+                      defaultValue={email}
                     />
                   </Col>
                   <Col span={24}>
