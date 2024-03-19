@@ -11,6 +11,7 @@ import { TUserPath } from "../types/dashboardItem.type";
 import AddProduct from "../pages/dashboard/vendor/AddProduct";
 import Products from "../pages/dashboard/vendor/Products";
 import Categories from "../pages/dashboard/admin/Categories";
+import Users from "../pages/dashboard/admin/Users";
 
 export const adminDashboardItems: TUserPath[] = [
   {
@@ -62,8 +63,8 @@ export const adminDashboardItems: TUserPath[] = [
     element: <div>Orders</div>,
   },
   {
-    path: "make-vendor",
-    name: "Make Vendor",
+    path: "Users",
+    name: "Users",
     icon: (
       <img
         src={makeVendor}
@@ -71,7 +72,7 @@ export const adminDashboardItems: TUserPath[] = [
         className="w-6 h-6"
       />
     ),
-    element: <div>Make Vendor</div>,
+    element: <Users />,
   },
   {
     path: "categories",

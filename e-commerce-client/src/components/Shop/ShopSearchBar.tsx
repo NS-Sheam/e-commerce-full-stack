@@ -3,9 +3,10 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 
 type TShopSearchBarProps = {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  [key: string]: any;
 };
 
-const ShopSearchBar = ({ setSearchTerm }: TShopSearchBarProps) => {
+const ShopSearchBar = ({ setSearchTerm, ...remaining }: TShopSearchBarProps) => {
   return (
     <Col
       span={24}
@@ -13,9 +14,9 @@ const ShopSearchBar = ({ setSearchTerm }: TShopSearchBarProps) => {
       className="shop-searchbar relative w-full"
     >
       <Input
+        {...remaining}
         onChange={(e) => setSearchTerm(e.target.value)}
         type="text"
-        placeholder="Enter your search keyword here..."
         className="w-full h-12 px-4 rounded-sm"
       />
       <div className="absolute inset-y-0 right-0 px-6 flex items-center bg-slate-200 cursor-pointer">

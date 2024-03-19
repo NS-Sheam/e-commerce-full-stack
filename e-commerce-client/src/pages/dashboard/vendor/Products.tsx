@@ -31,7 +31,7 @@ const Products = () => {
     });
   }
 
-  const { data: products, isLoading: pIsLoading } = useGetProductsQuery(searchQuery);
+  const { data: products, isLoading: pIsLoading, isFetching: pIsFetching } = useGetProductsQuery(searchQuery);
 
   return (
     <div className="p-4">
@@ -52,7 +52,7 @@ const Products = () => {
         gutter={[12, 12]}
         style={{ padding: "14px 0" }}
       >
-        {pIsLoading && (
+        {pIsFetching || pIsLoading ? (
           <Flex
             justify="center"
             align="center"
@@ -60,23 +60,24 @@ const Products = () => {
           >
             <Spin size="large" />
           </Flex>
+        ) : (
+          products?.data?.map((product) => (
+            <Col
+              xs={24}
+              sm={12}
+              md={8}
+              lg={6}
+              key={product._id}
+            >
+              <ProductCard product={product} />
+            </Col>
+          ))
         )}
-        {products?.data?.map((product) => (
-          <Col
-            xs={24}
-            sm={12}
-            md={8}
-            lg={6}
-            key={product._id}
-          >
-            <ProductCard product={product} />
-          </Col>
-        ))}
       </Row>
       <ShopPagination
         page={page}
         setPage={setPage}
-        meta={products!.meta!}
+        meta={products?.meta && (products.meta! as any)}
       />
     </div>
   );
