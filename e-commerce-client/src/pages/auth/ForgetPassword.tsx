@@ -15,7 +15,7 @@ const ForgetPassword = () => {
   const [forgetPassword] = useForgetPasswordMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const toastId = toast.loading("Changing password...");
+    const toastId = toast.loading("Sending reset password link...");
 
     try {
       const res = (await forgetPassword(data)) as TReduxResponse<any>;
