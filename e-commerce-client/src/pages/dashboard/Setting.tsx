@@ -1,26 +1,39 @@
-import { Button, Col, Row } from "antd";
+import { Button, Col, Flex, Row } from "antd";
 import DashboardHeading from "../../components/ui/DashboardHeading";
 import EComForm from "../../components/form/EComForm";
 import EComInput from "../../components/form/EComInput";
 import EComProfileImageUploader from "../../components/form/EComProfileImageUploader";
-import { useState } from "react";
 import { useGetMyInfoQuery } from "../../redux/features/auth/auth.api";
+import { useNavigate } from "react-router-dom";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Setting = () => {
-  const [showImageInput, setShowImageInput] = useState(false);
+  const navigate = useNavigate();
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
-  console.log(myInfo);
   if (isMyInfoLoading || isMyInfoFetching) {
     return <div>Loading...</div>;
   }
 
-  const submitHandler = (data: any) => {
-    console.log(data);
+
+
+  const defaultValues = {
+    userName: myInfo?.userName,
+    name: {
+      firstName: myInfo?.name?.firstName,
+      middleName: myInfo?.name?.middleName,
+      lastName: myInfo?.name?.lastName,
+    },
+    email: myInfo?.email,
+    mobileNo: myInfo?.mobileNo,
+  };
+
+  const submitHandler: SubmitHandler<FieldValues> = async(data) => {
+    const userInfo = myInfo?.user?.
   };
   return (
-    <div className="p-4">
+    <div className="p-4 space-y-4">
       <DashboardHeading>
-        <h3>Shopping Cart</h3>
+        <h3>Setting</h3>
       </DashboardHeading>
       <Row
         justify="center"
@@ -30,24 +43,16 @@ const Setting = () => {
         <Col span={24}>
           <EComForm
             onSubmit={submitHandler}
-            defaultValues={myInfo}
+            defaultValues={defaultValues}
           >
             <Col
               span={24}
               md={{ span: 12 }}
             >
-              {showImageInput ? (
-                <EComProfileImageUploader
-                  name="image"
-                  label="Image"
-                />
-              ) : (
-                <img
-                  src={myInfo?.image}
-                  alt="profile"
-                  style={{ width: "100px", height: "100px" }}
-                />
-              )}
+              <EComProfileImageUploader
+                name="image"
+                defaultImageUrl={myInfo?.image}
+              />
             </Col>
             <Row gutter={8}>
               <Col
@@ -111,12 +116,26 @@ const Setting = () => {
                 />
               </Col>{" "}
             </Row>
-            <Button
-              htmlType="submit"
-              style={{ width: "100%", backgroundColor: "#fa8232", color: "white", fontWeight: "bold" }}
+            <Flex
+              justify="space-between"
+              align="middle"
+              gap="middle"
             >
-              Register
-            </Button>
+              <Button
+                onClick={() => {
+                  navigate("/auth/change-password");
+                }}
+                style={{ width: "20%", backgroundColor: "#fa8232", color: "white", fontWeight: "bold" }}
+              >
+                Change Password
+              </Button>
+              <Button
+                htmlType="submit"
+                style={{ width: "20%", backgroundColor: "#fa8232", color: "white", fontWeight: "bold" }}
+              >
+                Update
+              </Button>
+            </Flex>
           </EComForm>
         </Col>
       </Row>

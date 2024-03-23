@@ -14,7 +14,7 @@ router.get(
 );
 router.get("/", auth(USER_TYPE.admin), vendorControllers.getAllVendors);
 router.patch(
-  "/:id",
+  "/",
   auth(USER_TYPE.admin, USER_TYPE.vendor),
   validateRequest(VendorValidations.updateVendorValidationSchema),
   vendorControllers.updateVendor,

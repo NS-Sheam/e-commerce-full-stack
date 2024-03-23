@@ -27,9 +27,9 @@ const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { userId } = req.user;
   const { customer } = req.body;
-  const result = await CustomerServices.updateCustomer(id, customer);
+  const result = await CustomerServices.updateCustomer(userId, customer);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

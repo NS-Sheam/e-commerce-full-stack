@@ -30,11 +30,8 @@ const getSingleCustomer = async (customerId: string) => {
   return result;
 };
 
-const updateCustomer = async (
-  customerId: string,
-  payload: Partial<TCustomer>,
-) => {
-  const { name, ...remaining } = payload;
+const updateCustomer = async (userId: string, payload: Partial<TCustomer>) => {
+  const { name, email, userName, ...remaining } = payload;
 
   const modifiedObject: Record<string, unknown> = {
     ...remaining,
@@ -45,10 +42,47 @@ const updateCustomer = async (
       modifiedObject[`name.${key}`] = value;
     }
   }
-  const result = Customer.findByIdAndUpdate(customerId, modifiedObject, {
-    new: true,
-  });
-  return result;
+  const userObject: Record<string, unknown> = {};
+
+  const userData = await User.findById(userId);
+  if (!userData) {
+    throw new AppError(httpStatus.NOT_FOUND, "Customer not found");
+  }
+
+  if (email) {
+    modifiedObject.email = email;
+    userObject.email = email;
+  }
+  if (userName) {
+    userObject.userName = userName;
+  }
+  const session = await mongoose.startSession();
+  try {
+    await session.startTransaction();
+    const user = await User.findByIdAndUpdate({ _id: userId }, userObject, {
+      new: true,
+      session,
+    });
+
+    if (!user) {
+      throw new AppError(httpStatus.BAD_REQUEST, "User update failed");
+    }
+    const result = await Customer.findOneAndUpdate(
+      { user: user._id },
+      modifiedObject,
+      { new: true, session },
+    );
+    if (!result) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Customer update failed");
+    }
+    await session.commitTransaction();
+    await session.endSession();
+    return result;
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw error;
+  }
 };
 
 const updateWishList = async (

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 type TEComProfileImageUploaderProps = {
   name: string;
-  label: string;
+  label?: string;
   defaultImageUrl?: string; // Add defaultImageUrl as an optional prop
 };
 

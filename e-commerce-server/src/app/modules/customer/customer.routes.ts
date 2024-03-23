@@ -23,7 +23,7 @@ router.patch(
   CustomerControllers.updateShoppingCart,
 );
 router.patch(
-  "/:id",
+  "/",
   auth(USER_TYPE.admin, USER_TYPE.customer),
   validateRequest(CustomerValidations.updateCustomerValidationSchema),
   CustomerControllers.updateCustomer,

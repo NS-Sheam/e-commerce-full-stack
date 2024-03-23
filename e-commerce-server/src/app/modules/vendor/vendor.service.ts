@@ -4,6 +4,8 @@ import { TVendor } from "./vendor.interface";
 import { Vendor } from "./vendor.model";
 import { User } from "../user/user.model";
 import { vendorSearchableFields } from "./vendor.const";
+import httpStatus from "http-status";
+import AppError from "../../errors/AppError";
 
 const getAllVendors = async (query: Record<string, unknown>) => {
   const vendorQuery = new QueryBuilder(Vendor.find(), query)
@@ -22,8 +24,8 @@ const getSingleVendor = async (vendorId: string) => {
   return result;
 };
 
-const updateVendor = async (vendorId: string, payload: Partial<TVendor>) => {
-  const { name, ...remaining } = payload;
+const updateVendor = async (userId: string, payload: Partial<TVendor>) => {
+  const { name, email, userName, ...remaining } = payload;
 
   const modifiedObject: Record<string, unknown> = {
     ...remaining,
@@ -33,11 +35,46 @@ const updateVendor = async (vendorId: string, payload: Partial<TVendor>) => {
     for (const [key, value] of Object.entries(name)) {
       modifiedObject[`name.${key}`] = value;
     }
+    const userObject: Record<string, unknown> = {};
+    const userData = await User.findById(userId);
+    if (!userData) {
+      throw new AppError(httpStatus.NOT_FOUND, "Vendor not found");
+    }
 
-    const result = Vendor.findByIdAndUpdate(vendorId, modifiedObject, {
-      new: true,
-    });
-    return result;
+    if (email) {
+      modifiedObject.email = email;
+      userObject.email = email;
+    }
+    if (userName) {
+      userObject.userName = userName;
+    }
+    const session = await mongoose.startSession();
+    try {
+      await session.startTransaction();
+      const user = await User.findByIdAndUpdate({ _id: userId }, userObject, {
+        new: true,
+        session,
+      });
+
+      if (!user) {
+        throw new AppError(httpStatus.BAD_REQUEST, "User update failed");
+      }
+      const result = await Vendor.findOneAndUpdate(
+        { user: user._id },
+        modifiedObject,
+        { new: true, session },
+      );
+      if (!result) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Vendor update failed");
+      }
+      await session.commitTransaction();
+      await session.endSession();
+      return result;
+    } catch (error) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw error;
+    }
   }
 };
 

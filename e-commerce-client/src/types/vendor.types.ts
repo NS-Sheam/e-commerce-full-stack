@@ -1,8 +1,8 @@
-import { TName } from ".";
+import { TName, TUserData } from ".";
 
 export type TVendor = {
   _id: string;
-  user: string;
+  user: TUserData;
   userName: string;
   name: TName;
   email: string;

@@ -24,8 +24,8 @@ const getSingleAdmin = async (adminId: string) => {
   return result;
 };
 
-const updateAdmin = async (adminId: string, payload: Partial<TAdmin>) => {
-  const { name, ...remaining } = payload;
+const updateAdmin = async (userId: string, payload: Partial<TAdmin>) => {
+  const { name, email, userName, ...remaining } = payload;
 
   const modifiedObject: Record<string, unknown> = {
     ...remaining,
@@ -35,11 +35,47 @@ const updateAdmin = async (adminId: string, payload: Partial<TAdmin>) => {
     for (const [key, value] of Object.entries(name)) {
       modifiedObject[`name.${key}`] = value;
     }
+    const userObject: Record<string, unknown> = {};
 
-    const result = Admin.findByIdAndUpdate(adminId, modifiedObject, {
-      new: true,
-    });
-    return result;
+    const userData = await User.findById(userId);
+    if (!userData) {
+      throw new AppError(httpStatus.NOT_FOUND, "Admin not found");
+    }
+
+    if (email) {
+      modifiedObject.email = email;
+      userObject.email = email;
+    }
+    if (userName) {
+      userObject.userName = userName;
+    }
+    const session = await mongoose.startSession();
+    try {
+      await session.startTransaction();
+      const user = await User.findByIdAndUpdate({ _id: userId }, userObject, {
+        new: true,
+        session,
+      });
+
+      if (!user) {
+        throw new AppError(httpStatus.BAD_REQUEST, "User update failed");
+      }
+      const result = await Admin.findOneAndUpdate(
+        { user: user._id },
+        modifiedObject,
+        { new: true, session },
+      );
+      if (!result) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Admin update failed");
+      }
+      await session.commitTransaction();
+      await session.endSession();
+      return result;
+    } catch (error) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw error;
+    }
   }
 };
 
