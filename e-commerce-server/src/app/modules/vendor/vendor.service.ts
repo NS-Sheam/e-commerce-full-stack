@@ -47,6 +47,7 @@ const updateVendor = async (userId: string, payload: Partial<TVendor>) => {
     }
     if (userName) {
       userObject.userName = userName;
+      modifiedObject.userName = userName;
     }
     const session = await mongoose.startSession();
     try {

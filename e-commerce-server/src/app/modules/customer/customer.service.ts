@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose, { Types } from "mongoose";
 import { TCustomer } from "./customer.interface";
 import { Customer } from "./customer.model";
@@ -6,6 +7,7 @@ import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { customerSearchableFields } from "./customer.const";
+import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 
 const getAllCustomers = async (query: Record<string, unknown>) => {
   const customerQuery = new QueryBuilder(
@@ -30,7 +32,11 @@ const getSingleCustomer = async (customerId: string) => {
   return result;
 };
 
-const updateCustomer = async (userId: string, payload: Partial<TCustomer>) => {
+const updateCustomer = async (
+  file: any,
+  userId: string,
+  payload: Partial<TCustomer>,
+) => {
   const { name, email, userName, ...remaining } = payload;
 
   const modifiedObject: Record<string, unknown> = {
@@ -55,6 +61,14 @@ const updateCustomer = async (userId: string, payload: Partial<TCustomer>) => {
   }
   if (userName) {
     userObject.userName = userName;
+    modifiedObject.userName = userName;
+  }
+  if (file) {
+    const { secure_url } = await sendImageToCloudinary(
+      userData.userName,
+      file?.path,
+    );
+    modifiedObject.image = secure_url;
   }
   const session = await mongoose.startSession();
   try {

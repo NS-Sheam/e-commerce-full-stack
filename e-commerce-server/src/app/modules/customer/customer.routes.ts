@@ -4,6 +4,8 @@ import validateRequest from "../../middlewares/validateRequest";
 import { CustomerValidations } from "./customer.validation";
 import auth from "../../middlewares/auth";
 import { USER_TYPE } from "../user/user.const";
+import { upload } from "../../utils/sendImageToCloudinary";
+import textToJsonParser from "../../middlewares/textToJsonParser";
 
 const router = Router();
 router.get(
@@ -25,6 +27,8 @@ router.patch(
 router.patch(
   "/",
   auth(USER_TYPE.admin, USER_TYPE.customer),
+  upload.single("file"),
+  textToJsonParser,
   validateRequest(CustomerValidations.updateCustomerValidationSchema),
   CustomerControllers.updateCustomer,
 );

@@ -6,15 +6,16 @@ import EComProfileImageUploader from "../../components/form/EComProfileImageUplo
 import { useGetMyInfoQuery } from "../../redux/features/auth/auth.api";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/auth/auth.Slice";
 
 const Setting = () => {
   const navigate = useNavigate();
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
+  const user = useAppSelector(selectCurrentUser);
   if (isMyInfoLoading || isMyInfoFetching) {
     return <div>Loading...</div>;
   }
-
-
 
   const defaultValues = {
     userName: myInfo?.userName,
@@ -27,8 +28,14 @@ const Setting = () => {
     mobileNo: myInfo?.mobileNo,
   };
 
-  const submitHandler: SubmitHandler<FieldValues> = async(data) => {
-    const userInfo = myInfo?.user?.
+  const submitHandler: SubmitHandler<FieldValues> = async (data) => {
+    const userInfo: Record<string, unknown> = {};
+    userInfo[user?.userType as string] = { ...data };
+    const formData = new FormData();
+    formData.append("userInfo", JSON.stringify(userInfo));
+    if (data.image[0]) {
+      formData.append("image", data.image[0]);
+    }
   };
   return (
     <div className="p-4 space-y-4">
