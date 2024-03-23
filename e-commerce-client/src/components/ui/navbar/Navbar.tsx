@@ -6,6 +6,7 @@ import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "antd";
 import logo from "../../../assets/icons/nazmus-sakib.png";
+import { RxCross2 } from "react-icons/rx";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const userData = useAppSelector(selectCurrentUser);
@@ -45,7 +46,7 @@ const Navbar = () => {
           <img
             src={userData.image}
             alt="user"
-            className="m-auto border-white border-2 w-10 h-10 rounded-full bg-white "
+            className="m-auto border-white border-2 w-7 md:w-10 h-7 md:h-10 rounded-full bg-white "
           />
         </Link>
       ) : (
@@ -85,7 +86,9 @@ const Navbar = () => {
   return (
     <section className="bg-primary ">
       <div className="text-sm lg:text-xl text-center lg:flex items-center justify-between inner-container lg:py-1">
-        <p className="text-white font-semibold text-base">Welcome to Next Shop, the best online shopping site</p>
+        <p className="text-white font-semibold text-xs md:text-base">
+          Welcome to Next Shop, the best online shopping site
+        </p>
         <p className="flex items-center justify-center gap-2">
           <span className=" text-white text-base">Follow Us:</span>
           {followIcons.map((item) => (
@@ -102,7 +105,7 @@ const Navbar = () => {
       <div className="relative grid grid-cols-5 justify-between py-1 inner-container">
         <div
           onClick={() => navigate("/")}
-          className="flex justify-center items-center gap-2 col-span-1 text-white font-bold  lg:text-xl cursor-pointer"
+          className="flex justify-center items-center gap-2 col-span-2 md:col-span-1 cursor-pointer"
         >
           <img
             src={logo}
@@ -110,9 +113,9 @@ const Navbar = () => {
             style={{
               border: "2px solid #fa8232",
             }}
-            className="w-12 h-12 rounded-full bg-white"
+            className="w-8 md:w-12 h-8 md:h-12 rounded-full bg-white"
           />
-          <h2>
+          <h2 className="font-bold text-white text-sm md:text-xl">
             <span className="text-orange">Next</span> Shop
           </h2>
         </div>
@@ -122,6 +125,10 @@ const Navbar = () => {
             showSearch ? "block" : "hidden lg:block"
           }`}
         >
+          <RxCross2
+            onClick={() => setShowSearch(!showSearch)}
+            className="md:hidden absolute cursor-pointer z-20 -left-5 top-1/2 -translate-y-1/2"
+          />
           <Input
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
@@ -144,10 +151,10 @@ const Navbar = () => {
             />
           </div>
         </div>
-        <div className="flex justify-end items-center gap-8 col-span-4 lg:col-span-1 text-3xl font-bold">
+        <div className="flex justify-end items-center gap-8 col-span-3 md:col-span-1 text-xl md:text-3xl font-bold">
           {rightMenu.map((item) => (
             <div
-              className="flex justify-center items-center w-4 lg:w-10 h-4 lg:h-10 rounded-full hover:bg-white text-white hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
+              className="flex justify-center items-center lg:w-10 h-4 md:h-10 rounded-full md:hover:bg-white text-white md:hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
               key={item.name}
             >
               {item.icon}

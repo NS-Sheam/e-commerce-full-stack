@@ -14,9 +14,11 @@ const createProductValidationSchema = z.object({
     price: z.number({
       required_error: "Product price is required",
     }),
-    category: z.string({
-      required_error: "Product category is required",
-    }),
+    category: z.array(
+      z.string({
+        required_error: "Product category is required",
+      }),
+    ),
     inventory: z.object({
       quantity: z.number({
         required_error: "Product quantity is required",
@@ -34,7 +36,7 @@ const updateProductValidationSchema = z.object({
     brand: z.string().optional(),
     price: z.number().optional(),
     images: z.array(z.string()).optional(),
-    category: z.string().optional(),
+    category: z.array(z.string()).optional(),
     inventory: z
       .object({
         quantity: z.number().optional(),

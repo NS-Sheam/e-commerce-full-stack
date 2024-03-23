@@ -11,7 +11,7 @@ export type TProduct = {
   description: string;
   price: number;
   images: string[];
-  category: Types.ObjectId;
+  category: Types.ObjectId[];
   vendor: Types.ObjectId;
   inventory: TInventory;
   discount?: number;

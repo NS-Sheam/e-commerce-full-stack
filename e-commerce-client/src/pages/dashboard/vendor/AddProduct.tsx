@@ -88,6 +88,7 @@ const AddProduct = () => {
                   <EComSelect
                     label="Category"
                     name="category"
+                    mode="multiple"
                     loading={categoryIsLoading}
                     options={categoryOptions!}
                   />

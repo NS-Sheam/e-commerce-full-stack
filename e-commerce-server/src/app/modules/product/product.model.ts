@@ -39,11 +39,13 @@ const productSchema = new Schema<TProduct>(
       required: true,
     },
     images: [String],
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
+    category: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Category",
+        required: true,
+      },
+    ],
     vendor: {
       type: Schema.Types.ObjectId,
       ref: "Vendor",
