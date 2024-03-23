@@ -10,6 +10,18 @@ const userManagementApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getVendors: builder.query({
+      query: () => ({
+        url: "/vendors",
+        method: "GET",
+      }),
+    }),
+    getAdmins: builder.query({
+      query: () => ({
+        url: "/admins",
+        method: "GET",
+      }),
+    }),
     getMe: builder.query({
       query: () => {
         return {
