@@ -12,6 +12,7 @@ import AddProduct from "../pages/dashboard/vendor/AddProduct";
 import Products from "../pages/dashboard/vendor/Products";
 import Categories from "../pages/dashboard/admin/Categories";
 import Users from "../pages/dashboard/admin/Users";
+import Setting from "../pages/dashboard/Setting";
 
 export const adminDashboardItems: TUserPath[] = [
   {
@@ -108,6 +109,6 @@ export const adminDashboardItems: TUserPath[] = [
         className="w-6 h-6"
       />
     ),
-    element: <div>setting</div>,
+    element: <Setting />,
   },
 ];

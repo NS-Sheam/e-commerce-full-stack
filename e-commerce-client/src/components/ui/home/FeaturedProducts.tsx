@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { TProduct } from "../../../types/product.types";
 import FeatureProductLargeCard from "./FeatureProductLargeCard";
+import { Link } from "react-router-dom";
 
 const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
   const [category, setCategory] = useState("All Products");
@@ -65,9 +66,12 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
                     </Col>
                   ))}
                   <Col span={4}>
-                    <p className="text-xs cursor-pointer text-orange font-semibold flex justify-center items-center gap-2">
+                    <Link
+                      to="/shop"
+                      className=" text-xs cursor-pointer text-orange font-semibold flex justify-center items-center gap-2"
+                    >
                       Show all products <FaArrowRight />
-                    </p>
+                    </Link>
                   </Col>
                 </Row>
               </Col>

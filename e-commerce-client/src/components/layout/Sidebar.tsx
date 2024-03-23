@@ -5,18 +5,6 @@ import logoutIcon from "../../assets/icons/logout.png";
 import { useAppDispatch } from "../../redux/hooks";
 import { logOut } from "../../redux/features/auth/auth.Slice";
 import { NavLink } from "react-router-dom";
-// {
-//   path: "logout",
-//   name: "Logout",
-//   icon: (
-//     <img
-//       src={logoutIcon}
-//       alt="logout"
-//       className="w-6 h-6"
-//     />
-//   ),
-//   element: ,
-// },
 const Sidebar = ({ items }: { items: TSidebarItem[] }) => {
   const dispatch = useAppDispatch();
   const logOutOption = {
@@ -37,6 +25,7 @@ const Sidebar = ({ items }: { items: TSidebarItem[] }) => {
     ),
     key: "logOut",
   };
+
   return (
     <Sider
       style={{ backgroundColor: "#fff" }}

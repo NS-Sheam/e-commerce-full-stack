@@ -17,6 +17,7 @@ import Shop from "../pages/Shop";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
 import ChangePassword from "../pages/auth/ChangePassword";
+import Setting from "../pages/dashboard/Setting";
 
 const router = createBrowserRouter([
   {

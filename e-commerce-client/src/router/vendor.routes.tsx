@@ -8,6 +8,7 @@ import transactionIcon from "../assets/icons/transaction.png";
 import { TUserPath } from "../types/dashboardItem.type";
 import AddProduct from "../pages/dashboard/vendor/AddProduct";
 import Products from "../pages/dashboard/vendor/Products";
+import Setting from "../pages/dashboard/Setting";
 export const vendorDashboardItems: TUserPath[] = [
   {
     path: "home",
@@ -79,6 +80,6 @@ export const vendorDashboardItems: TUserPath[] = [
         className="w-6 h-6"
       />
     ),
-    element: <div>setting</div>,
+    element: <Setting />,
   },
 ];
