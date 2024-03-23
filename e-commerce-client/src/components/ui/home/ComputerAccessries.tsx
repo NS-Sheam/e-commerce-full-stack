@@ -9,7 +9,7 @@ const ComputerAccessories = () => {
   const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
 
   const [category, setCategory] = useState("All Products");
-  const categories = ["All Products", "Electric", "Fashion", "Home & Kitchen", "Health & Beauty"];
+  const categories = ["All Products", "Keyboard", "Mouse", "Headphone", "Printer"];
 
   const productData = pData?.data?.filter((product: TProduct) => {
     if (category === "All Products") {
@@ -42,7 +42,7 @@ const ComputerAccessories = () => {
                 span={24}
                 md={{ span: 4 }}
               >
-                <h3>Featured Products</h3>
+                <h3>Computer Accessries</h3>
               </Col>
               <Col
                 span={24}
