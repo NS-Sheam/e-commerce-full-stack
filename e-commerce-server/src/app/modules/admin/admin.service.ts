@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { TAdmin } from "./admin.interface";
@@ -6,6 +7,7 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { User } from "../user/user.model";
 import { adminSearchableFields } from "./admin.const";
+import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 
 const getAllAdmins = async (query: Record<string, unknown>) => {
   const adminQuery = new QueryBuilder(Admin.find(), query)
@@ -24,7 +26,11 @@ const getSingleAdmin = async (adminId: string) => {
   return result;
 };
 
-const updateAdmin = async (userId: string, payload: Partial<TAdmin>) => {
+const updateAdmin = async (
+  file: any,
+  userId: string,
+  payload: Partial<TAdmin>,
+) => {
   const { name, email, userName, ...remaining } = payload;
 
   const modifiedObject: Record<string, unknown> = {
@@ -49,6 +55,13 @@ const updateAdmin = async (userId: string, payload: Partial<TAdmin>) => {
     if (userName) {
       userObject.userName = userName;
       modifiedObject.userName = userName;
+    }
+    if (file) {
+      const { secure_url } = await sendImageToCloudinary(
+        userData.userName,
+        file?.path,
+      );
+      modifiedObject.image = secure_url;
     }
     const session = await mongoose.startSession();
     try {

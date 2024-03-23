@@ -28,7 +28,7 @@ const getSingleVendor = catchAsync(async (req: Request, res: Response) => {
 const updateVendor = catchAsync(async (req: Request, res: Response) => {
   const { userId } = req.user;
   const { vendor } = req.body;
-  const result = await vendorServices.updateVendor(userId, vendor);
+  const result = await vendorServices.updateVendor(req.file, userId, vendor);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

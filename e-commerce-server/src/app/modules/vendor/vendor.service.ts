@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { TVendor } from "./vendor.interface";
@@ -6,6 +7,7 @@ import { User } from "../user/user.model";
 import { vendorSearchableFields } from "./vendor.const";
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
+import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 
 const getAllVendors = async (query: Record<string, unknown>) => {
   const vendorQuery = new QueryBuilder(Vendor.find(), query)
@@ -24,7 +26,11 @@ const getSingleVendor = async (vendorId: string) => {
   return result;
 };
 
-const updateVendor = async (userId: string, payload: Partial<TVendor>) => {
+const updateVendor = async (
+  file: any,
+  userId: string,
+  payload: Partial<TVendor>,
+) => {
   const { name, email, userName, ...remaining } = payload;
 
   const modifiedObject: Record<string, unknown> = {
@@ -48,6 +54,13 @@ const updateVendor = async (userId: string, payload: Partial<TVendor>) => {
     if (userName) {
       userObject.userName = userName;
       modifiedObject.userName = userName;
+    }
+    if (file) {
+      const { secure_url } = await sendImageToCloudinary(
+        userData.userName,
+        file?.path,
+      );
+      modifiedObject.image = secure_url;
     }
     const session = await mongoose.startSession();
     try {
