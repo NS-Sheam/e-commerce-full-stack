@@ -154,7 +154,10 @@ const Shop = () => {
           gutter={[16, 16]}
           justify="space-between"
         >
-          <ShopSearchBar setSearchTerm={setSearchTerm} />
+          <ShopSearchBar
+            placeholder="Search for products"
+            setSearchTerm={setSearchTerm}
+          />
           <Col
             span={24}
             md={{ span: 6 }}
