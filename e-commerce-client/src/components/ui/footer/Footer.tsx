@@ -4,11 +4,11 @@ import { AppStoreButton, GooglePlayButton } from "react-mobile-app-button";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
+import logo from "../../../assets/icons/nazmus-sakib.png";
 
 const Footer = () => {
   const navigate = useNavigate();
   const user = useAppSelector(selectCurrentUser);
-  console.log(user);
 
   return (
     <section
@@ -17,11 +17,26 @@ const Footer = () => {
       } items-center justify-between gap-4`}
     >
       <div className="space-y-1">
-        <h3 className="text-2xl font-bold text-warning my-3">Logo</h3>
-        <p className="font-light">Customer Support</p>
-        <p className="">099993333</p>
-        <p className="font-light">4517 Washington Ave. Manchester, Kentucky 39495</p>
-        <p className="">info@gmail.com</p>
+        <div
+          onClick={() => navigate("/")}
+          className="flex flex-col justify-center items-start gap-2 col-span-2 md:col-span-1 cursor-pointer"
+        >
+          <img
+            src={logo}
+            alt="logo"
+            style={{
+              border: "2px solid #fa8232",
+            }}
+            className=" w-8 md:w-12 h-8 md:h-12 rounded-full bg-white"
+          />
+          <h2 className="font-bold text-white text-sm md:text-xl">
+            <span className="text-orange">Next</span> Shop
+          </h2>
+        </div>
+        <h3 className="text-xl font-bold">Customer Support</h3>
+        <p>+01800011122</p>
+        <p>Mirpur, Dhaka, Bangladesh</p>
+        <p>next-shop@gmail.com</p>
       </div>
       <div className="space-y-1 flex items-start flex-col">
         <h3 className="text-xl font-bold">Top Category</h3>
