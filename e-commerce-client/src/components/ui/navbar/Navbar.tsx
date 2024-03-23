@@ -107,7 +107,10 @@ const Navbar = () => {
           <img
             src={logo}
             alt="logo"
-            className="w-12 h-12 shadow-md rounded-full bg-white"
+            style={{
+              border: "2px solid #fa8232",
+            }}
+            className="w-12 h-12 rounded-full bg-white"
           />
           <h2>
             <span className="text-orange">Next</span> Shop
