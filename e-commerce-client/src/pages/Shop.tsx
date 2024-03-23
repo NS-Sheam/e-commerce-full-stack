@@ -167,7 +167,7 @@ const Shop = () => {
               <Col span={4}>
                 <CiFilter
                   onClick={() => setShowFilter(!showFilter)}
-                  className="text-orange text-4xl font-bold"
+                  className="text-orange text-4xl font-bold md:hidden"
                 />
               </Col>
 

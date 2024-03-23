@@ -58,7 +58,7 @@ const createCustomer = async (password: string, payload: TCustomer) => {
  */
 
 // create customer with image file upload
-const createCustomer = async (
+const   = async (
   file: any,
   password: string,
   payload: TCustomer,

@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "antd";
-
+import logo from "../../../assets/icons/nazmus-sakib.png";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const userData = useAppSelector(selectCurrentUser);
@@ -84,10 +84,10 @@ const Navbar = () => {
 
   return (
     <section className="bg-primary ">
-      <div className="text-sm lg:text-xl text-center lg:flex items-center justify-between lg:py-2 inner-container">
-        <p className="text-white">Welcome to My-commerce online e-commerce store</p>
+      <div className="text-sm lg:text-xl text-center lg:flex items-center justify-between inner-container lg:py-1">
+        <p className="text-white font-semibold text-base">Welcome to Next Shop, the best online shopping site</p>
         <p className="flex items-center justify-center gap-2">
-          <span className=" text-white">Follow Us:</span>
+          <span className=" text-white text-base">Follow Us:</span>
           {followIcons.map((item) => (
             <span
               key={item.name}
@@ -99,18 +99,19 @@ const Navbar = () => {
         </p>
       </div>
       <hr className="bg-white h-[1px]" />
-      <div className="relative grid grid-cols-5 justify-between py-2 inner-container">
+      <div className="relative grid grid-cols-5 justify-between py-1 inner-container">
         <div
           onClick={() => navigate("/")}
-          className="flex justify-start items-center gap-2 col-span-1 text-white font-bold text-xl lg:text-2xl cursor-pointer"
+          className="flex justify-center items-center gap-2 col-span-1 text-white font-bold  lg:text-xl cursor-pointer"
         >
-          <h2
-            className="bg-white rounded-full p-1 lg:w-12 lg:h-12 flex justify-center items-center"
-            style={{ color: "#f44336" }}
-          >
-            2
+          <img
+            src={logo}
+            alt="logo"
+            className="w-12 h-12 shadow-md rounded-full bg-white"
+          />
+          <h2>
+            <span className="text-orange">Next</span> Shop
           </h2>
-          <h2>ClickMe</h2>
         </div>
 
         <div

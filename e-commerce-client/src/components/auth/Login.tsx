@@ -77,6 +77,13 @@ const Login = () => {
                   name="password"
                   label="Password"
                 />
+                <Button
+                  onClick={() => navigate("/auth/forget-password")}
+                  type="link"
+                  style={{ float: "left", margin: "0 0 0.5rem 0" }}
+                >
+                  Forgot Password?
+                </Button>
               </Col>
             </Row>
             <Button
