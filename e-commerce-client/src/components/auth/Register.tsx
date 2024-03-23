@@ -39,7 +39,10 @@ const Register = () => {
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(userInfo));
-    if (data.image) formData.append("file", data.image?.originFileObj);
+    if (data.image) {
+      formData.append("file", data.image?.originFileObj);
+      delete data.image;
+    }
     try {
       const res = (await registerUser(formData)) as TReduxResponse<any>;
       if (!res.error) {

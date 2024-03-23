@@ -14,6 +14,7 @@ const customerApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["customer"],
     }),
     getSingleCustomer: builder.query({
       query: (customerId: string) => ({
@@ -21,14 +22,16 @@ const customerApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: TReduxResponse<TCustomer>) => response.data,
+      providesTags: ["customer"],
     }),
     updateCustomer: builder.mutation({
-      query: (data: { customer: Partial<TCustomer> }) => ({
+      query: (data: any) => ({
         url: "/customers",
         method: "PATCH",
         body: data,
       }),
       transformResponse: (response: TReduxResponse<TCustomer>) => response.data,
+      invalidatesTags: ["customer", "user"],
     }),
     deleteCustomer: builder.mutation({
       query: (customerId: string) => ({
@@ -36,6 +39,7 @@ const customerApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       transformResponse: (response: TReduxResponse<TCustomer>) => response.data,
+      invalidatesTags: ["customer", "user"],
     }),
   }),
 });

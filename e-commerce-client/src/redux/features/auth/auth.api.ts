@@ -59,6 +59,7 @@ const authApi = baseApi.injectEndpoints({
       transformResponse: (response: TReduxResponse<TCustomer | TVendor | TAdmin>) => {
         return response.data;
       },
+      providesTags: ["user", "customer", "vendor", "admin"],
     }),
   }),
 });

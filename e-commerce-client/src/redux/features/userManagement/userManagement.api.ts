@@ -29,7 +29,7 @@ const userManagementApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["wishlist", "customer", "user"],
+      providesTags: ["wishlist", "customer", "user", "vendor", "admin"],
       transformResponse: (response: TReduxResponse<TUser>) => response.data,
     }),
     updateWishList: builder.mutation({

@@ -14,6 +14,7 @@ const adminApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["admin"],
     }),
     getSingleAdmin: builder.query({
       query: (adminId: string) => ({
@@ -21,14 +22,16 @@ const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: TReduxResponse<TAdmin>) => response.data,
+      providesTags: ["admin"],
     }),
     updateAdmin: builder.mutation({
-      query: (data: { admin: Partial<TAdmin> }) => ({
+      query: (data: any) => ({
         url: "/admins",
         method: "PATCH",
         body: data,
       }),
       transformResponse: (response: TReduxResponse<TAdmin>) => response.data,
+      invalidatesTags: ["admin", "user"],
     }),
     deleteAdmin: builder.mutation({
       query: (adminId: string) => ({
@@ -36,6 +39,7 @@ const adminApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       transformResponse: (response: TReduxResponse<TAdmin>) => response.data,
+      invalidatesTags: ["admin", "user"],
     }),
   }),
 });

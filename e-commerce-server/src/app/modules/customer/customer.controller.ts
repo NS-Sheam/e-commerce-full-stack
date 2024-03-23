@@ -29,6 +29,7 @@ const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
 const updateCustomer = catchAsync(async (req: Request, res: Response) => {
   const { userId } = req.user;
   const { customer } = req.body;
+
   const result = await CustomerServices.updateCustomer(
     req.file,
     userId,

@@ -14,6 +14,7 @@ const vendorApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["vendor"],
     }),
     getSingleVendor: builder.query({
       query: (vendorId: string) => ({
@@ -21,14 +22,16 @@ const vendorApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: TReduxResponse<TVendor>) => response.data,
+      providesTags: ["vendor"],
     }),
     updateVendor: builder.mutation({
-      query: (data: { vendor: Partial<TVendor> }) => ({
+      query: (data: any) => ({
         url: "/vendors",
         method: "PATCH",
         body: data,
       }),
       transformResponse: (response: TReduxResponse<TVendor>) => response.data,
+      invalidatesTags: ["vendor", "user"],
     }),
     deleteVendor: builder.mutation({
       query: (vendorId: string) => ({
@@ -36,6 +39,7 @@ const vendorApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       transformResponse: (response: TReduxResponse<TVendor>) => response.data,
+      invalidatesTags: ["vendor", "user"],
     }),
   }),
 });

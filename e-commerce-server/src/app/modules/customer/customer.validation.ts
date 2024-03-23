@@ -51,7 +51,6 @@ const updateCustomerValidationSchema = z.object({
       mobileNo: z.string().optional(),
       wishList: z.array(z.string()).optional(),
       shoppingCart: z.array(z.string()).optional(),
-      image: z.string().optional(),
       isDeleted: z.boolean().optional(),
     }),
   }),
