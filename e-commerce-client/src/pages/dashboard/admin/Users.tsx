@@ -10,6 +10,7 @@ import { useGetAllAdminsQuery } from "../../../redux/features/admin/admin.api";
 import { useGetAllCustomersQuery } from "../../../redux/features/customer/customer.api";
 import { useGetAllVendorsQuery } from "../../../redux/features/vendor/vendor.api";
 import ShopPagination from "../../../components/Shop/ShopPagination";
+import UserHeading from "../../../components/users/UserHeading";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -98,6 +99,11 @@ const Users = () => {
 
   return (
     <div className="min-h-screen space-y-4">
+      <UserHeading
+        userType={userType}
+        setUserType={setUserType}
+        setSearchTerm={setSearchTerm}
+      />
       <Table
         columns={columns}
         loading={isCustomerFetching || isVendorFetching || isAFetching}

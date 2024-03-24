@@ -1,4 +1,17 @@
-const UserHeading = ({ userType, setUserType, setSearchTerm }) => {
+import { Col, Row } from "antd";
+import ShopSearchBar from "../Shop/ShopSearchBar";
+import DashboardHeading from "../ui/DashboardHeading";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/auth/auth.Slice";
+
+type TUserHeadingProps = {
+  userType: string;
+  setUserType: React.Dispatch<React.SetStateAction<string>>;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const UserHeading = ({ userType, setUserType, setSearchTerm }: TUserHeadingProps) => {
+  const user = useAppSelector(selectCurrentUser);
   return (
     <DashboardHeading>
       <ShopSearchBar
