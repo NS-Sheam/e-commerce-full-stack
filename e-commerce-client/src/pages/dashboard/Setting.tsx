@@ -7,7 +7,7 @@ import { useGetMyInfoQuery } from "../../redux/features/auth/auth.api";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { logOut, selectCurrentUser } from "../../redux/features/auth/auth.Slice";
+import { logOut, selectCurrentUser, setUser, useCurrentToken } from "../../redux/features/auth/auth.Slice";
 import { useUpdateCustomerMutation } from "../../redux/features/customer/customer.api";
 import { useUpdateVendorMutation } from "../../redux/features/vendor/vendor.api";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ const Setting = () => {
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
 
   const user = useAppSelector(selectCurrentUser);
+  const token = useAppSelector(useCurrentToken);
   const [updateCustomer] = useUpdateCustomerMutation();
   const [updateVendor] = useUpdateVendorMutation();
   const [updateAdmin] = useUpdateAdminMutation();
@@ -57,6 +58,9 @@ const Setting = () => {
           : ((await updateAdmin(formData)) as TReduxResponse<TAdmin>);
 
       if (!res.error) {
+        if (data?.image) {
+          dispatch(setUser({ user: { ...user, image: res?.data?.image }, token }));
+        }
         if (user?.email !== res?.data?.email) {
           toast.success("Profile updated successfully. Please login again", { id: toastId, duration: 2000 });
 

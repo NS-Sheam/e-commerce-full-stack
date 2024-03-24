@@ -3,9 +3,9 @@ import orderHistoryIcon from "../assets/icons/order-history.png";
 import trackOrderIcon from "../assets/icons/tracking.png";
 import shoppingCartIcon from "../assets/icons/shopping-cart.png";
 import wishlistIcon from "../assets/icons/wishlist.png";
-import compareIcon from "../assets/icons/swap.png";
-import cardAndAddressIcon from "../assets/icons/card-address.png";
-import browsingHistoryIcon from "../assets/icons/history.png";
+// import compareIcon from "../assets/icons/swap.png";
+// import cardAndAddressIcon from "../assets/icons/card-address.png";
+// import browsingHistoryIcon from "../assets/icons/history.png";
 import settingIcon from "../assets/icons/settings.png";
 import { TUserPath } from "../types/dashboardItem.type";
 import Products from "../pages/dashboard/vendor/Products";
@@ -89,43 +89,43 @@ export const customerDashboardItems: TUserPath[] = [
     ),
     element: <WishList />,
   },
-  {
-    path: "compare",
-    name: "Compare",
-    icon: (
-      <img
-        src={compareIcon}
-        alt="compare"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>compare</div>,
-  },
-  {
-    path: "card-and-address",
-    name: "Card and Address",
-    icon: (
-      <img
-        src={cardAndAddressIcon}
-        alt="card and address"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>card-and-address</div>,
-  },
+  // {
+  //   path: "compare",
+  //   name: "Compare",
+  //   icon: (
+  //     <img
+  //       src={compareIcon}
+  //       alt="compare"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>compare</div>,
+  // },
+  // {
+  //   path: "card-and-address",
+  //   name: "Card and Address",
+  //   icon: (
+  //     <img
+  //       src={cardAndAddressIcon}
+  //       alt="card and address"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>card-and-address</div>,
+  // },
 
-  {
-    path: "browsing-history",
-    name: "Browsing History",
-    icon: (
-      <img
-        src={browsingHistoryIcon}
-        alt="browsing history"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>browsing-history</div>,
-  },
+  // {
+  //   path: "browsing-history",
+  //   name: "Browsing History",
+  //   icon: (
+  //     <img
+  //       src={browsingHistoryIcon}
+  //       alt="browsing history"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>browsing-history</div>,
+  // },
   {
     path: "setting",
     name: "Setting",
