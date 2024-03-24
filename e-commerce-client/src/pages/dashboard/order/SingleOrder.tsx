@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCustomerOrderQuery } from "../../../redux/features/order/order.api";
+import { useAllOrdersQuery } from "../../../redux/features/order/order.api";
 import moment from "moment";
 
 import OrderTimeLine from "../../../components/ui/order/OrderTimeLine";
@@ -10,8 +10,9 @@ import { TProduct } from "../../../types";
 const SingleOrder = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
-  const { data: COrder, isLoading: isCOrderLoading, isFetching: isCOrderFetching } = useCustomerOrderQuery(undefined);
-  const order = COrder?.data?.find((order) => order._id === orderId);
+  const { data: singleOrder, isLoading: isOrderLoading, isFetching: isOrderFetching } = useAllOrdersQuery(undefined);
+
+  const order = singleOrder?.data?.find((order) => order._id === orderId);
   const productsWithQuantity = order?.products.reduce((acc, product) => {
     const existingProduct = acc.find((p: TProduct) => p._id === product._id);
     if (existingProduct) {
@@ -21,7 +22,7 @@ const SingleOrder = () => {
     return [...acc, { ...product, quantity: 1 }];
   }, [] as any);
 
-  if (isCOrderLoading || isCOrderFetching) {
+  if (isOrderLoading || isOrderFetching) {
     return <div>Loading...</div>;
   }
 

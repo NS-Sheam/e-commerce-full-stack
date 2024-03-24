@@ -24,7 +24,8 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
   if (!customer) {
     throw new AppError(httpStatus.BAD_REQUEST, "Customer not found");
   }
-  if (!(customer.user as any).isverified) {
+
+  if ((customer.user as any).isverified === false) {
     throw new AppError(httpStatus.BAD_REQUEST, "Please verify your email");
   }
 
@@ -101,7 +102,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       total_amount: totalPrice,
       currency: "BDT",
       tran_id: transactionId,
-      success_url: `${config.server_url}/orders/payment/success/${transactionId}`,
+      success_url: `${config.client_url}/orders/payment/success/${transactionId}`,
       fail_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
       cancel_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
       ipn_url: "http://localhost:3030/ipn",
