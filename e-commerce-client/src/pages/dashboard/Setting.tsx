@@ -7,25 +7,22 @@ import { useGetMyInfoQuery } from "../../redux/features/auth/auth.api";
 import { useNavigate } from "react-router-dom";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { logOut, selectCurrentUser, setUser, useCurrentToken } from "../../redux/features/auth/auth.Slice";
+import { logOut, selectCurrentUser } from "../../redux/features/auth/auth.Slice";
 import { useUpdateCustomerMutation } from "../../redux/features/customer/customer.api";
 import { useUpdateVendorMutation } from "../../redux/features/vendor/vendor.api";
 import { toast } from "sonner";
 import { TAdmin, TCustomer, TReduxResponse, TVendor } from "../../types";
-import { useState } from "react";
-import { verifyToken } from "../../utils/verifyToken";
+import { useUpdateAdminMutation } from "../../redux/features/admin/admin.api";
 
 const Setting = () => {
   const navigate = useNavigate();
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
 
   const user = useAppSelector(selectCurrentUser);
-  const token = useAppSelector(useCurrentToken);
-  const dispatch = useAppDispatch();
   const [updateCustomer] = useUpdateCustomerMutation();
   const [updateVendor] = useUpdateVendorMutation();
-  const [updateAdmin] = useUpdateVendorMutation();
-
+  const [updateAdmin] = useUpdateAdminMutation();
+  const dispatch = useAppDispatch();
   if (isMyInfoLoading || isMyInfoFetching) {
     return <div>Loading...</div>;
   }
@@ -41,6 +38,7 @@ const Setting = () => {
     mobileNo: myInfo?.mobileNo,
     image: myInfo?.image,
   };
+
   const submitHandler: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Updating profile...", { duration: 2000 });
     const userInfo: Record<string, unknown> = {};
@@ -59,8 +57,14 @@ const Setting = () => {
           : ((await updateAdmin(formData)) as TReduxResponse<TAdmin>);
 
       if (!res.error) {
-        toast.success("Profile updated successfully login again to continue", { id: toastId, duration: 2000 });
-        dispatch(logOut());
+        if (user?.email !== res?.data?.email) {
+          toast.success("Profile updated successfully. Please login again", { id: toastId, duration: 2000 });
+
+          dispatch(logOut());
+          navigate("/auth/login");
+        } else {
+          toast.success("Profile updated successfully ", { id: toastId, duration: 2000 });
+        }
       } else {
         toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong", {
           id: toastId,

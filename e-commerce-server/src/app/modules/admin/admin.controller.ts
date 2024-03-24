@@ -27,9 +27,10 @@ const getSingleAdmin = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateAdmin = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { userId } = req.user;
   const { admin } = req.body;
-  const result = await adminServices.updateAdmin(req.file, id, admin);
+
+  const result = await adminServices.updateAdmin(req.file, userId, admin);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

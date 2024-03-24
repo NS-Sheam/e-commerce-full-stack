@@ -1,5 +1,4 @@
 import dashboardIcon from "../assets/icons/dashboard.png";
-import settingIcon from "../assets/icons/settings.png";
 import productIcon from "../assets/icons/products.png";
 import orderIcon from "../assets/icons/orders.png";
 import transactionIcon from "../assets/icons/transaction.png";
@@ -10,10 +9,9 @@ import { TUserPath } from "../types/dashboardItem.type";
 import Products from "../pages/dashboard/vendor/Products";
 import Categories from "../pages/dashboard/admin/Categories";
 import Users from "../pages/dashboard/admin/Users";
-import Setting from "../pages/dashboard/Setting";
 import Orders from "../pages/dashboard/order/Orders";
 
-export const adminDashboardItems: TUserPath[] = [
+export const superAdminDashboardItems: TUserPath[] = [
   {
     path: "home",
     name: "Dashboard",
@@ -85,17 +83,5 @@ export const adminDashboardItems: TUserPath[] = [
       />
     ),
     element: <div>Transactions</div>,
-  },
-  {
-    path: "setting",
-    name: "Setting",
-    icon: (
-      <img
-        src={settingIcon}
-        alt="setting"
-        className="w-6 h-6"
-      />
-    ),
-    element: <Setting />,
   },
 ];

@@ -20,7 +20,7 @@ router.get(
 );
 
 router.patch(
-  "/:id",
+  "/",
   auth(USER_TYPE.admin, USER_TYPE.superAdmin),
   upload.single("file"),
   textToJsonParser,
