@@ -54,12 +54,10 @@ const Checkout = () => {
     };
     try {
       const res = (await placeOrder(orderData)) as TResponse<any>;
-      console.log(res);
-
       if (!res.error) {
         window.location.replace(res.data?.GatewayPageURL);
       } else {
-        toast.error(res.error.message, { id: toastId });
+        toast.error(res?.error?.data?.errorSources[0].message || res.error.message, { id: toastId });
       }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });

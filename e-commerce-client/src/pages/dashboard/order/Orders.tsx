@@ -1,12 +1,22 @@
 import { Col, Row, Tag } from "antd";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { useCustomerOrderQuery } from "../../../redux/features/order/order.api";
+import { useAllOrdersQuery, useCustomerOrderQuery, useVendorOrderQuery } from "../../../redux/features/order/order.api";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 
 const Orders = () => {
+  const user = useAppSelector(selectCurrentUser);
+  const { data: orders, isLoading: isOrderLoading, isFetching: isOrderFetching } = useAllOrdersQuery(undefined);
   const {
-    data: orders,
+    data: vendorOrders,
+    isLoading: isVendorOrderLoading,
+    isFetching: isVendorOrderFetching,
+  } = useVendorOrderQuery(undefined);
+
+  const {
+    data: customerOrders,
     isLoading: customerOrderLoading,
     isFetching: customerOrderFetching,
   } = useCustomerOrderQuery([
@@ -15,17 +25,39 @@ const Orders = () => {
       value: "true",
     },
   ]);
+
   const navigate = useNavigate();
-  const orderedProducts = orders?.data
-    ?.map((order) => {
-      return order.products.map((product) => {
-        return {
-          ...product,
-          order,
-        };
-      });
-    })
-    .flat();
+  const orderedProducts =
+    user?.userType === "customer"
+      ? customerOrders?.data
+          ?.map((order) => {
+            return order.products.map((product) => {
+              return {
+                ...product,
+                order,
+              };
+            });
+          })
+          .flat()
+      : user?.userType === "vendor"
+      ? vendorOrders?.data?.map((order) => {
+          return order.products.map((product) => {
+            return {
+              ...product,
+              order,
+            };
+          });
+        })
+      : orders?.data
+          ?.map((order) => {
+            return order.products.map((product) => {
+              return {
+                ...product,
+                order,
+              };
+            });
+          })
+          .flat();
 
   const handleNavigateProductOrder = (orderId: string, productId: string) => {
     navigate(`/order/${orderId}/${productId}`);
@@ -40,9 +72,9 @@ const Orders = () => {
         <h3>Order History</h3>
       </DashboardHeading>
       <Row gutter={[16, 16]}>
-        {orderedProducts?.map((product) => (
+        {orderedProducts?.map((product, index) => (
           <Col
-            key={product._id}
+            key={index}
             span={12}
             md={{ span: 24 }}
             style={{

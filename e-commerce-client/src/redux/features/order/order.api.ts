@@ -77,4 +77,4 @@ const orderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { usePlaceOrderMutation, useCustomerOrderQuery } = orderApi;
+export const { usePlaceOrderMutation, useAllOrdersQuery, useVendorOrderQuery, useCustomerOrderQuery } = orderApi;

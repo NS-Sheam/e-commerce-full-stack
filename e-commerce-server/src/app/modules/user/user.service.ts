@@ -14,7 +14,6 @@ import config from "../../config";
 import { createToken, verifyToken } from "../Auth/auth.utils";
 import { JwtPayload } from "jsonwebtoken";
 import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
-import { Product } from "../product/product.model";
 import { sendEmail } from "../../utils/sendEmail";
 
 // create customer without image file upload
@@ -85,13 +84,17 @@ const createCustomer = async (
     payload.user = newUser[0]._id;
 
     // Transaction 2: Create Customer
-    const { secure_url } = (await sendImageToCloudinary(
-      payload.userName,
-      file?.path,
-    )) as any;
+    if (file) {
+      const { secure_url } = (await sendImageToCloudinary(
+        payload.userName,
+        file?.path,
+      )) as any;
 
-    payload.image = secure_url;
+      payload.image = secure_url;
+    }
+
     const newCustomer = await Customer.create([payload], { session });
+
     if (!newCustomer) {
       throw new AppError(httpStatus.BAD_REQUEST, "Customer creation failed");
     }

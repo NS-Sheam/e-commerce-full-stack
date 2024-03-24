@@ -5,10 +5,14 @@ import EComSelect from "../form/EComSelect";
 import { Button, Col, Row } from "antd";
 
 import EComProfileImageUploader from "../form/EComProfileImageUploader";
-import { useRegistrationMutation } from "../../redux/features/auth/auth.api";
+import { useLoginMutation, useRegistrationMutation } from "../../redux/features/auth/auth.api";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../types/global";
 import GoogleLoginButton from "../ui/GoogleLoginButton";
+import { verifyToken } from "../../utils/verifyToken";
+import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
+import { useAppDispatch } from "../../redux/hooks";
+import { useNavigate } from "react-router-dom";
 /** TODO:
  * - Add google Login
  * - Add autmatic login after registration
@@ -29,7 +33,11 @@ const defaultValues = {
 
 const Register = () => {
   const [registerUser] = useRegistrationMutation();
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Registering...", { duration: 2000 });
     const userInfo = {
       password: data.password,
       customer: {
@@ -46,12 +54,37 @@ const Register = () => {
     try {
       const res = (await registerUser(formData)) as TReduxResponse<any>;
       if (!res.error) {
-        toast.success("Registered successfully");
+        toast.success("Registered successfully. Check your email for verification link.", {
+          id: toastId,
+          duration: 2000,
+        });
+        const loginRes = (await login({ email: data.email, password: data.password })) as TReduxResponse<any>;
+
+        if (!loginRes.error) {
+          const user = verifyToken(loginRes.data.data.accessToken) as TUser;
+
+          const data = await fetch("http://localhost:4000/api/v1/users/me", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              authorization: loginRes.data.data.accessToken,
+            },
+          });
+          const loginInfo = await data.json();
+
+          dispatch(
+            setUser({ user: { ...user, image: loginInfo?.data?.image }, token: loginRes.data.data.accessToken })
+          );
+          navigate("/");
+        }
       } else {
-        toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong");
+        toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Something went wrong", {
+          id: toastId,
+          duration: 2000,
+        });
       }
     } catch (error: any) {
-      toast.error(error.message || "Something went wrong");
+      toast.error(error.message || "Something went wrong", { id: toastId, duration: 2000 });
     }
   };
   return (

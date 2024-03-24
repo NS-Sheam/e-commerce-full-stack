@@ -10,8 +10,8 @@ import { TProduct } from "../../../types";
 const SingleOrder = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
-  const { data: oData, isLoading: orderLoading, isFetching: orderFetching } = useCustomerOrderQuery(undefined);
-  const order = oData?.data?.find((order) => order._id === orderId);
+  const { data: COrder, isLoading: isCOrderLoading, isFetching: isCOrderFetching } = useCustomerOrderQuery(undefined);
+  const order = COrder?.data?.find((order) => order._id === orderId);
   const productsWithQuantity = order?.products.reduce((acc, product) => {
     const existingProduct = acc.find((p: TProduct) => p._id === product._id);
     if (existingProduct) {
@@ -21,7 +21,7 @@ const SingleOrder = () => {
     return [...acc, { ...product, quantity: 1 }];
   }, [] as any);
 
-  if (orderLoading || orderFetching) {
+  if (isCOrderLoading || isCOrderFetching) {
     return <div>Loading...</div>;
   }
 
@@ -99,4 +99,4 @@ const SingleOrder = () => {
   );
 };
 
-export default SingleOrder
+export default SingleOrder;

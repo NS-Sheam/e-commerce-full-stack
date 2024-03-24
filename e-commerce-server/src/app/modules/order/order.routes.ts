@@ -27,8 +27,16 @@ router.get(
   OrderControllers.getOrderForVendor,
 );
 
-router.get("/:id", auth(USER_TYPE.admin), OrderControllers.getSingleOrder);
+router.get(
+  "/:id",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  OrderControllers.getSingleOrder,
+);
 
-router.get("/", auth(USER_TYPE.admin), OrderControllers.getAllOrders);
+router.get(
+  "/",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  OrderControllers.getAllOrders,
+);
 
 export const OrderRoutes = router;
