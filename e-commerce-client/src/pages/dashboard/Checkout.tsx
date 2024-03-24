@@ -54,6 +54,7 @@ const Checkout = () => {
     };
     try {
       const res = (await placeOrder(orderData)) as TResponse<any>;
+
       if (!res.error) {
         window.location.replace(res.data?.GatewayPageURL);
       } else {

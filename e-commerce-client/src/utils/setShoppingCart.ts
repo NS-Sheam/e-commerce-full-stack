@@ -24,7 +24,7 @@ export const handleAddToShoppingCart = ({ id, shoppingCart, dispatchFn, addFn }:
     return;
   }
   dispatchFn(addFn({ type: "ADD_TO_CART", id }));
-  toast.success("Addedd to cart");
+  toast.success("Added to cart");
 };
 export const handleRemoveFromShoppingCart = ({ id, dispatchFn, removeFn }: TRemoveShoppingCartProps) => {
   dispatchFn(removeFn({ type: "REMOVE_FROM_CART", id }));

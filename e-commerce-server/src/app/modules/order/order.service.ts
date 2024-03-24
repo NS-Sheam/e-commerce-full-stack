@@ -102,7 +102,7 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
       total_amount: totalPrice,
       currency: "BDT",
       tran_id: transactionId,
-      success_url: `${config.client_url}/orders/payment/success/${transactionId}`,
+      success_url: `${config.server_url}/orders/payment/success/${transactionId}`,
       fail_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
       cancel_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
       ipn_url: "http://localhost:3030/ipn",

@@ -27,7 +27,7 @@ const Orders = () => {
   ]);
 
   const navigate = useNavigate();
-  const orderedProducts =
+  const orderedProducts: any =
     user?.userType === "customer"
       ? customerOrders?.data
           ?.map((order) => {
@@ -63,7 +63,14 @@ const Orders = () => {
     navigate(`/order/${orderId}/${productId}`);
   };
 
-  if (customerOrderLoading || customerOrderFetching) {
+  if (
+    customerOrderLoading ||
+    customerOrderFetching ||
+    isVendorOrderLoading ||
+    isVendorOrderFetching ||
+    isOrderLoading ||
+    isOrderFetching
+  ) {
     return <div>Loading...</div>;
   }
   return (
@@ -72,7 +79,7 @@ const Orders = () => {
         <h3>Order History</h3>
       </DashboardHeading>
       <Row gutter={[16, 16]}>
-        {orderedProducts?.map((product, index) => (
+        {orderedProducts?.map((product: any, index: number) => (
           <Col
             key={index}
             span={12}
