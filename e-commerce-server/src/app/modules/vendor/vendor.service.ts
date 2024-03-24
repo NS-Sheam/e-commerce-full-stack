@@ -18,7 +18,11 @@ const getAllVendors = async (query: Record<string, unknown>) => {
     .paginate();
 
   const result = await vendorQuery.modelQuery;
-  return result;
+  const meta = await vendorQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
 };
 
 const getSingleVendor = async (vendorId: string) => {

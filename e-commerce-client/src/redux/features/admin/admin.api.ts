@@ -1,14 +1,23 @@
-import { TAdmin, TReduxResponse } from "../../../types";
+import { TAdmin, TQueryParams, TReduxResponse } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const adminApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAdmins: builder.query({
-      query: () => ({
-        url: "/admins",
-        method: "GET",
-      }),
-      transformResponse: (response: TReduxResponse<TAdmin>) => {
+      query: (args: TQueryParams[] | undefined) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item) => {
+            params.append(item.name, item.value);
+          });
+        }
+        return {
+          url: "/admins",
+          method: "GET",
+          params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TAdmin[]>) => {
         return {
           data: response.data,
           meta: response.meta,

@@ -11,7 +11,8 @@ const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "All customers fetched successfully",
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 

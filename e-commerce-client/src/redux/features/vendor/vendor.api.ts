@@ -1,14 +1,24 @@
-import { TVendor, TReduxResponse } from "../../../types";
+import { TVendor, TReduxResponse, TQueryParams } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const vendorApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getVendors: builder.query({
-      query: () => ({
-        url: "/vendors",
-        method: "GET",
-      }),
-      transformResponse: (response: TReduxResponse<TVendor>) => {
+      query: (args: TQueryParams[] | undefined) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item) => {
+            params.append(item.name, item.value);
+          });
+        }
+
+        return {
+          url: "/vendors",
+          method: "GET",
+          params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TVendor[]>) => {
         return {
           data: response.data,
           meta: response.meta,

@@ -11,13 +11,17 @@ const router = Router();
 
 router.get(
   "/:id",
-  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  auth(USER_TYPE.vendor, USER_TYPE.admin, USER_TYPE.superAdmin),
   vendorControllers.getSingleVendor,
 );
-router.get("/", auth(USER_TYPE.admin), vendorControllers.getAllVendors);
+router.get(
+  "/",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  vendorControllers.getAllVendors,
+);
 router.patch(
   "/",
-  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  auth(USER_TYPE.vendor, USER_TYPE.admin, USER_TYPE.superAdmin),
   upload.single("file"),
   textToJsonParser,
   validateRequest(VendorValidations.updateVendorValidationSchema),
@@ -25,7 +29,7 @@ router.patch(
 );
 router.delete(
   "/:id",
-  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  auth(USER_TYPE.vendor, USER_TYPE.admin, USER_TYPE.superAdmin),
   vendorControllers.deleteVendor,
 );
 

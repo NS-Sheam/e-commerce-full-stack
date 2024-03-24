@@ -4,12 +4,34 @@ import DashboardHeading from "../../../components/ui/DashboardHeading";
 import { Col, Row } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
+import { useGetAdminsQuery } from "../../../redux/features/admin/admin.api";
+import { useGetVendorsQuery } from "../../../redux/features/vendor/vendor.api";
+import { useGetCustomersQuery } from "../../../redux/features/userManagement/userManagement.api";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const user = useAppSelector(selectCurrentUser);
 
+  const {
+    data: adminsData,
+    isLoading: isALoading,
+    isFetching: isAFetching,
+  } = useGetAdminsQuery([
+    {
+      name: "limit",
+      value: 1 + "",
+    },
+  ]);
+  const { data: vendorsData, isLoading: isVLoading, isFetching: isVFetching } = useGetVendorsQuery(undefined);
+  const { data: customersData, isLoading: isCLoading, isFetching: isCFetching } = useGetCustomersQuery(undefined);
+
   const [userType, setUserType] = useState("customer");
+
+  if (isALoading || isVLoading || isCLoading || isAFetching || isVFetching || isCFetching) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(adminsData);
 
   return (
     <div>

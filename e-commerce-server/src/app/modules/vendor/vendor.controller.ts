@@ -10,7 +10,8 @@ const getAllVendors = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "All vendors fetched successfully",
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 

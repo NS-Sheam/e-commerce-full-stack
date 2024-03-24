@@ -21,8 +21,12 @@ const getAllCustomers = async (query: Record<string, unknown>) => {
     .paginate();
 
   const result = await customerQuery.modelQuery;
+  const meta = await customerQuery.countTotal();
 
-  return result;
+  return {
+    result,
+    meta,
+  };
 };
 
 const getSingleCustomer = async (customerId: string) => {

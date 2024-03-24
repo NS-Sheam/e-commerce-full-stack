@@ -1,14 +1,23 @@
-import { TCustomer, TReduxResponse } from "../../../types";
+import { TCustomer, TQueryParams, TReduxResponse } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
 const customerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCustomers: builder.query({
-      query: () => ({
-        url: "/customers",
-        method: "GET",
-      }),
-      transformResponse: (response: TReduxResponse<TCustomer>) => {
+      query: (args: TQueryParams[] | undefined) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item) => {
+            params.append(item.name, item.value);
+          });
+        }
+        return {
+          url: "/customers",
+          method: "GET",
+          params,
+        };
+      },
+      transformResponse: (response: TReduxResponse<TCustomer[]>) => {
         return {
           data: response.data,
           meta: response.meta,

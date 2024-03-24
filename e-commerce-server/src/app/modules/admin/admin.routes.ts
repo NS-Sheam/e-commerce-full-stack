@@ -8,18 +8,30 @@ import { upload } from "../../utils/sendImageToCloudinary";
 import textToJsonParser from "../../middlewares/textToJsonParser";
 
 const router = Router();
-router.get("/:id", auth(USER_TYPE.admin), AdminControllers.getSingleAdmin);
-router.get("/", auth(USER_TYPE.admin), AdminControllers.getAllAdmins);
+router.get(
+  "/:id",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  AdminControllers.getSingleAdmin,
+);
+router.get(
+  "/",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  AdminControllers.getAllAdmins,
+);
 
 router.patch(
   "/:id",
-  auth(USER_TYPE.admin),
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
   upload.single("file"),
   textToJsonParser,
   validateRequest(AdminValidations.updateAdminValidationSchema),
   AdminControllers.updateAdmin,
 );
 
-router.delete("/:id", auth(USER_TYPE.admin), AdminControllers.deleteAdmin);
+router.delete(
+  "/:id",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  AdminControllers.deleteAdmin,
+);
 
 export const AdminRoutes = router;

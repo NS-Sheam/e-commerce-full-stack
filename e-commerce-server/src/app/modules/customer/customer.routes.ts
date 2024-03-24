@@ -10,23 +10,27 @@ import textToJsonParser from "../../middlewares/textToJsonParser";
 const router = Router();
 router.get(
   "/:id",
-  auth(USER_TYPE.admin, USER_TYPE.customer),
+  auth(USER_TYPE.customer, USER_TYPE.admin, USER_TYPE.superAdmin),
   CustomerControllers.getSingleCustomer,
 );
-router.get("/", auth(USER_TYPE.admin), CustomerControllers.getAllCustomers);
+router.get(
+  "/",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  CustomerControllers.getAllCustomers,
+);
 router.patch(
   "/wishlist",
-  auth(USER_TYPE.admin, USER_TYPE.customer),
+  auth(USER_TYPE.customer, USER_TYPE.admin, USER_TYPE.superAdmin),
   CustomerControllers.updateWishList,
 );
 router.patch(
   "/shopping-cart",
-  auth(USER_TYPE.admin, USER_TYPE.customer),
+  auth(USER_TYPE.customer, USER_TYPE.admin, USER_TYPE.superAdmin),
   CustomerControllers.updateShoppingCart,
 );
 router.patch(
   "/",
-  auth(USER_TYPE.admin, USER_TYPE.customer),
+  auth(USER_TYPE.customer, USER_TYPE.admin, USER_TYPE.superAdmin),
   upload.single("file"),
   textToJsonParser,
   validateRequest(CustomerValidations.updateCustomerValidationSchema),
