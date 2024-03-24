@@ -17,6 +17,7 @@ import Shop from "../pages/Shop";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
 import ChangePassword from "../pages/auth/ChangePassword";
+import VerifyEmail from "../pages/auth/VerifyEmail";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <Auth />,
+      },
+      {
+        path: "/auth/verify-email",
+        element: <VerifyEmail />,
       },
       {
         path: "/auth/forget-password",

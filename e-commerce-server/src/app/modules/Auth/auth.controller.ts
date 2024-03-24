@@ -19,6 +19,15 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     data: { accessToken, refreshToken },
   });
 });
+const verifyEmail = catchAsync(async (req: Request, res: Response) => {
+  const result = await AuthServices.verifyEmail(req.body.token);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Email verified successfully",
+    data: result,
+  });
+});
 
 const changePassword = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthServices.changePassword(req.user, req.body);
@@ -68,6 +77,7 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 
 export const AuthControllers = {
   loginUser,
+  verifyEmail,
   changePassword,
   refreshToken,
   forgetPassword,
