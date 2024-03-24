@@ -3,7 +3,7 @@ import { baseApi } from "../../api/baseApi";
 
 const customerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCustomers: builder.query({
+    getAllCustomers: builder.query({
       query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
         if (args) {
@@ -53,5 +53,9 @@ const customerApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetCustomersQuery, useGetSingleCustomerQuery, useUpdateCustomerMutation, useDeleteCustomerMutation } =
-  customerApi;
+export const {
+  useGetAllCustomersQuery,
+  useGetSingleCustomerQuery,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,
+} = customerApi;

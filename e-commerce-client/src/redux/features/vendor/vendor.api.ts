@@ -3,7 +3,7 @@ import { baseApi } from "../../api/baseApi";
 
 const vendorApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getVendors: builder.query({
+    getAllVendors: builder.query({
       query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
         if (args) {
@@ -54,5 +54,5 @@ const vendorApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetVendorsQuery, useGetSingleVendorQuery, useUpdateVendorMutation, useDeleteVendorMutation } =
+export const { useGetAllVendorsQuery, useGetSingleVendorQuery, useUpdateVendorMutation, useDeleteVendorMutation } =
   vendorApi;

@@ -3,7 +3,7 @@ import { baseApi } from "../../api/baseApi";
 
 const adminApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAdmins: builder.query({
+    getAllAdmins: builder.query({
       query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
 
@@ -53,4 +53,5 @@ const adminApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAdminsQuery, useGetSingleAdminQuery, useUpdateAdminMutation, useDeleteAdminMutation } = adminApi;
+export const { useGetAllAdminsQuery, useGetSingleAdminQuery, useUpdateAdminMutation, useDeleteAdminMutation } =
+  adminApi;

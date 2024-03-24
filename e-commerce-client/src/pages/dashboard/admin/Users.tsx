@@ -4,8 +4,11 @@ import DashboardHeading from "../../../components/ui/DashboardHeading";
 import { Col, Row } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
-import { useGetAdminsQuery } from "../../../redux/features/admin/admin.api";
+
 import { TQueryParams } from "../../../types";
+import { useGetAllAdminsQuery } from "../../../redux/features/admin/admin.api";
+import { useGetAllCustomersQuery } from "../../../redux/features/customer/customer.api";
+import { useGetAllVendorsQuery } from "../../../redux/features/vendor/vendor.api";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,9 +30,25 @@ const Users = () => {
       value: searchTerm,
     });
   }
-  const { data: adminData, isLoading: isALoading, isFetching: isAFetching } = useGetAdminsQuery(searchQuery);
+
+  const {
+    data: customersData,
+    isLoading: isCustomerLoading,
+    isFetching: isCustomerFetching,
+  } = useGetAllCustomersQuery(undefined);
+  const {
+    data: vendorsData,
+    isLoading: isVendorLoading,
+    isFetching: isVendorFetching,
+  } = useGetAllVendorsQuery(undefined);
+
+  const { data: adminsData, isLoading: isALoading, isFetching: isAFetching } = useGetAllAdminsQuery(undefined);
 
   const [userType, setUserType] = useState("customer");
+
+  if (isCustomerLoading || isVendorLoading || isALoading || isCustomerFetching || isVendorFetching || isAFetching) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen">
