@@ -1,11 +1,9 @@
 import { useState } from "react";
-import ShopSearchBar from "../../../components/Shop/ShopSearchBar";
-import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { Col, Row, Select, Table } from "antd";
+import { Select, Table } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 
-import { TAdmin, TCustomer, TQueryParams, TReduxResponse, TVendor } from "../../../types";
+import { TAdmin, TQueryParams, TReduxResponse, TVendor } from "../../../types";
 import { useGetAllAdminsQuery } from "../../../redux/features/admin/admin.api";
 import { useGetAllCustomersQuery } from "../../../redux/features/customer/customer.api";
 import { useGetAllVendorsQuery } from "../../../redux/features/vendor/vendor.api";
