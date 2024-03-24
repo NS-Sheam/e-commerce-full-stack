@@ -30,20 +30,20 @@ const userManagementApi = baseApi.injectEndpoints({
     }),
     makeVendor: builder.mutation({
       query: (id: string) => ({
-        url: `/make-vendor/${id}`,
-        method: "POST",
+        url: `/users/make-vendor/${id}`,
+        method: "PATCH",
       }),
-      invalidatesTags: ["vendor", "user"],
+      invalidatesTags: ["customer", "vendor", "user"],
       transformResponse: (response: TReduxResponse<TVendor>) => {
         return response.data;
       },
     }),
     makeAdmin: builder.mutation({
       query: (id: string) => ({
-        url: `/make-admin/${id}`,
-        method: "POST",
+        url: `/users/make-admin/${id}`,
+        method: "PATCH",
       }),
-      invalidatesTags: ["admin", "user"],
+      invalidatesTags: ["customer", "admin", "user"],
       transformResponse: (response: TReduxResponse<TAdmin>) => {
         return response.data;
       },
