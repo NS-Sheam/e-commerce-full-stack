@@ -16,6 +16,8 @@ const Dashboard = () => {
   const items =
     user?.userType === "admin"
       ? sidebarItemGenerator(adminDashboardItems)
+      : user?.userType === "superAdmin"
+      ? sidebarItemGenerator(adminDashboardItems)
       : user?.userType === "vendor"
       ? sidebarItemGenerator(vendorDashboardItems)
       : sidebarItemGenerator(customerDashboardItems);

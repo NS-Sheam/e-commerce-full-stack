@@ -10,6 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const userData = useAppSelector(selectCurrentUser);
+
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
@@ -38,16 +39,20 @@ const Navbar = () => {
     },
     {
       name: "user",
-      icon: userData?.image ? (
+      icon: userData ? (
         <Link
           to={`${userData.userType}/home`}
           className="flex items-center justify-center"
         >
-          <img
-            src={userData.image}
-            alt="user"
-            className="m-auto border-white border-2 w-7 md:w-10 h-7 md:h-10 rounded-full bg-white "
-          />
+          {userData?.image ? (
+            <img
+              src={userData.image}
+              alt="user"
+              className="m-auto border-white border-2 w-7 md:w-10 h-7 md:h-10 rounded-full bg-white "
+            />
+          ) : (
+            <CiUser className="text-white" />
+          )}
         </Link>
       ) : (
         <Link

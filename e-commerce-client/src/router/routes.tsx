@@ -83,6 +83,15 @@ const router = createBrowserRouter([
         children: routesGenerator(adminDashboardItems),
       },
       {
+        path: "superAdmin",
+        element: (
+          <ProtectedRoute role="superAdmin">
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+        children: routesGenerator(adminDashboardItems),
+      },
+      {
         path: "/payment/success/:transactionId",
         element: (
           <ProtectedRoute role={["customer"]}>
