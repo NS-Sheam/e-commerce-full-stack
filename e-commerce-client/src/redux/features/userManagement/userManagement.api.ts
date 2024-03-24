@@ -4,24 +4,6 @@ import { baseApi } from "../../api/baseApi";
 
 const userManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCustomers: builder.query({
-      query: () => ({
-        url: "/customers",
-        method: "GET",
-      }),
-    }),
-    getVendors: builder.query({
-      query: () => ({
-        url: "/vendors",
-        method: "GET",
-      }),
-    }),
-    getAdmins: builder.query({
-      query: () => ({
-        url: "/admins",
-        method: "GET",
-      }),
-    }),
     getMe: builder.query({
       query: () => {
         return {
@@ -45,7 +27,22 @@ const userManagementApi = baseApi.injectEndpoints({
         return response.data;
       },
     }),
+    makeVendor: builder.mutation({
+      query: (id: string) => ({
+        url: `/vendors/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["vendor", "user"],
+    }),
+    makeAdmin: builder.mutation({
+      query: (id: string) => ({
+        url: `/admins/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["admin", "user"],
+    }),
   }),
 });
 
-export const { useGetCustomersQuery, useGetMeQuery, useUpdateWishListMutation } = userManagementApi;
+export const { useGetMeQuery, useUpdateWishListMutation, useMakeVendorMutation, useMakeAdminMutation } =
+  userManagementApi;

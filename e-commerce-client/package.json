@@ -29,6 +29,7 @@
     "react-router-dom": "^6.21.3",
     "redux-persist": "^6.0.0",
     "sonner": "^1.4.0",
+    "sweetalert2": "^11.10.7",
     "swiper": "^11.0.6",
     "zod": "^3.22.4"
   },

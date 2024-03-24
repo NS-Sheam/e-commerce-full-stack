@@ -50,6 +50,18 @@ const Users = () => {
   if (isCustomerLoading || isVendorLoading || isALoading) {
     return <div>Loading...</div>;
   }
+  const selectOptions = [
+    {
+      value: "makeVendor",
+      label: "Make Vendor",
+    },
+  ];
+  if (user?.userType === "superAdmin") {
+    selectOptions.push({
+      value: "makeAdmin",
+      label: "Make Admin",
+    });
+  }
 
   const columns = [
     {
@@ -63,84 +75,29 @@ const Users = () => {
       key: "email",
     },
     {
-      title: "Action",
-      key: "action",
-      render: () => {
-        return (
-          <Select
-            defaultValue={"makeVendor"}
-            options={[
-              {
-                value: "makeVendor",
-                label: "Make Vendor",
-              },
-              {
-                value: "makeAdmin",
-                label: "Make Admin",
-              },
-            ]}
-          />
-        );
-      },
+      title: "Phone",
+      dataIndex: "mobileNo",
+      key: "mobileNo",
     },
   ];
 
+  if (userType === "customer") {
+    columns.push({
+      title: "Action",
+      key: "action",
+      dataIndex: "action",
+      render: () => (
+        <Select
+          options={selectOptions}
+          defaultValue="Select Action"
+          style={{ width: 200 }}
+        />
+      ),
+    } as { title: string; dataIndex: string; key: string; render: () => JSX.Element });
+  }
+
   return (
     <div className="min-h-screen space-y-4">
-      <DashboardHeading>
-        <ShopSearchBar
-          placeholder="Enter name of the user...."
-          setSearchTerm={setSearchTerm}
-        />
-        <Row
-          justify={"center"}
-          align={"middle"}
-          className="md:w-1/2 px-2"
-        >
-          <Col
-            onClick={() => setUserType("customer")}
-            span={8}
-            className="border-b-4 border-orange "
-          >
-            <p
-              className={`text-center text-xl font-semibold text-grayBlack py-2 cursor-pointer ${
-                userType === "customer" ? "bg-grayWhite" : ""
-              }`}
-            >
-              Customer
-            </p>
-            <hr className={`h-2 w-full bg-orange ${userType === "customer" ? "visible" : "hidden"}`} />
-          </Col>
-          <Col
-            onClick={() => setUserType("vendor")}
-            span={8}
-          >
-            <p
-              className={`text-center text-xl font-semibold text-grayBlack py-2 cursor-pointer ${
-                userType === "vendor" ? "bg-grayWhite" : ""
-              }`}
-            >
-              Vendor
-            </p>
-            <hr className={`h-2 w-full bg-orange ${userType === "vendor" ? "visible" : "hidden"}`} />
-          </Col>
-          {user?.userType === "superAdmin" && (
-            <Col
-              onClick={() => setUserType("admin")}
-              span={8}
-            >
-              <p
-                className={`text-center text-xl font-semibold text-grayBlack py-2 cursor-pointer ${
-                  userType === "admin" ? "bg-grayWhite" : ""
-                }`}
-              >
-                Admin
-              </p>
-              <hr className={`h-2 w-full bg-orange ${userType === "admin" ? "visible" : "hidden"}`} />
-            </Col>
-          )}
-        </Row>
-      </DashboardHeading>
       <Table
         columns={columns}
         loading={isCustomerFetching || isVendorFetching || isAFetching}
