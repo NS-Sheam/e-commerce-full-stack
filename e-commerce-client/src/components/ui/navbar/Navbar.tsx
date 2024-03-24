@@ -126,7 +126,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`absolute top-full lg:top-0 right-0 lg:relative lg:col-span-3 my-auto lg:mx-20 ${
+          className={`absolute top-full lg:top-0 right-0 md:relative md:col-span-3 my-auto lg:mx-20 ${
             showSearch ? "block" : "hidden lg:block"
           }`}
         >
@@ -152,7 +152,7 @@ const Navbar = () => {
                 setShowSearch(!showSearch);
                 navigate(`/shop?searchTerm=${searchTerm}`);
               }}
-              className={`text-xl lg:text-2xl text-gray`}
+              className={`text-xl md:text-2xl text-gray`}
             />
           </div>
         </div>
@@ -166,7 +166,7 @@ const Navbar = () => {
             </div>
           ))}
           <FaMagnifyingGlass
-            className={`${showSearch ? "hidden" : "block"} lg:hidden text-sm lg:text-2xl text-white`}
+            className={`${showSearch ? "hidden" : "block"} md:hidden text-sm lg:text-2xl text-white`}
             onClick={() => setShowSearch(!showSearch)}
           />
         </div>

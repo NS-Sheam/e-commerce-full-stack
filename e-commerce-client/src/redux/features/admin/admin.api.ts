@@ -6,13 +6,14 @@ const adminApi = baseApi.injectEndpoints({
     getAdmins: builder.query({
       query: (args: TQueryParams[] | undefined) => {
         const params = new URLSearchParams();
+
         if (args) {
           args.forEach((item) => {
             params.append(item.name, item.value);
           });
         }
         return {
-          url: "/admins",
+          url: `admins`,
           method: "GET",
           params,
         };
@@ -23,7 +24,6 @@ const adminApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
-      providesTags: ["admin"],
     }),
     getSingleAdmin: builder.query({
       query: (adminId: string) => ({
