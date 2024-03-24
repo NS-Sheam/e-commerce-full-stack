@@ -8,6 +8,7 @@ const superAdmin = {
   email: "123sheamfeni@gmail.com",
   userType: USER_TYPE.superAdmin,
   isDeleted: false,
+  isVerified: true,
 };
 const seedSuperAdmin = async () => {
   // when database is connected, we will check is thee any user who super admin

@@ -1,3 +1,4 @@
+import { TAdmin, TVendor } from "../../../types";
 import { TReduxResponse } from "../../../types/global";
 import { TUser } from "../../../types/userManagement.types";
 import { baseApi } from "../../api/baseApi";
@@ -29,17 +30,23 @@ const userManagementApi = baseApi.injectEndpoints({
     }),
     makeVendor: builder.mutation({
       query: (id: string) => ({
-        url: `/vendors/${id}`,
+        url: `/make-vendor/${id}`,
         method: "POST",
       }),
       invalidatesTags: ["vendor", "user"],
+      transformResponse: (response: TReduxResponse<TVendor>) => {
+        return response.data;
+      },
     }),
     makeAdmin: builder.mutation({
       query: (id: string) => ({
-        url: `/admins/${id}`,
+        url: `/make-admin/${id}`,
         method: "POST",
       }),
       invalidatesTags: ["admin", "user"],
+      transformResponse: (response: TReduxResponse<TAdmin>) => {
+        return response.data;
+      },
     }),
   }),
 });

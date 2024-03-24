@@ -5,12 +5,15 @@ import { Col, Row, Select, Table } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 
-import { TQueryParams } from "../../../types";
+import { TAdmin, TCustomer, TQueryParams, TReduxResponse, TVendor } from "../../../types";
 import { useGetAllAdminsQuery } from "../../../redux/features/admin/admin.api";
 import { useGetAllCustomersQuery } from "../../../redux/features/customer/customer.api";
 import { useGetAllVendorsQuery } from "../../../redux/features/vendor/vendor.api";
 import ShopPagination from "../../../components/Shop/ShopPagination";
 import UserHeading from "../../../components/users/UserHeading";
+import { useMakeVendorMutation } from "../../../redux/features/userManagement/userManagement.api";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,6 +49,9 @@ const Users = () => {
 
   const { data: adminsData, isLoading: isALoading, isFetching: isAFetching } = useGetAllAdminsQuery(searchQuery);
 
+  const [makeVendor] = useMakeVendorMutation();
+  const [makeAdmin] = useMakeVendorMutation();
+
   const [userType, setUserType] = useState("customer");
 
   if (isCustomerLoading || isVendorLoading || isALoading) {
@@ -63,7 +69,36 @@ const Users = () => {
       label: "Make Admin",
     });
   }
-
+  const handleSelectChange = async (value: string, id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, do it!",
+      cancelButtonText: "No, cancel!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const toastId = toast.loading("Updating user...", { duration: 2000 });
+          const res =
+            value === "makeVendor"
+              ? ((await makeVendor(id)) as TReduxResponse<TVendor>)
+              : ((await makeAdmin(id)) as TReduxResponse<TAdmin>);
+          if (!res.error) {
+            toast.success(res.message || "User updated successfully", { id: toastId, duration: 2000 });
+          } else {
+            toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "User updating failed", {
+              id: toastId,
+              duration: 2000,
+            });
+          }
+        } catch (error: any) {
+          toast.error(error.message || "User updating failed", { duration: 2000 });
+        }
+      }
+    });
+  };
   const columns = [
     {
       title: "Name",
@@ -85,10 +120,11 @@ const Users = () => {
   if (userType === "customer") {
     columns.push({
       title: "Action",
-      key: "action",
-      dataIndex: "action",
-      render: () => (
+      key: "_id",
+      dataIndex: "_id",
+      render: (item: string) => (
         <Select
+          onChange={(value) => handleSelectChange(value, item)}
           options={selectOptions}
           defaultValue="Select Action"
           style={{ width: 200 }}
