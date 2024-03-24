@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ShopSearchBar from "../../../components/Shop/ShopSearchBar";
 import DashboardHeading from "../../../components/ui/DashboardHeading";
-import { Col, Row } from "antd";
+import { Col, Row, Select, Table } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 
@@ -9,6 +9,7 @@ import { TQueryParams } from "../../../types";
 import { useGetAllAdminsQuery } from "../../../redux/features/admin/admin.api";
 import { useGetAllCustomersQuery } from "../../../redux/features/customer/customer.api";
 import { useGetAllVendorsQuery } from "../../../redux/features/vendor/vendor.api";
+import ShopPagination from "../../../components/Shop/ShopPagination";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +18,7 @@ const Users = () => {
   const searchQuery: TQueryParams[] = [
     {
       name: "limit",
-      value: 2 + "",
+      value: 10 + "",
     },
     {
       name: "page",
@@ -35,23 +36,57 @@ const Users = () => {
     data: customersData,
     isLoading: isCustomerLoading,
     isFetching: isCustomerFetching,
-  } = useGetAllCustomersQuery(undefined);
+  } = useGetAllCustomersQuery(searchQuery);
   const {
     data: vendorsData,
     isLoading: isVendorLoading,
     isFetching: isVendorFetching,
-  } = useGetAllVendorsQuery(undefined);
+  } = useGetAllVendorsQuery(searchQuery);
 
-  const { data: adminsData, isLoading: isALoading, isFetching: isAFetching } = useGetAllAdminsQuery(undefined);
+  const { data: adminsData, isLoading: isALoading, isFetching: isAFetching } = useGetAllAdminsQuery(searchQuery);
 
   const [userType, setUserType] = useState("customer");
 
-  if (isCustomerLoading || isVendorLoading || isALoading || isCustomerFetching || isVendorFetching || isAFetching) {
+  if (isCustomerLoading || isVendorLoading || isALoading) {
     return <div>Loading...</div>;
   }
 
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "fullName",
+      key: "fullName",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: () => {
+        return (
+          <Select
+            defaultValue={"makeVendor"}
+            options={[
+              {
+                value: "makeVendor",
+                label: "Make Vendor",
+              },
+              {
+                value: "makeAdmin",
+                label: "Make Admin",
+              },
+            ]}
+          />
+        );
+      },
+    },
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen space-y-4">
       <DashboardHeading>
         <ShopSearchBar
           placeholder="Enter name of the user...."
@@ -106,6 +141,29 @@ const Users = () => {
           )}
         </Row>
       </DashboardHeading>
+      <Table
+        columns={columns}
+        loading={isCustomerFetching || isVendorFetching || isAFetching}
+        dataSource={
+          userType === "customer"
+            ? (customersData?.data as any)
+            : userType === "vendor"
+            ? (vendorsData?.data as any)
+            : (adminsData?.data as any) || []
+        }
+        pagination={false}
+      />
+      <ShopPagination
+        page={page}
+        setPage={setPage}
+        meta={
+          userType === "customer"
+            ? (customersData?.meta as any)
+            : userType === "vendor"
+            ? (vendorsData?.meta as any)
+            : (adminsData?.meta as any)
+        }
+      />
     </div>
   );
 };
