@@ -1,18 +1,36 @@
 import { Col, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAllOrdersQuery } from "../../../redux/features/order/order.api";
+import { useAllOrdersQuery, useCustomerOrderQuery, useVendorOrderQuery } from "../../../redux/features/order/order.api";
 import moment from "moment";
 
 import OrderTimeLine from "../../../components/ui/order/OrderTimeLine";
 import OrderActivity from "../../../components/ui/order/OrderActivity";
 import { TProduct } from "../../../types";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 
 const SingleOrder = () => {
+  const user = useAppSelector(selectCurrentUser);
   const { orderId } = useParams();
   const navigate = useNavigate();
+  const {
+    data: customerSingleOrder,
+    isLoading: isCustomerOrderLoading,
+    isFetching: isCustomerOrderFetching,
+  } = useCustomerOrderQuery(undefined);
+  const {
+    data: vendorSingleOrder,
+    isLoading: isVendorOrderLoading,
+    isFetching: isVendorOrderFetching,
+  } = useVendorOrderQuery(undefined);
   const { data: singleOrder, isLoading: isOrderLoading, isFetching: isOrderFetching } = useAllOrdersQuery(undefined);
 
-  const order = singleOrder?.data?.find((order) => order._id === orderId);
+  const order =
+    user?.userType === "customer"
+      ? customerSingleOrder?.data?.find((order) => order._id === orderId)
+      : user?.userType === "vendor"
+      ? vendorSingleOrder?.data?.find((order) => order._id === orderId)
+      : singleOrder?.data?.find((order) => order._id === orderId);
   const productsWithQuantity = order?.products.reduce((acc, product) => {
     const existingProduct = acc.find((p: TProduct) => p._id === product._id);
     if (existingProduct) {
@@ -22,7 +40,14 @@ const SingleOrder = () => {
     return [...acc, { ...product, quantity: 1 }];
   }, [] as any);
 
-  if (isOrderLoading || isOrderFetching) {
+  if (
+    isOrderLoading ||
+    isOrderFetching ||
+    isCustomerOrderLoading ||
+    isCustomerOrderFetching ||
+    isVendorOrderLoading ||
+    isVendorOrderFetching
+  ) {
     return <div>Loading...</div>;
   }
 
@@ -61,7 +86,7 @@ const SingleOrder = () => {
           <div className="space-y-4">
             <h3 className="text-2xl text-grayBlack">Order Summary</h3>
             <div className="space-y-4">
-              {productsWithQuantity.map((product: any) => (
+              {productsWithQuantity?.map((product: any) => (
                 <div
                   key={product._id}
                   style={{
