@@ -5,26 +5,29 @@ import { Col, Row } from "antd";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import { useGetAdminsQuery } from "../../../redux/features/admin/admin.api";
+import { TQueryParams } from "../../../types";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const user = useAppSelector(selectCurrentUser);
-  const {
-    data: adminData,
-    isLoading: isALoading,
-    isFetching: isAFetching,
-  } = useGetAdminsQuery([
+  const [page, setPage] = useState(1);
+  const searchQuery: TQueryParams[] = [
     {
       name: "limit",
-      value: 1 + "",
+      value: 2 + "",
     },
     {
       name: "page",
-      value: 2 + "",
+      value: page + "",
     },
-  ]);
-
-  console.log(adminData);
+  ];
+  if (searchTerm) {
+    searchQuery.push({
+      name: "searchTerm",
+      value: searchTerm,
+    });
+  }
+  const { data: adminData, isLoading: isALoading, isFetching: isAFetching } = useGetAdminsQuery(searchQuery);
 
   const [userType, setUserType] = useState("customer");
 
