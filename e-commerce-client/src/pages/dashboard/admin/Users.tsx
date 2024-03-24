@@ -11,7 +11,7 @@ import { useGetAllCustomersQuery } from "../../../redux/features/customer/custom
 import { useGetAllVendorsQuery } from "../../../redux/features/vendor/vendor.api";
 import ShopPagination from "../../../components/Shop/ShopPagination";
 import UserHeading from "../../../components/users/UserHeading";
-import { useMakeVendorMutation } from "../../../redux/features/userManagement/userManagement.api";
+import { useMakeAdminMutation, useMakeVendorMutation } from "../../../redux/features/userManagement/userManagement.api";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
@@ -50,7 +50,7 @@ const Users = () => {
   const { data: adminsData, isLoading: isALoading, isFetching: isAFetching } = useGetAllAdminsQuery(searchQuery);
 
   const [makeVendor] = useMakeVendorMutation();
-  const [makeAdmin] = useMakeVendorMutation();
+  const [makeAdmin] = useMakeAdminMutation();
 
   const [userType, setUserType] = useState("customer");
 
@@ -103,7 +103,7 @@ const Users = () => {
     {
       title: "Name",
       dataIndex: "fullName",
-      key: "fullName",
+      key: "_id",
     },
     {
       title: "Email",
@@ -113,7 +113,7 @@ const Users = () => {
     {
       title: "Phone",
       dataIndex: "mobileNo",
-      key: "mobileNo",
+      key: "_id",
     },
   ];
 
@@ -143,6 +143,7 @@ const Users = () => {
       <Table
         columns={columns}
         loading={isCustomerFetching || isVendorFetching || isAFetching}
+        rowKey="_id"
         dataSource={
           userType === "customer"
             ? (customersData?.data as any)

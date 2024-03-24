@@ -24,6 +24,7 @@ const adminApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["admin"],
     }),
     getSingleAdmin: builder.query({
       query: (adminId: string) => ({

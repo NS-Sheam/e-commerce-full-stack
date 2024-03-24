@@ -62,6 +62,7 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
 
 const makeVendor = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
+
   const result = await UserServices.makeVendor(id);
 
   sendResponse(res, {
@@ -73,6 +74,7 @@ const makeVendor = catchAsync(async (req: Request, res: Response) => {
 });
 const makeAdmin = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
+
   const result = await UserServices.makeAdmin(id);
 
   sendResponse(res, {

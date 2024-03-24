@@ -255,7 +255,7 @@ const makeVendor = async (customerId: string) => {
   }
 };
 
-const makeAdmin = async (vendorId: string) => {
+const makeAdmin = async (customerId: string) => {
   const session = await mongoose.startSession();
 
   try {
@@ -263,17 +263,15 @@ const makeAdmin = async (vendorId: string) => {
     session.startTransaction();
 
     // Transaction 1: Change Vendor to Admin
-    const vendor = await Vendor.findById(vendorId);
-    if (!vendor) {
-      throw new AppError(httpStatus.BAD_REQUEST, "Vendor not found");
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Customer not found");
     }
 
-    await Product.deleteMany({ vendor: vendorId }, { session });
-
-    await Vendor.findByIdAndDelete(vendorId, { session });
+    await Customer.findByIdAndDelete(customerId, { session });
 
     const newUpdatedUser = await User.findByIdAndUpdate(
-      vendor.user,
+      customer.user,
       { userType: "admin" },
       { new: true, session },
     );
@@ -285,12 +283,12 @@ const makeAdmin = async (vendorId: string) => {
     const newAdmin = await Admin.create(
       [
         {
-          user: vendor.user,
-          userName: vendor.userName,
-          name: vendor.name,
-          email: vendor.email,
-          mobileNo: vendor.mobileNo,
-          image: vendor.image,
+          user: customer.user,
+          userName: customer.userName,
+          name: customer.name,
+          email: customer.email,
+          mobileNo: customer.mobileNo,
+          image: customer?.image,
         },
       ],
       { session },
