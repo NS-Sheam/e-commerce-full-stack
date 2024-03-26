@@ -1,6 +1,6 @@
-import dashboardIcon from "../assets/icons/dashboard.png";
+// import dashboardIcon from "../assets/icons/dashboard.png";
 import orderHistoryIcon from "../assets/icons/order-history.png";
-import trackOrderIcon from "../assets/icons/tracking.png";
+// import trackOrderIcon from "../assets/icons/tracking.png";
 import shoppingCartIcon from "../assets/icons/shopping-cart.png";
 import wishlistIcon from "../assets/icons/wishlist.png";
 // import compareIcon from "../assets/icons/swap.png";

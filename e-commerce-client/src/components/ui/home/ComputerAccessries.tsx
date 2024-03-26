@@ -5,6 +5,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
 import { TProduct } from "../../../types";
 import ComputerAccessioriesCards from "./ComputerAccessioriesCards";
+import LoadingComponent from "../../LoadingComponent";
 const ComputerAccessories = () => {
   const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
 
@@ -20,7 +21,11 @@ const ComputerAccessories = () => {
   }) as TProduct[];
 
   if (isPLoading || isPFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   return (
@@ -103,7 +108,7 @@ const ComputerAccessories = () => {
           gutter={[16, 16]}
           className="  h-full"
         >
-          <ComputerAccessioriesCards product={productData[1]} />
+          <ComputerAccessioriesCards product={productData?.[1]} />
         </Row>
       </Col>
     </Row>

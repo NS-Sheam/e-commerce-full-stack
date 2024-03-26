@@ -5,12 +5,17 @@ import { TProduct } from "../../types/product.types";
 
 import BannerCarousel from "../ui/home/BannerCarousel";
 import BannerCards from "../ui/home/BannerCards";
+import LoadingComponent from "../LoadingComponent";
 
 const Banner = () => {
   const { data: products, isLoading: productIsLoading } = useGetProductsQuery(undefined);
 
   if (productIsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   const productData = sortByDiscount(products?.data?.map((product) => product) as TProduct[]);

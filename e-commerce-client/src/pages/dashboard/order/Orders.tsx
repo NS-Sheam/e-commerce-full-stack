@@ -5,6 +5,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 const Orders = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -71,7 +72,11 @@ const Orders = () => {
     isOrderLoading ||
     isOrderFetching
   ) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
   return (
     <div className="p-4">
@@ -79,74 +84,84 @@ const Orders = () => {
         <h3>Orders</h3>
       </DashboardHeading>
       <Row gutter={[16, 16]}>
-        {orderedProducts?.map((product: any, index: number) => (
-          <Col
-            key={index}
-            span={12}
-            md={{ span: 24 }}
-            style={{
-              border: "1px solid #e5e5e5",
-              padding: "1rem",
-            }}
-            className="shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
-            onClick={() => handleNavigateProductOrder(product.order._id, product._id)}
-          >
-            <Row
-              gutter={[16, 16]}
-              justify="center"
-              align="middle"
+        {orderedProducts?.length === 0 ? (
+          orderedProducts?.map((product: any, index: number) => (
+            <Col
+              key={index}
+              span={12}
+              md={{ span: 24 }}
+              style={{
+                border: "1px solid #e5e5e5",
+                padding: "1rem",
+              }}
+              className="shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
+              onClick={() => handleNavigateProductOrder(product.order._id, product._id)}
             >
-              <Col
-                span={24}
-                md={{ span: 8 }}
+              <Row
+                gutter={[16, 16]}
+                justify="center"
+                align="middle"
               >
-                <div className="md:flex items-center justify-start gap-2">
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-full md:w-32 md:h-20 text-grayBlack"
-                  />
-                  <span className="text-2xl md:text-xl font-semibold">{product.name}</span>
-                </div>
-              </Col>
-              <Col
-                span={24}
-                md={{ span: 5 }}
-              >
-                <span className="text-[#2DA5F3] font-bold text-xl">${product.price}</span>
-              </Col>
-              <Col
-                span={24}
-                md={{ span: 5 }}
-              >
-                <Tag
-                  className="text-base font-semibold"
-                  color={
-                    product.order.status === "placed"
-                      ? "gold"
-                      : product.order.status === "shipped"
-                      ? "blue"
-                      : product.order.status === "delivered"
-                      ? "green"
-                      : "red"
-                  }
+                <Col
+                  span={24}
+                  md={{ span: 8 }}
                 >
-                  {product.order.status}
-                </Tag>
-              </Col>
+                  <div className="md:flex items-center justify-start gap-2">
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-full h-full md:w-32 md:h-20 text-grayBlack"
+                    />
+                    <span className="text-2xl md:text-xl font-semibold">{product.name}</span>
+                  </div>
+                </Col>
+                <Col
+                  span={24}
+                  md={{ span: 5 }}
+                >
+                  <span className="text-[#2DA5F3] font-bold text-xl">${product.price}</span>
+                </Col>
+                <Col
+                  span={24}
+                  md={{ span: 5 }}
+                >
+                  <Tag
+                    className="text-base font-semibold"
+                    color={
+                      product.order.status === "placed"
+                        ? "gold"
+                        : product.order.status === "shipped"
+                        ? "blue"
+                        : product.order.status === "delivered"
+                        ? "green"
+                        : "red"
+                    }
+                  >
+                    {product.order.status}
+                  </Tag>
+                </Col>
 
-              <Col
-                span={24}
-                md={{ span: 6 }}
-                className="flex items-center justify-center gap-2"
-              >
-                <span className="text-grayBlack font-bold text-lg">
-                  {moment(product.order.createdAt).format("MMMM Do YYYY")}
-                </span>
-              </Col>
-            </Row>
-          </Col>
-        ))}
+                <Col
+                  span={24}
+                  md={{ span: 6 }}
+                  className="flex items-center justify-center gap-2"
+                >
+                  <span className="text-grayBlack font-bold text-lg">
+                    {moment(product.order.createdAt).format("MMMM Do YYYY")}
+                  </span>
+                </Col>
+              </Row>
+            </Col>
+          ))
+        ) : (
+          <p className="text-grayBlack font-semibold">
+            {user?.userType === "customer"
+              ? "You did not place any order yet"
+              : user?.userType === "vendor"
+              ? "You did not receive any order yet"
+              : "No orders found"}
+          </p>
+        )}
       </Row>
     </div>
   );

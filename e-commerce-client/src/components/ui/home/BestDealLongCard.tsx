@@ -81,7 +81,7 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
         <p className=" font-bold text-[#2DA5F3] flex justify-start items-center gap-2">
           <span>${product?.price}</span>
           {"  "}
-          <span className={`font-semibold text-gray line-through`}>{product.price + (product?.discount || 0)}</span>
+          <span className={`font-semibold text-gray line-through`}>{product?.price + (product?.discount || 0)}</span>
         </p>
         <p className="text-gray">{product?.description}</p>
 
@@ -104,7 +104,7 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
             <CommonBtn size="large">Shop Now</CommonBtn>
           </Col>
           <Col span={4}>
-            <Link to={`/product/${product._id}`}>
+            <Link to={`/product/${product?._id}`}>
               <span className={`${iconStyle}`}>
                 <FaEye />
               </span>

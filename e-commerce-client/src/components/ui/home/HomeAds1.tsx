@@ -36,11 +36,11 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             >
               Introducing
             </Tag>
-            <h3 className="text-xl md:text-3xl text-grayBlack">{productData[2]?.name}</h3>
-            <p className="text-gray md:text-xl font-semibold ">{productData[2]?.description.slice(0, 60)}... </p>
+            <h3 className="text-xl md:text-3xl text-grayBlack">{productData?.[2]?.name}</h3>
+            <p className="text-gray md:text-xl font-semibold ">{productData?.[2]?.description.slice(0, 60)}... </p>
             <div className="w-24 md:w-36">
               <CommonBtn
-                onClick={() => navigate(`/product/${productData[2]._id}`)}
+                onClick={() => navigate(`/product/${productData?.[2]._id}`)}
                 size={(isSmallDevice && "small") || "large"}
               >
                 <span className="text-xs md:text-base">
@@ -56,7 +56,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             <div className="w-32 md:w-60 h-32 md:h-60 mx-auto">
               <img
                 className=" w-full h-full"
-                src={productData[2].images[0]}
+                src={productData?.[2].images[0]}
                 alt=""
               />
             </div>
@@ -69,7 +69,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
         className="relative"
       >
         <div className="absolute h-14 md:h-28 w-14 md:w-28 rounded-full z-10 bg-[#2DA5F3] top-2 md:top-4 right-2 md:right-4 flex items-center justify-center">
-          <span className="text-xs md:text-2xl font-bold text-white">${productData[1]?.price}</span>
+          <span className="text-xs md:text-2xl font-bold text-white">${productData?.[1]?.price}</span>
         </div>
         <Row
           gutter={[0, 16]}
@@ -88,11 +88,11 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             >
               Introducing
             </Tag>
-            <h3 className="text-xl md:text-3xl font-bold text-white">{productData[1]?.name}</h3>
-            <p className="text-white md:text-xl font-semibold ">{productData[1]?.description.slice(0, 60)}... </p>
+            <h3 className="text-xl md:text-3xl font-bold text-white">{productData?.[1]?.name}</h3>
+            <p className="text-white md:text-xl font-semibold ">{productData?.[1]?.description.slice(0, 60)}... </p>
             <div className="w-24 md:w-36">
               <CommonBtn
-                onClick={() => navigate(`/product/${productData[1]._id}`)}
+                onClick={() => navigate(`/product/${productData?.[1]._id}`)}
                 size={(isSmallDevice && "small") || "large"}
               >
                 <span className="text-xs md:text-base">
@@ -108,7 +108,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             <div className="w-32 md:w-60 h-32 md:h-60 mx-auto">
               <img
                 className=" w-full h-full"
-                src={productData[1].images[0]}
+                src={productData?.[1].images[0]}
                 alt=""
               />
             </div>

@@ -1,9 +1,9 @@
-import dashboardIcon from "../assets/icons/dashboard.png";
+// import dashboardIcon from "../assets/icons/dashboard.png";
 import settingIcon from "../assets/icons/settings.png";
 import productIcon from "../assets/icons/products.png";
 import addProductIcon from "../assets/icons/add-product.png";
 import orderIcon from "../assets/icons/orders.png";
-import transactionIcon from "../assets/icons/transaction.png";
+// import transactionIcon from "../assets/icons/transaction.png";
 
 import { TUserPath } from "../types/dashboardItem.type";
 import AddProduct from "../pages/dashboard/vendor/AddProduct";

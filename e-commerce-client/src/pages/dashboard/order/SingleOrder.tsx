@@ -15,6 +15,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 const SingleOrder = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -90,7 +91,11 @@ const SingleOrder = () => {
     isVendorOrderLoading ||
     isVendorOrderFetching
   ) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   return (

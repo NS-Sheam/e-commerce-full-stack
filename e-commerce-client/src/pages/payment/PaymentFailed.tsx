@@ -4,13 +4,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetMyInfoQuery } from "../../redux/features/auth/auth.api";
 import CommonBtn from "../../components/ui/CommonBtn";
 import { BsMenuButton } from "react-icons/bs";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const PaymentFailed = () => {
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
   const navigate = useNavigate();
   const { transactionId } = useParams<{ transactionId: string }>();
   if (isMyInfoLoading || isMyInfoFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
   return (
     <Row

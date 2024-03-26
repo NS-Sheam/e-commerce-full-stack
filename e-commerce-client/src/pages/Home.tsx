@@ -10,6 +10,7 @@ import HomeAds1 from "../components/ui/home/HomeAds1";
 import ComputerAccessories from "../components/ui/home/ComputerAccessries";
 import HomeAds2 from "../components/ui/home/HomeAds2";
 import Subscribe from "../components/ui/home/Subscribe";
+import LoadingComponent from "../components/LoadingComponent";
 /**
  * TODO:
  * 1. Handle product loading
@@ -20,7 +21,11 @@ const Home = () => {
   const productData = sortByDiscount(products?.data?.map((product) => product) as TProduct[]);
 
   if (productIsLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   return (
@@ -31,15 +36,15 @@ const Home = () => {
       {/* Best Deal  */}
       <BestDeal productData={productData} />
       {/* Shop with categories  */}
-      <ShopWithCategories />
+      // <ShopWithCategories />
       {/* Feature Products  */}
       <FeaturedProducts productData={productData} />
       {/* Home Ads 1 */}
-      <HomeAds1 productData={productData} />
+      // <HomeAds1 productData={productData} />
       {/* Comuter Accessories */}
       <ComputerAccessories />
       {/* Home Ads 2 */}
-      <HomeAds2 product={productData[1]} />
+      <HomeAds2 product={productData?.[1]} />
       <Subscribe />
     </div>
   );

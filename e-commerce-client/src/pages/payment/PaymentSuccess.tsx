@@ -5,6 +5,7 @@ import { useGetMyInfoQuery } from "../../redux/features/auth/auth.api";
 import CommonBtn from "../../components/ui/CommonBtn";
 import { BsMenuButton } from "react-icons/bs";
 import { FaArrowRight } from "react-icons/fa6";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const PaymentSuccess = () => {
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFetching } = useGetMyInfoQuery(undefined);
@@ -12,7 +13,11 @@ const PaymentSuccess = () => {
 
   const { transactionId } = useParams<{ transactionId: string }>();
   if (isMyInfoLoading || isMyInfoFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   return (

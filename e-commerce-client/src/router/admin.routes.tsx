@@ -1,4 +1,4 @@
-import dashboardIcon from "../assets/icons/dashboard.png";
+// import dashboardIcon from "../assets/icons/dashboard.png";
 import settingIcon from "../assets/icons/settings.png";
 import productIcon from "../assets/icons/products.png";
 import orderIcon from "../assets/icons/orders.png";

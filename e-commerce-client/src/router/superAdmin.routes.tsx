@@ -1,7 +1,7 @@
-import dashboardIcon from "../assets/icons/dashboard.png";
+// import dashboardIcon from "../assets/icons/dashboard.png";
 import productIcon from "../assets/icons/products.png";
 import orderIcon from "../assets/icons/orders.png";
-import transactionIcon from "../assets/icons/transaction.png";
+// import transactionIcon from "../assets/icons/transaction.png";
 import makeVendor from "../assets/icons/make-vendor.png";
 import categories from "../assets/icons/categories.png";
 

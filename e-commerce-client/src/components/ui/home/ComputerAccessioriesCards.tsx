@@ -18,15 +18,15 @@ const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
             alt=""
           />
         </div>
-        <h4 className="text-3xl text-grayBlack">{product.name}</h4>
-        <p className="font-semibold">{product.description.slice(0, 60)}</p>
+        <h4 className="text-3xl text-grayBlack">{product?.name}</h4>
+        <p className="font-semibold">{product?.description.slice(0, 60)}</p>
         <div>
           <span>Only For: </span>
           <Tag
             color="#ffffff"
             style={{ color: "#000000", fontWeight: "600", fontSize: "1rem" }}
           >
-            {product.price} BDT
+            {product?.price} BDT
           </Tag>
         </div>
         <div className=" w-full">

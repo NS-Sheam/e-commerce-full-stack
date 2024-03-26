@@ -77,7 +77,7 @@ const WishList = () => {
             </Col>
           ))
         ) : (
-          <h3>No product in wishlist</h3>
+          <p className="text-grayBlack font-semibold">No product in wishlist</p>
         )}
       </Row>
     </div>

@@ -19,6 +19,7 @@ import ShopSearchBar from "../components/Shop/ShopSearchBar";
 import ShopPagination from "../components/Shop/ShopPagination";
 import { RxCross2 } from "react-icons/rx";
 import { CiFilter } from "react-icons/ci";
+import LoadingComponent from "../components/LoadingComponent";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -91,7 +92,11 @@ const Shop = () => {
   }
 
   if (isCLoading || isCFetching || isBLoading || isBFetching || pIsLoading || pIsFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   const priceRangeTexts = [

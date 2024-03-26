@@ -11,6 +11,7 @@ import { useGetProductsQuery } from "../../redux/features/productManagement/prod
 import { usePlaceOrderMutation } from "../../redux/features/order/order.api";
 import { TResponse } from "../../types/global";
 import { toast } from "sonner";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const Checkout = () => {
   const { data: myInfo, isLoading: isMyInfoLoading, isFetching: isMyInfoFecthing } = useGetMyInfoQuery(undefined);
@@ -66,7 +67,11 @@ const Checkout = () => {
   };
 
   if (isMyInfoLoading || isMyInfoFecthing || isPLoading || isPFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
   return (
     <div className="p-4 space-y-2">

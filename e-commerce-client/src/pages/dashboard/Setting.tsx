@@ -13,6 +13,7 @@ import { useUpdateVendorMutation } from "../../redux/features/vendor/vendor.api"
 import { toast } from "sonner";
 import { TAdmin, TCustomer, TReduxResponse, TVendor } from "../../types";
 import { useUpdateAdminMutation } from "../../redux/features/admin/admin.api";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const Setting = () => {
   const navigate = useNavigate();
@@ -25,7 +26,11 @@ const Setting = () => {
   const [updateAdmin] = useUpdateAdminMutation();
   const dispatch = useAppDispatch();
   if (isMyInfoLoading || isMyInfoFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
   }
 
   const defaultValues = {

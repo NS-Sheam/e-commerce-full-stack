@@ -12,6 +12,7 @@ import UserHeading from "../../../components/users/UserHeading";
 import { useMakeAdminMutation, useMakeVendorMutation } from "../../../redux/features/userManagement/userManagement.api";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,7 +54,9 @@ const Users = () => {
   const [userType, setUserType] = useState("customer");
 
   if (isCustomerLoading || isVendorLoading || isALoading) {
-    return <div>Loading...</div>;
+    return  <div className="min-h-[70vh] flex justify-center items-center">
+    <LoadingComponent />
+  </div>
   }
   const selectOptions = [
     {
