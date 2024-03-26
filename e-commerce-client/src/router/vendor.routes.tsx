@@ -9,18 +9,32 @@ import { TUserPath } from "../types/dashboardItem.type";
 import AddProduct from "../pages/dashboard/vendor/AddProduct";
 import Products from "../pages/dashboard/vendor/Products";
 import Setting from "../pages/dashboard/Setting";
+import Orders from "../pages/dashboard/order/Orders";
 export const vendorDashboardItems: TUserPath[] = [
+  // {
+  //   path: "home",
+  //   name: "Dashboard",
+  //   icon: (
+  //     <img
+  //       src={dashboardIcon}
+  //       alt="dashboard"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Home</div>,
+  // },
+
   {
-    path: "home",
-    name: "Dashboard",
+    path: "orders",
+    name: "Orders",
     icon: (
       <img
-        src={dashboardIcon}
+        src={orderIcon}
         alt="dashboard"
         className="w-6 h-6"
       />
     ),
-    element: <div>Home</div>,
+    element: <Orders />,
   },
   {
     path: "products",
@@ -46,30 +60,19 @@ export const vendorDashboardItems: TUserPath[] = [
     ),
     element: <AddProduct />,
   },
-  {
-    path: "orders",
-    name: "Orders",
-    icon: (
-      <img
-        src={orderIcon}
-        alt="dashboard"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>Orders</div>,
-  },
-  {
-    path: "transactions",
-    name: "Transactions",
-    icon: (
-      <img
-        src={transactionIcon}
-        alt="dashboard"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>Transactions</div>,
-  },
+
+  // {
+  //   path: "transactions",
+  //   name: "Transactions",
+  //   icon: (
+  //     <img
+  //       src={transactionIcon}
+  //       alt="dashboard"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Transactions</div>,
+  // },
   {
     path: "setting",
     name: "Setting",

@@ -16,21 +16,21 @@ import Orders from "../pages/dashboard/order/Orders";
 import Setting from "../pages/dashboard/Setting";
 
 export const customerDashboardItems: TUserPath[] = [
+  // {
+  //   path: "home",
+  //   name: "Dashboard",
+  //   icon: (
+  //     <img
+  //       src={dashboardIcon}
+  //       alt="dashboard"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Home</div>,
+  // },
   {
-    path: "home",
-    name: "Dashboard",
-    icon: (
-      <img
-        src={dashboardIcon}
-        alt="dashboard"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>Home</div>,
-  },
-  {
-    path: "order-history",
-    name: "Order History",
+    path: "orders",
+    name: "Orders",
     icon: (
       <img
         src={orderHistoryIcon}
@@ -40,18 +40,18 @@ export const customerDashboardItems: TUserPath[] = [
     ),
     element: <Orders />,
   },
-  {
-    path: "track-order",
-    name: "Track Order",
-    icon: (
-      <img
-        src={trackOrderIcon}
-        alt="track order"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>Track Order</div>,
-  },
+  // {
+  //   path: "track-order",
+  //   name: "Track Order",
+  //   icon: (
+  //     <img
+  //       src={trackOrderIcon}
+  //       alt="track order"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Track Order</div>,
+  // },
   {
     path: "products",
     name: "Products",

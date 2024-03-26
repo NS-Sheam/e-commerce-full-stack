@@ -12,17 +12,30 @@ import Users from "../pages/dashboard/admin/Users";
 import Orders from "../pages/dashboard/order/Orders";
 
 export const superAdminDashboardItems: TUserPath[] = [
+  // {
+  //   path: "home",
+  //   name: "Dashboard",
+  //   icon: (
+  //     <img
+  //       src={dashboardIcon}
+  //       alt="dashboard"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Home</div>,
+  // },
+
   {
-    path: "home",
-    name: "Dashboard",
+    path: "orders",
+    name: "Orders",
     icon: (
       <img
-        src={dashboardIcon}
+        src={orderIcon}
         alt="dashboard"
         className="w-6 h-6"
       />
     ),
-    element: <div>Home</div>,
+    element: <Orders />,
   },
   {
     path: "products",
@@ -35,18 +48,6 @@ export const superAdminDashboardItems: TUserPath[] = [
       />
     ),
     element: <Products />,
-  },
-  {
-    path: "orders",
-    name: "Orders",
-    icon: (
-      <img
-        src={orderIcon}
-        alt="dashboard"
-        className="w-6 h-6"
-      />
-    ),
-    element: <Orders />,
   },
   {
     path: "Users",
@@ -72,16 +73,16 @@ export const superAdminDashboardItems: TUserPath[] = [
     ),
     element: <Categories />,
   },
-  {
-    path: "transactions",
-    name: "Transactions",
-    icon: (
-      <img
-        src={transactionIcon}
-        alt="dashboard"
-        className="w-6 h-6"
-      />
-    ),
-    element: <div>Transactions</div>,
-  },
+  // {
+  //   path: "transactions",
+  //   name: "Transactions",
+  //   icon: (
+  //     <img
+  //       src={transactionIcon}
+  //       alt="dashboard"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Transactions</div>,
+  // },
 ];

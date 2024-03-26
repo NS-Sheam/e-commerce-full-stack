@@ -10,6 +10,7 @@ const orderApi = baseApi.injectEndpoints({
         body: orderData,
       }),
       transformResponse: (response: any) => response.data,
+      invalidatesTags: ["order"],
     }),
     allOrders: builder.query({
       query: (args: TQueryParams[] | undefined) => {
@@ -31,6 +32,7 @@ const orderApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["order"],
     }),
     customerOrder: builder.query({
       query: (args: TQueryParams[] | undefined) => {
@@ -52,6 +54,7 @@ const orderApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["order"],
     }),
     vendorOrder: builder.query({
       query: (args: TQueryParams[] | undefined) => {
@@ -73,13 +76,18 @@ const orderApi = baseApi.injectEndpoints({
           meta: response.meta,
         };
       },
+      providesTags: ["order"],
     }),
     changeOrderStatus: builder.mutation({
-      query: (data: { id: string; status: string }) => ({
-        url: `orders/${data.id}/status`,
-        method: "PATCH",
-        body: data.status,
-      }),
+      query: (data: { id: string; data: { status: string } }) => {
+        return {
+          url: `orders/${data.id}/status`,
+          method: "PATCH",
+          body: data.data,
+        };
+      },
+      transformResponse: (response: any) => response.data,
+      invalidatesTags: ["order"],
     }),
   }),
 });

@@ -14,17 +14,29 @@ import Setting from "../pages/dashboard/Setting";
 import Orders from "../pages/dashboard/order/Orders";
 
 export const adminDashboardItems: TUserPath[] = [
+  // {
+  //   path: "home",
+  //   name: "Dashboard",
+  //   icon: (
+  //     <img
+  //       src={dashboardIcon}
+  //       alt="dashboard"
+  //       className="w-6 h-6"
+  //     />
+  //   ),
+  //   element: <div>Home</div>,
+  // },
   {
-    path: "home",
-    name: "Dashboard",
+    path: "orders",
+    name: "Orders",
     icon: (
       <img
-        src={dashboardIcon}
+        src={orderIcon}
         alt="dashboard"
         className="w-6 h-6"
       />
     ),
-    element: <div>Home</div>,
+    element: <Orders />,
   },
   {
     path: "products",
@@ -38,18 +50,7 @@ export const adminDashboardItems: TUserPath[] = [
     ),
     element: <Products />,
   },
-  {
-    path: "orders",
-    name: "Orders",
-    icon: (
-      <img
-        src={orderIcon}
-        alt="dashboard"
-        className="w-6 h-6"
-      />
-    ),
-    element: <Orders />,
-  },
+
   {
     path: "Users",
     name: "Users",

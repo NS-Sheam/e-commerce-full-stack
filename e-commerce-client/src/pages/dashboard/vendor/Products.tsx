@@ -17,7 +17,7 @@ const Products = () => {
   const searchQuery: TQueryParams[] = [
     {
       name: "limit",
-      value: 2 + "",
+      value: 20 + "",
     },
     {
       name: "page",

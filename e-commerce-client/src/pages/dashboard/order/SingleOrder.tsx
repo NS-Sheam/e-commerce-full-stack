@@ -1,13 +1,20 @@
 import { Col, Row, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAllOrdersQuery, useCustomerOrderQuery, useVendorOrderQuery } from "../../../redux/features/order/order.api";
+import {
+  useAllOrdersQuery,
+  useChangeOrderStatusMutation,
+  useCustomerOrderQuery,
+  useVendorOrderQuery,
+} from "../../../redux/features/order/order.api";
 import moment from "moment";
 
 import OrderTimeLine from "../../../components/ui/order/OrderTimeLine";
 import OrderActivity from "../../../components/ui/order/OrderActivity";
-import { TProduct } from "../../../types";
+import { TOrder, TProduct, TReduxResponse } from "../../../types";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
+import Swal from "sweetalert2";
+import { toast } from "sonner";
 
 const SingleOrder = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -24,6 +31,7 @@ const SingleOrder = () => {
     isFetching: isVendorOrderFetching,
   } = useVendorOrderQuery(undefined);
   const { data: singleOrder, isLoading: isOrderLoading, isFetching: isOrderFetching } = useAllOrdersQuery(undefined);
+  const [changeOrderStatus] = useChangeOrderStatusMutation();
 
   const order =
     user?.userType === "customer"
@@ -40,7 +48,7 @@ const SingleOrder = () => {
     return [...acc, { ...product, quantity: 1 }];
   }, [] as any);
 
-  const handleOrderStatusChange = (value: string) => {
+  const handleOrderStatusChange = async (value: string) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -50,23 +58,26 @@ const SingleOrder = () => {
       cancelButtonText: "No, cancel!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // try {
-        //   const toastId = toast.loading("Updating user...", { duration: 2000 });
-        //   const res =
-        //     value === "makeVendor"
-        //       ? ((await makeVendor(id)) as TReduxResponse<TVendor>)
-        //       : ((await makeAdmin(id)) as TReduxResponse<TAdmin>);
-        //   if (!res.error) {
-        //     toast.success(res.message || "User updated successfully", { id: toastId, duration: 2000 });
-        //   } else {
-        //     toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "User updating failed", {
-        //       id: toastId,
-        //       duration: 2000,
-        //     });
-        //   }
-        // } catch (error: any) {
-        //   toast.error(error.message || "User updating failed", { duration: 2000 });
-        // }
+        try {
+          const toastId = toast.loading("Changing order status...", { duration: 2000 });
+          const res = (await changeOrderStatus({
+            id: order?._id as string,
+            data: { status: value },
+          })) as TReduxResponse<TOrder>;
+          if (!res.error) {
+            toast.success(res.message || "Order status updated successfully", { id: toastId, duration: 2000 });
+          } else {
+            toast.error(
+              res?.error?.data?.errorSources[0].message || res.error.message || "Order status updating failed",
+              {
+                id: toastId,
+                duration: 2000,
+              }
+            );
+          }
+        } catch (error: any) {
+          toast.error(error.message || "Order status updating failed", { duration: 2000 });
+        }
       }
     });
   };

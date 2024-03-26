@@ -76,7 +76,7 @@ const Orders = () => {
   return (
     <div className="p-4">
       <DashboardHeading>
-        <h3>Order History</h3>
+        <h3>Orders</h3>
       </DashboardHeading>
       <Row gutter={[16, 16]}>
         {orderedProducts?.map((product: any, index: number) => (
