@@ -52,12 +52,12 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
     "bg-white hover:bg-orange p-3 flex items-center justify-center rounded-full text-grayBlack hover:text-white text-xl duration-300";
   return (
     <Card
-      className="product-card h-full "
+      className="product-card h-full relative "
       key={product._id}
       hoverable
       style={{ width: "100%" }}
       cover={
-        <div style={{ width: "100%", height: 200, position: "relative" }}>
+        <div style={{ width: "100%", height: "100%", position: "relative" }}>
           <div className="card-icon-container">
             <span
               onClick={handleSubmit}
