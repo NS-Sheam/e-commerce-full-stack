@@ -107,7 +107,7 @@ const createCustomer = async (
     const verifyEmailToken = createToken(
       jwtPayload,
       config.jwt_access_secret as string,
-      "10d",
+      "365d",
     );
     const verifyUrl = `${config.client_url}/auth/verify-email?token=${verifyEmailToken}`;
     sendEmail(

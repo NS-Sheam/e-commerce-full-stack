@@ -59,7 +59,8 @@ const EComProfileImageUploader = ({ name, label, defaultImageUrl }: TEComProfile
                 setLoading(true);
                 return;
               }
-              if (e.file.status === "done") {
+
+              if (e.file.status === "done" || e.file.status === "error") {
                 getBase64(e.file.originFileObj, (url) => {
                   setLoading(false);
                   setImageUrl(url);

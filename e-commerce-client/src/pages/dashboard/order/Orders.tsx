@@ -84,7 +84,7 @@ const Orders = () => {
         <h3>Orders</h3>
       </DashboardHeading>
       <Row gutter={[16, 16]}>
-        {orderedProducts?.length === 0 ? (
+        {orderedProducts?.length > 0 ? (
           orderedProducts?.map((product: any, index: number) => (
             <Col
               key={index}

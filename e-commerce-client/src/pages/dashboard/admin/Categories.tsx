@@ -81,20 +81,21 @@ const Categories = () => {
     <div className="p-4">
       <DashboardHeading>
         <h3>Categories</h3>
-        {user?.userType === "admin" && (
-          <Button
-            onClick={() => {
-              setAction("add");
-              handleModalOpen();
-            }}
-            style={{ color: "#FF8C00", border: "FF8C00" }}
-          >
-            <p className="flex items-center justify-center gap-2">
-              <span>Add Category</span>
-              <FaArrowRight />
-            </p>
-          </Button>
-        )}
+        {user?.userType === "admin" ||
+          (user?.userType === "superAdmin" && (
+            <Button
+              onClick={() => {
+                setAction("add");
+                handleModalOpen();
+              }}
+              style={{ color: "#FF8C00", border: "FF8C00" }}
+            >
+              <p className="flex items-center justify-center gap-2">
+                <span>Add Category</span>
+                <FaArrowRight />
+              </p>
+            </Button>
+          ))}
       </DashboardHeading>
       {cIsLoading && (
         <Flex
@@ -135,7 +136,7 @@ const Categories = () => {
               align="middle"
             >
               <Col span={24}>
-                <div className="md:flex items-center justify-start gap-2">
+                <div className="md:flex items-center justify-start gap-2 w-32 h-32">
                   <img
                     src={item?.image}
                     alt={"product.name"}

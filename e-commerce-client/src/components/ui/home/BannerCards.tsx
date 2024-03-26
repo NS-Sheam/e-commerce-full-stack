@@ -85,7 +85,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
             <div className="w-full md:w-44 h-32 md:h-44 mx-auto">
               <img
                 className=" w-full h-full"
-                src={productData?.[1].images[0]}
+                src={productData?.[1]?.images[0]}
                 alt=""
               />
             </div>

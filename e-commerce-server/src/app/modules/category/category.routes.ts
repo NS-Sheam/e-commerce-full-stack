@@ -12,7 +12,7 @@ router.post(
   "/",
   upload.single("file"),
   textToJsonParser,
-  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  auth(USER_TYPE.superAdmin, USER_TYPE.admin, USER_TYPE.vendor),
   validateRequest(CategoryValidations.createCategoryValidationSchema),
   CategoryControllers.createCategory,
 );
@@ -20,14 +20,14 @@ router.patch(
   "/:id",
   upload.single("file"),
   textToJsonParser,
-  auth(USER_TYPE.admin, USER_TYPE.vendor),
+  auth(USER_TYPE.superAdmin, USER_TYPE.admin, USER_TYPE.vendor),
   CategoryControllers.updateCategory,
 );
 
 router.get("/", CategoryControllers.getAllCategories);
 router.delete(
   "/:id",
-  auth(USER_TYPE.admin),
+  auth(USER_TYPE.superAdmin, USER_TYPE.admin),
   CategoryControllers.deleteCategory,
 );
 

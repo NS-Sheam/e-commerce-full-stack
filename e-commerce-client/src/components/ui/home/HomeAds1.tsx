@@ -56,7 +56,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             <div className="w-32 md:w-60 h-32 md:h-60 mx-auto">
               <img
                 className=" w-full h-full"
-                src={productData?.[2].images[0]}
+                src={productData?.[2]?.images[0]}
                 alt=""
               />
             </div>
@@ -108,7 +108,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             <div className="w-32 md:w-60 h-32 md:h-60 mx-auto">
               <img
                 className=" w-full h-full"
-                src={productData?.[1].images[0]}
+                src={productData?.[1]?.images[0]}
                 alt=""
               />
             </div>

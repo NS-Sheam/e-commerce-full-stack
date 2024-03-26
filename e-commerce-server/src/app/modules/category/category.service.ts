@@ -13,6 +13,7 @@ const createCategory = async (file: any, payload: TCategory) => {
   payload.image = secure_url;
 
   const result = await Category.create(payload);
+
   return result;
 };
 const getAllCategories = async (query: Record<string, any>) => {
