@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAllOrdersQuery, useCustomerOrderQuery, useVendorOrderQuery } from "../../../redux/features/order/order.api";
 import moment from "moment";
@@ -39,6 +39,37 @@ const SingleOrder = () => {
     }
     return [...acc, { ...product, quantity: 1 }];
   }, [] as any);
+
+  const handleOrderStatusChange = (value: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, do it!",
+      cancelButtonText: "No, cancel!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        // try {
+        //   const toastId = toast.loading("Updating user...", { duration: 2000 });
+        //   const res =
+        //     value === "makeVendor"
+        //       ? ((await makeVendor(id)) as TReduxResponse<TVendor>)
+        //       : ((await makeAdmin(id)) as TReduxResponse<TAdmin>);
+        //   if (!res.error) {
+        //     toast.success(res.message || "User updated successfully", { id: toastId, duration: 2000 });
+        //   } else {
+        //     toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "User updating failed", {
+        //       id: toastId,
+        //       duration: 2000,
+        //     });
+        //   }
+        // } catch (error: any) {
+        //   toast.error(error.message || "User updating failed", { duration: 2000 });
+        // }
+      }
+    });
+  };
 
   if (
     isOrderLoading ||
@@ -82,6 +113,24 @@ const SingleOrder = () => {
           >
             Order expected to be delivered in {moment(order?.createdAt).add(7, "days").format("MMMM Do YYYY")}
           </p>
+          {(user?.userType === "superAdmin" || user?.userType === "admin") && (
+            <>
+              <p
+                className="text-gray md:text-lg"
+                style={{ fontWeight: 500 }}
+              >
+                Order Status
+              </p>
+              <Select
+                style={{ width: 200 }}
+                defaultValue={order?.status}
+                onChange={handleOrderStatusChange}
+              >
+                <Select.Option value="shipped">Shipped</Select.Option>
+                <Select.Option value="delivered">Delivered</Select.Option>
+              </Select>
+            </>
+          )}
           <OrderTimeLine order={order!} />
           <div className="space-y-4">
             <h3 className="text-2xl text-grayBlack">Order Summary</h3>

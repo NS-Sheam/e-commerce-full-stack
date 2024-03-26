@@ -70,6 +70,19 @@ const getOrderForVendor = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const changeOrderStatus = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderServices.changeOrderStatus(
+    req.params.id,
+    req.body.status,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Order status updated successfully",
+    data: result,
+  });
+});
+
 export const OrderControllers = {
   addOrder,
   paymentSuccess,
@@ -78,4 +91,5 @@ export const OrderControllers = {
   getSingleOrder,
   getOrderForCustomer,
   getOrderForVendor,
+  changeOrderStatus,
 };

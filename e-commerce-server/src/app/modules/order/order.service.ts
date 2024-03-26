@@ -291,6 +291,18 @@ const getOrderForVendor = async (
   return { result, meta };
 };
 
+const changeOrderStatus = async (orderId: string, status: string) => {
+  const order = await Order.findByIdAndUpdate(
+    orderId,
+    { status },
+    { new: true },
+  );
+  if (!order) {
+    throw new AppError(httpStatus.NOT_FOUND, "Order not found");
+  }
+  return order;
+};
+
 export const OrderServices = {
   addOrder,
   paymentSuccess,
@@ -299,4 +311,5 @@ export const OrderServices = {
   getSingleOrder,
   getOrderForCustomer,
   getOrderForVendor,
+  changeOrderStatus,
 };

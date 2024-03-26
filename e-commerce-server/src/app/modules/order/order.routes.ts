@@ -38,5 +38,10 @@ router.get(
   auth(USER_TYPE.admin, USER_TYPE.superAdmin),
   OrderControllers.getAllOrders,
 );
+router.patch(
+  "/:id/status",
+  auth(USER_TYPE.admin, USER_TYPE.superAdmin),
+  OrderControllers.changeOrderStatus,
+);
 
 export const OrderRoutes = router;

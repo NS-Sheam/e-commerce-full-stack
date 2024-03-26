@@ -18,11 +18,6 @@ export const sendOrderConfirmation = async (
   products: TProduct[],
   invoice: string,
 ) => {
-  console.log(
-    "Sending order confirmation email",
-    products[0].vendor._id.toString(),
-  );
-
   const transporter = nodemailer.createTransport({
     host: config.email_host,
     port: Number(config.email_port),
