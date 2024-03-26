@@ -12,6 +12,7 @@ import EComTextAreaInput from "../../../components/form/EComTextAreaInput";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../../types/global";
 import { TProduct } from "../../../types/product.types";
+import { useNavigate } from "react-router-dom";
 
 /**
  * TODO:
@@ -24,6 +25,7 @@ import { TProduct } from "../../../types/product.types";
 const AddProduct = () => {
   const { data: categories, isLoading: categoryIsLoading } = useGetCategoriesQuery(undefined);
   const [addProduct] = useAddProductMutation();
+  const navigate = useNavigate();
   const categoryOptions = categories?.map((category) => ({
     value: category._id,
     label: category.name,
@@ -52,6 +54,7 @@ const AddProduct = () => {
 
       if (!res.error) {
         toast.success(res.message || "Product added successfully", { id: toastId, duration: 2000 });
+        navigate("/vendor/products");
       } else {
         toast.error(res?.error?.data?.errorSources[0].message || res.error.message || "Product adding failed", {
           id: toastId,

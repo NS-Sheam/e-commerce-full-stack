@@ -9,10 +9,12 @@ import ShopSearchBar from "../../../components/Shop/ShopSearchBar";
 import { TQueryParams } from "../../../types";
 import { useState } from "react";
 import ShopPagination from "../../../components/Shop/ShopPagination";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const user = useAppSelector(selectCurrentUser);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const searchQuery: TQueryParams[] = [
     {
@@ -39,7 +41,10 @@ const Products = () => {
         <ShopSearchBar setSearchTerm={setSearchTerm} />
 
         {user?.userType === "vendor" && (
-          <Button style={{ color: "#FF8C00", border: "FF8C00" }}>
+          <Button
+            onClick={() => navigate("/vendor/add-product")}
+            style={{ color: "#FF8C00", border: "FF8C00" }}
+          >
             <p className="flex items-center justify-center gap-2">
               <span>Add Product</span>
               <FaArrowRight />

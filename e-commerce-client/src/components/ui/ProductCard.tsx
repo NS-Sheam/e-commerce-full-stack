@@ -52,7 +52,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
     "bg-white hover:bg-orange p-3 flex items-center justify-center rounded-full text-grayBlack hover:text-white text-xl duration-300";
   return (
     <Card
-      className="product-card"
+      className="product-card h-full "
       key={product._id}
       hoverable
       style={{ width: "100%" }}
@@ -91,6 +91,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
             alt={product.name}
             src={product.images[0]}
             style={{ width: "100%", height: "100%" }}
+            className="p-4"
           />
         </div>
       }
