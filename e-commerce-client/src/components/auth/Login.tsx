@@ -11,13 +11,6 @@ import GoogleLoginButton from "../ui/GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
 import { TReduxResponse } from "../../types";
 
-const defaultValues = {
-  // email: "admin@example.com",
-  // password: "admin123",
-  email: "customer321@gmail.com",
-  password: "customer123",
-};
-
 const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
@@ -59,10 +52,7 @@ const Login = () => {
         align="middle"
       >
         <Col span={24}>
-          <EComForm
-            onSubmit={onSubmit}
-            defaultValues={defaultValues}
-          >
+          <EComForm onSubmit={onSubmit}>
             <Row gutter={8}>
               <Col span={24}>
                 <EComInput

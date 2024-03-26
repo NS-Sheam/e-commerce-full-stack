@@ -19,17 +19,6 @@ import { useNavigate } from "react-router-dom";
  * - Automatically redirect to page where user was before login or want to go
  *
  */
-const defaultValues = {
-  userName: "customer321",
-  name: {
-    firstName: "Customer",
-    middleName: "Nazmus",
-    lastName: "Sakib",
-  },
-  email: "sakib@gmail.com",
-  mobileNo: "012323232323",
-  gender: "male",
-};
 
 const Register = () => {
   const [registerUser] = useRegistrationMutation();
@@ -95,10 +84,7 @@ const Register = () => {
         style={{ minHeight: "100vh" }}
       >
         <Col span={24}>
-          <EComForm
-            onSubmit={onSubmit}
-            defaultValues={defaultValues}
-          >
+          <EComForm onSubmit={onSubmit}>
             <Row gutter={8}>
               <Col span={24}>
                 <EComInput

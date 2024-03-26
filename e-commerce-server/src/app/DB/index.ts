@@ -5,7 +5,7 @@ import { User } from "../modules/user/user.model";
 const superAdmin = {
   userName: "superAdmin",
   password: config.super_admin_password,
-  email: "123sheamfeni@gmail.com",
+  email: "cardik360degree@gmail.com",
   userType: USER_TYPE.superAdmin,
   isDeleted: false,
   isVerified: true,
