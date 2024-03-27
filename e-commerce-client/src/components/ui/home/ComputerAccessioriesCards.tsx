@@ -1,6 +1,6 @@
 import { Col, Tag } from "antd";
 import { TProduct } from "../../../types";
-import { discountCalculator } from "../../../utils/product.utils";
+import { discountCalculator, truncateString } from "../../../utils/product.utils";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
 
@@ -18,8 +18,8 @@ const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
             alt=""
           />
         </div>
-        <h4 className="text-3xl text-grayBlack">{product?.name}</h4>
-        <p className="font-semibold">{product?.description.slice(0, 60)}</p>
+        <h4 className="text-3xl text-grayBlack">{truncateString(product?.name, 5)}</h4>
+        <p className="font-semibold">{truncateString(product?.description, 20)}</p>
         <div>
           <span>Only For: </span>
           <Tag

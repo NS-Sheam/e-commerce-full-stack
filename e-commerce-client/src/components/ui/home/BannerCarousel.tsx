@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { discountCalculator } from "../../../utils/product.utils";
+import { discountCalculator, truncateString } from "../../../utils/product.utils";
 import { TProduct } from "../../../types/product.types";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
@@ -42,7 +42,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
                   <hr className="w-10 h-[3px] bg-[#2DA5F3]" />
                   your best deal
                 </small>
-                <h1 className="text-base md:text-4xl font-bold text-grayBlack">{product?.name}</h1>
+                <h1 className="text-base md:text-4xl font-bold text-grayBlack">{truncateString(product?.name, 5)}</h1>
                 <p className="text-grayBlack text-xs md:text-xl">
                   Save upto {discountCalculator(product)}% off and get free shipping on all orders
                 </p>

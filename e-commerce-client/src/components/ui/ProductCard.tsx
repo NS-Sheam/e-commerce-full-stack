@@ -9,7 +9,7 @@ import { handleAddToWishList } from "../../utils/updateWishList";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { handleAddToShoppingCart, handleRemoveFromShoppingCart } from "../../utils/setShoppingCart";
 import { setShoppingCart } from "../../redux/features/auth/auth.Slice";
-import { discountCalculator } from "../../utils/product.utils";
+import { discountCalculator, truncateString } from "../../utils/product.utils";
 import { Rating } from "@smastrom/react-rating";
 import { toast } from "sonner";
 const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean }) => {
@@ -57,7 +57,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
       hoverable
       style={{ width: "100%" }}
       cover={
-        <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        <div style={{ width: "100%", height: "12rem", position: "relative" }}>
           <div className="card-icon-container">
             <span
               onClick={handleSubmit}
@@ -111,7 +111,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
           value={Math.ceil(avgProductRating)}
         />
       )}
-      <h3 className="text-[#191C1F] font-medium">{product.name}</h3>
+      <h3 className="text-[#191C1F] font-medium">{truncateString(product.name, 10)}</h3>
       <p className="text-[#2DA5F3] font-semibold">${product.price - product?.discount || 0}</p>
     </Card>
   );

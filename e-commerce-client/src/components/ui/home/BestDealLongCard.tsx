@@ -9,7 +9,7 @@ import { setShoppingCart } from "../../../redux/features/auth/auth.Slice";
 import { FaEye, FaHeart, FaRegHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { handleAddToShoppingCart } from "../../../utils/setShoppingCart";
-import { discountCalculator } from "../../../utils/product.utils";
+import { discountCalculator, truncateString } from "../../../utils/product.utils";
 
 /**
  * TODO:
@@ -77,7 +77,7 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
           />
           <span className="font-bold text-gray text-xs">(322)</span>
         </div>
-        <h4 className="text-[18px]">{product?.name}</h4>
+        <h4 className="text-[18px]">{truncateString(product?.name, 5)}</h4>
         <p className=" font-bold text-[#2DA5F3] flex justify-start items-center gap-2">
           <span>${product?.price}</span>
           {"  "}

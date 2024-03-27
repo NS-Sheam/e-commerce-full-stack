@@ -4,6 +4,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { TProduct } from "../../../types/product.types";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import { truncateString } from "../../../utils/product.utils";
 
 /**
  * FIXME:
@@ -36,8 +37,8 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             >
               Introducing
             </Tag>
-            <h3 className="text-xl md:text-3xl text-grayBlack">{productData?.[2]?.name}</h3>
-            <p className="text-gray md:text-xl font-semibold ">{productData?.[2]?.description.slice(0, 60)}... </p>
+            <h3 className="text-xl md:text-3xl text-grayBlack">{truncateString(productData?.[2]?.name, 5)}</h3>
+            <p className="text-gray md:text-xl font-semibold ">{truncateString(productData?.[2]?.description, 10)} </p>
             <div className="w-24 md:w-36">
               <CommonBtn
                 onClick={() => navigate(`/product/${productData?.[2]._id}`)}
@@ -88,8 +89,8 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
             >
               Introducing
             </Tag>
-            <h3 className="text-xl md:text-3xl font-bold text-white">{productData?.[1]?.name}</h3>
-            <p className="text-white md:text-xl font-semibold ">{productData?.[1]?.description.slice(0, 60)}... </p>
+            <h3 className="text-xl md:text-3xl font-bold text-white">{truncateString(productData?.[1]?.name, 5)}</h3>
+            <p className="text-white md:text-xl font-semibold ">{truncateString(productData?.[1]?.description, 10)} </p>
             <div className="w-24 md:w-36">
               <CommonBtn
                 onClick={() => navigate(`/product/${productData?.[1]._id}`)}

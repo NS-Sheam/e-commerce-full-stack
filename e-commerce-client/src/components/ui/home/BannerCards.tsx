@@ -3,6 +3,7 @@ import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
 import { TProduct } from "../../../types/product.types";
 import { useMediaQuery } from "react-responsive";
+import { truncateString } from "../../../utils/product.utils";
 
 /**
  * FIXME:
@@ -30,7 +31,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
             className="space-y-2 md:space-y-4 "
           >
             <small className="text-[8px] md:text-base uppercase text-yellow-400 font-semibold"> Summer Sale</small>
-            <h3 className="text-sm md:text-2xl font-bold text-white">{productData?.[0]?.name}</h3>
+            <h3 className="text-sm md:text-2xl font-bold text-white">{truncateString(productData?.[0]?.name, 5)}</h3>
             <div className="w-24 md:w-36">
               <CommonBtn size={(isSmallDevice && "small") || "large"}>
                 <span className="text-xs md:text-base">
@@ -67,7 +68,7 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
             md={{ span: 12 }}
             className="space-y-2 md:space-y-4"
           >
-            <h3 className="text-sm md:text-2xl text-grayBlack">{productData?.[1]?.name}</h3>
+            <h3 className="text-sm md:text-2xl text-grayBlack">{truncateString(productData?.[1]?.name, 5)}</h3>
             <p className="uppercase text-[#2DA5F3] font-bold text-sm md:text-xl">${productData?.[1]?.price} USD</p>
             <div className="w-24 md:w-36">
               <CommonBtn size={(isSmallDevice && "small") || "large"}>
