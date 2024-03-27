@@ -3,6 +3,7 @@ import { TProduct } from "../../../types";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { truncateString } from "../../../utils/product.utils";
 
 const HomeAds2 = ({ product }: { product: TProduct }) => {
   const navigate = useNavigate();
@@ -24,8 +25,8 @@ const HomeAds2 = ({ product }: { product: TProduct }) => {
         >
           Save Up to ${product?.discount}
         </Tag>
-        <h4 className="text-3xl md:text-5xl text-grayBlack">{product?.name}</h4>
-        <p className="font-semibold text-xl md:text-2xl">{product?.description.slice(0, 60)}</p>
+        <h4 className="text-3xl md:text-5xl text-grayBlack">{truncateString(product?.name, 7)}</h4>
+        <p className="font-semibold text-xl md:text-2xl">{truncateString(product?.description, 15)}</p>
         <div className=" w-full md:w-1/3">
           <CommonBtn
             onClick={() => navigate(`/product/${product?._id}`)}

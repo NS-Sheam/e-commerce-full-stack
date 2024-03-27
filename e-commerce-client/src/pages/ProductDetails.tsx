@@ -13,6 +13,7 @@ import AddToCartBtnComponent from "../components/ui/AddToCartBtnComponent";
 import { handleAddToWishList } from "../utils/updateWishList";
 import { useGetMeQuery, useUpdateWishListMutation } from "../redux/features/userManagement/userManagement.api";
 import { TProduct } from "../types/product.types";
+import LoadingComponent from "../components/LoadingComponent";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,14 +21,9 @@ const ProductDetails = () => {
 
   if (pIsLoading) {
     return (
-      <Flex
-        justify="center"
-        align="center"
-        gap="middle"
-        style={{ minHeight: "100vh" }}
-      >
-        <Spin size="large" />
-      </Flex>
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
     );
   }
 

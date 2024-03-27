@@ -36,11 +36,11 @@ const Home = () => {
       {/* Best Deal  */}
       <BestDeal productData={productData} />
       {/* Shop with categories  */}
-      // <ShopWithCategories />
+      <ShopWithCategories />
       {/* Feature Products  */}
       <FeaturedProducts productData={productData} />
       {/* Home Ads 1 */}
-      // <HomeAds1 productData={productData} />
+      <HomeAds1 productData={productData} />
       {/* Comuter Accessories */}
       <ComputerAccessories />
       {/* Home Ads 2 */}
