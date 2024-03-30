@@ -111,7 +111,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
         />
       )}
       <h3 className="text-[#191C1F] font-medium">{truncateString(product.name, 8)}</h3>
-      <p className="text-[#2DA5F3] font-semibold">${product.price - product?.discount || 0}</p>
+      <p className="text-[#2DA5F3] font-semibold">${product.price || 0}</p>
     </Card>
   );
 };

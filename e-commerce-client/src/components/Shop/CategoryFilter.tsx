@@ -4,9 +4,10 @@ import { TCatgeory } from "../../types";
 type TCategoryFilterProps = {
   categories: TCatgeory[];
   setter: React.Dispatch<React.SetStateAction<string[]>>;
+  pageSetter: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const CategoryFilter = ({ categories, setter }: TCategoryFilterProps) => {
+const CategoryFilter = ({ categories, setter, pageSetter }: TCategoryFilterProps) => {
   return (
     <div className="space-y-1">
       <h3 className="text-xl font-bold uppercase text-grayBlack">Category</h3>
@@ -20,6 +21,7 @@ const CategoryFilter = ({ categories, setter }: TCategoryFilterProps) => {
                 } else {
                   setter((prev) => prev.filter((cat) => cat !== category.name));
                 }
+                pageSetter(1);
               }}
             >
               {category.name}

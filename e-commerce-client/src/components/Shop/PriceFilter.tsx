@@ -5,9 +5,10 @@ type TPriceFilterProps = {
   setter: React.Dispatch<React.SetStateAction<{ minPrice: number | null; maxPrice: number | null }>>;
   priceRangeTexts: { text: string; min: number | null; max: number | null }[];
   isAllPriceSelected: boolean;
+  pageSetter: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const PriceFilter = ({ priceRange, setter, priceRangeTexts, isAllPriceSelected }: TPriceFilterProps) => {
+const PriceFilter = ({ priceRange, setter, priceRangeTexts, isAllPriceSelected, pageSetter }: TPriceFilterProps) => {
   return (
     <div className="space-y-2">
       <h3 className="text-xl font-bold uppercase text-grayBlack">Price Range</h3>
@@ -30,7 +31,10 @@ const PriceFilter = ({ priceRange, setter, priceRangeTexts, isAllPriceSelected }
           <li
             key={index}
             className="flex justify-start items-center gap-2"
-            onClick={() => setter({ minPrice: min, maxPrice: max })}
+            onClick={() => {
+              setter({ minPrice: min, maxPrice: max });
+              pageSetter(1);
+            }}
           >
             <div
               style={{

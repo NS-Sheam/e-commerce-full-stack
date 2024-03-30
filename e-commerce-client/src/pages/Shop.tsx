@@ -1,9 +1,5 @@
 import { Col, Row, Select } from "antd";
-import {
-  useGetCategoriesQuery,
-  useGetProductBrandsQuery,
-  useGetProductsQuery,
-} from "../redux/features/productManagement/productManagement.api";
+import { useGetCategoriesQuery, useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
 import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
@@ -38,7 +34,6 @@ const Shop = () => {
   const [sort, setSort] = useState<string>("price");
   const [showFilter, setShowFilter] = useState(false);
   const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
-  const { data: bData, isLoading: isBLoading, isFetching: isBFetching } = useGetProductBrandsQuery(undefined);
   const searchQuery: TQueryParams[] = [
     {
       name: "limit",
@@ -60,6 +55,8 @@ const Shop = () => {
       value: brands.join(","),
     });
   }
+  // console.log("brands", brands);
+
   if (categories.length > 0) {
     searchQuery.push({
       name: "category",
@@ -91,7 +88,7 @@ const Shop = () => {
     });
   }
 
-  if (isCLoading || isCFetching || isBLoading || isBFetching || pIsLoading || pIsFetching) {
+  if (isCLoading || isCFetching || pIsLoading || pIsFetching) {
     return (
       <div className="min-h-[70vh] flex justify-center items-center">
         <LoadingComponent />
@@ -135,18 +132,23 @@ const Shop = () => {
         <CategoryFilter
           categories={cData || []}
           setter={setCategories}
+          pageSetter={setPage}
         />
         <PriceFilter
           priceRange={priceRange}
           setter={setPriceRange}
           priceRangeTexts={priceRangeTexts}
           isAllPriceSelected={isAllPriceSelected}
+          pageSetter={setPage}
         />
         <BrandFilter
-          brands={bData || []}
           setter={setBrands}
+          pageSetter={setPage}
         />
-        <PopularTag />
+        <PopularTag
+          setSearchTerm={setSearchTerm}
+          setPage={setPage}
+        />
         <ShopProductLargeCard product={pData?.data && pData?.data[0]} />
       </Col>
       <Col
