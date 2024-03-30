@@ -90,8 +90,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
           <img
             alt={product.name}
             src={product.images[0]}
-            style={{ width: "100%", height: "100%" }}
-            className="p-4"
+            className="p-4 object-contain h-full w-full"
           />
         </div>
       }
@@ -111,7 +110,7 @@ const ProductCard = ({ product, rating }: { product: TProduct; rating?: boolean 
           value={Math.ceil(avgProductRating)}
         />
       )}
-      <h3 className="text-[#191C1F] font-medium">{truncateString(product.name, 10)}</h3>
+      <h3 className="text-[#191C1F] font-medium">{truncateString(product.name, 8)}</h3>
       <p className="text-[#2DA5F3] font-semibold">${product.price - product?.discount || 0}</p>
     </Card>
   );

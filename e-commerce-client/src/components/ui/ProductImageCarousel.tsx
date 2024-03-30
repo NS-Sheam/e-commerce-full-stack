@@ -27,6 +27,8 @@ const ProductImageCarousel = ({ product }: { product: TProduct }) => {
               width: "100%",
               height: "100%",
               display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
             key={sliderIndex}
             imageSrc={product?.images[sliderIndex]}
@@ -57,7 +59,7 @@ const ProductImageCarousel = ({ product }: { product: TProduct }) => {
                 src={image}
                 alt={product.name}
                 style={{ border: sliderIndex === index ? "2px solid #2DA5F3" : "", padding: "2px", height: "5rem" }}
-                className={`cursor-pointer w-full  ${sliderIndex === index ? "" : ""}`}
+                className={`cursor-pointer w-full h-full   ${sliderIndex === index ? "" : ""}`}
                 onClick={() => setSliderIndex(index)}
               />
             </Col>
