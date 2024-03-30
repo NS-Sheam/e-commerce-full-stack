@@ -70,7 +70,10 @@ const createProduct = async (
   if (files && files.length) {
     let imageNo = 0;
     for (const file of files) {
-      const imageName = `${user.userId}-${payload?.name}-${payload?.category}-${imageNo}`;
+      const imageName = `${user.userId}-${payload?.name.substring(
+        0,
+        20,
+      )}-${imageNo}`;
       const path = file?.path;
 
       // send image to cloudinary
@@ -80,7 +83,9 @@ const createProduct = async (
     }
   }
   payload.images = images;
+
   const result = await Product.create(payload);
+
   return result;
 };
 

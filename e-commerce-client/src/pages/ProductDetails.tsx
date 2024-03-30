@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetSingleProductQuery } from "../redux/features/productManagement/productManagement.api";
-import { Col, Flex, Row, Spin, Tag } from "antd";
+import { Col, Row, Tag } from "antd";
 
 import ProductImageCarousel from "../components/ui/ProductImageCarousel";
 import { Rating } from "@smastrom/react-rating";

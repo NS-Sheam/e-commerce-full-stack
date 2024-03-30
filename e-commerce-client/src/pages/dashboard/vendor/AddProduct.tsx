@@ -51,6 +51,7 @@ const AddProduct = () => {
     });
     try {
       const res = (await addProduct(formData)) as TReduxResponse<TProduct>;
+      console.log(res);
 
       if (!res.error) {
         toast.success(res.message || "Product added successfully", { id: toastId, duration: 2000 });
