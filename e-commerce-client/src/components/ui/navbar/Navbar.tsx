@@ -135,11 +135,13 @@ const Navbar = () => {
             className="md:hidden absolute cursor-pointer z-20 -left-5 top-1/2 -translate-y-1/2"
           />
           <Input
+            value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 setShowSearch(!showSearch);
                 navigate(`/shop?searchTerm=${searchTerm}`);
+                setSearchTerm("");
               }
             }}
             type="text"
@@ -151,6 +153,7 @@ const Navbar = () => {
               onClick={() => {
                 setShowSearch(!showSearch);
                 navigate(`/shop?searchTerm=${searchTerm}`);
+                setSearchTerm("");
               }}
               className={`text-xl md:text-2xl text-gray cursor-pointer`}
             />

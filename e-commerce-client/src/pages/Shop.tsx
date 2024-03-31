@@ -34,7 +34,6 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") || "");
   const [sort, setSort] = useState<string>("price");
   const [showFilter, setShowFilter] = useState(false);
-  console.log(searchParams.get("searchTerm"));
 
   const searchQuery: TQueryParams[] = [
     {

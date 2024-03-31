@@ -25,7 +25,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
       >
         <Row
           gutter={[0, 16]}
-          className="bg-grayWhite2 px-5 py-5 md:py-14 rounded-sm "
+          className="bg-grayWhite2 px-5 py-5 md:py-14 rounded-sm h-full"
         >
           <Col
             span={12}
@@ -74,7 +74,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
         </div>
         <Row
           gutter={[0, 16]}
-          className="bg-grayBlack px-5 py-5 md:py-14 rounded-sm"
+          className="bg-grayBlack px-5 py-5 md:py-14 rounded-sm h-full"
         >
           <Col
             span={12}

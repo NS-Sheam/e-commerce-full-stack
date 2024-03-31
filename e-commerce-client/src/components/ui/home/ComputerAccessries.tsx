@@ -37,11 +37,7 @@ const ComputerAccessories = () => {
   }) as TProduct[];
 
   if (isPLoading || isPFetching) {
-    return (
-      <div className="min-h-[70vh] flex justify-center items-center">
-        <LoadingComponent />
-      </div>
-    );
+    return null;
   }
 
   return (

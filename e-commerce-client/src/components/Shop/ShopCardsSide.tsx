@@ -2,6 +2,7 @@ import { Col, Flex, Row, Spin } from "antd";
 import { useGetProductsQuery } from "../../redux/features/productManagement/productManagement.api";
 import ProductCard from "../ui/ProductCard";
 import { useEffect } from "react";
+import LoadingComponent from "../LoadingComponent";
 
 type TShopCardsSideProps = {
   searchQuery: any;
@@ -14,6 +15,14 @@ const ShopCardsSide = ({ searchQuery, setMeta }: TShopCardsSideProps) => {
   useEffect(() => {
     setMeta(pData?.meta);
   }, [pData, setMeta]);
+
+  if (pIsLoading || pIsFetching) {
+    return (
+      <div className="min-h-[70vh] flex justify-center items-center">
+        <LoadingComponent />
+      </div>
+    );
+  }
   return (
     <div
       style={{
@@ -27,29 +36,18 @@ const ShopCardsSide = ({ searchQuery, setMeta }: TShopCardsSideProps) => {
         justify={"start"}
         align={"top"}
       >
-        {pIsLoading || pIsFetching ? (
-          <Flex
-            justify="center"
-            align="center"
-            gap="middle"
-            className="h-full w-full"
+        {products?.map((product) => (
+          <Col
+            key={product._id}
+            span={12}
+            md={{ span: 6 }}
           >
-            <Spin size="large" />
-          </Flex>
-        ) : (
-          products?.map((product) => (
-            <Col
-              key={product._id}
-              span={12}
-              md={{ span: 6 }}
-            >
-              <ProductCard
-                product={product}
-                rating
-              />
-            </Col>
-          ))
-        )}
+            <ProductCard
+              product={product}
+              rating
+            />
+          </Col>
+        ))}
       </Row>
     </div>
   );
