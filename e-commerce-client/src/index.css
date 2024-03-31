@@ -30,3 +30,8 @@ body {
 .ant-layout-sider-zero-width-trigger {
   background-color: #ff8c00 !important;
 }
+
+.magnifier-image {
+  height: 20rem;
+  object-fit: contain;
+}
