@@ -135,7 +135,6 @@ const Navbar = () => {
             className="md:hidden absolute cursor-pointer z-20 -left-5 top-1/2 -translate-y-1/2"
           />
           <Input
-            defaultValue={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -153,7 +152,7 @@ const Navbar = () => {
                 setShowSearch(!showSearch);
                 navigate(`/shop?searchTerm=${searchTerm}`);
               }}
-              className={`text-xl md:text-2xl text-gray`}
+              className={`text-xl md:text-2xl text-gray cursor-pointer`}
             />
           </div>
         </div>

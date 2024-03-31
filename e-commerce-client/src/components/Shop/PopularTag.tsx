@@ -10,7 +10,7 @@ const PopularTag = ({ setSearchTerm, setPage }: TPopularTagProps) => {
     <div className="space-y-1 hidden md:block">
       <h3 className="text-xl font-bold uppercase text-grayBlack">Popular Tag</h3>
       <div>
-        {["Laptop", "Headphone", "TV", "Smartphone", "Computer", "Headphone", "TV", "Printer", "Keyboard", "Mouse"].map(
+        {["Laptop", "Headphone", "TV", "Smartphone", "Computer", "TV", "Printer", "Keyboard", "Mouse"].map(
           (item, index) => {
             return (
               <Tag

@@ -71,7 +71,16 @@ const ProductDetails = () => {
               Brand: <span className="font-bold text-black">{product?.brand}</span>
             </p>
             <p className="md:order-last">
-              Category: <span className="font-bold text-black">{product?.category.name}</span>
+              Category:
+              {product?.category.map((cat) => (
+                <Tag
+                  key={cat._id}
+                  color="default"
+                  className="font-semibold text-gray m-1 hover:border-orange hover:text-orange cursor-pointer"
+                >
+                  {cat.name}
+                </Tag>
+              ))}
             </p>
             <p>
               Availablibility:{" "}

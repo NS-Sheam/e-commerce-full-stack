@@ -8,11 +8,13 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import "../../../styles/ShopWithCategories.css";
 import { useMediaQuery } from "react-responsive";
 import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
+import { useNavigate } from "react-router-dom";
 
 const ShopWithCategories = () => {
   const { data: categories } = useGetCategoriesQuery(undefined);
   const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
   const isMediumDevice = useMediaQuery({ query: "(max-width: 1024px)" });
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-4 relative overflow-hidden ">
@@ -36,7 +38,8 @@ const ShopWithCategories = () => {
         {categories?.map((category) => (
           <SwiperSlide key={category?._id}>
             <Card
-              className="flex flex-col justify-center items-center"
+              onClick={() => navigate(`/shop?category=${category.name}`)}
+              className="flex flex-col justify-center items-center cursor-pointer"
               style={{ width: isSmallDevice ? "10rem" : "14rem" }}
             >
               <img

@@ -16,6 +16,7 @@ import ShopPagination from "../components/Shop/ShopPagination";
 import { RxCross2 } from "react-icons/rx";
 import { CiFilter } from "react-icons/ci";
 import LoadingComponent from "../components/LoadingComponent";
+import ShopSearchBar from "../components/Shop/ShopSearchBar";
 
 type TPriceRange = {
   minPrice: number | null;
@@ -28,11 +29,12 @@ const Shop = () => {
   const [brands, setBrands] = useState<string[]>([]);
   const { data: pData, isLoading: pIsLoading, isFetching: pIsFetching } = useGetProductsQuery(undefined);
   const [page, setPage] = useState(1);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>(searchParams.get("category")?.split(",") || []);
   const [meta, setMeta] = useState<TMeta>();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") || "");
   const [sort, setSort] = useState<string>("price");
   const [showFilter, setShowFilter] = useState(false);
+  console.log(searchParams.get("searchTerm"));
 
   const searchQuery: TQueryParams[] = [
     {
@@ -158,12 +160,13 @@ const Shop = () => {
         {/* Search section  */}
         <Row
           gutter={[16, 16]}
-          justify="end"
+          justify="space-between"
         >
-          {/* <ShopSearchBar
+          <ShopSearchBar
+            defaultValue={searchTerm}
             placeholder="Search for products"
             setSearchTerm={setSearchTerm}
-          /> */}
+          />
           <Col
             span={24}
             md={{ span: 6 }}
