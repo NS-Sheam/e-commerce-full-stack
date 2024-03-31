@@ -38,7 +38,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
               Introducing
             </Tag>
             <h3 className="text-xl md:text-3xl text-grayBlack">{truncateString(productData?.[2]?.name, 5)}</h3>
-            <p className="text-gray md:text-xl font-semibold ">{truncateString(productData?.[2]?.description, 10)} </p>
+            <p className="text-gray md:text-xl font-semibold ">{truncateString(productData?.[2]?.description, 6)} </p>
             <div className="w-24 md:w-36">
               <CommonBtn
                 onClick={() => navigate(`/product/${productData?.[2]._id}`)}
@@ -56,7 +56,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
           >
             <div className="w-32 md:w-60 h-32 md:h-60 mx-auto">
               <img
-                className=" w-full h-full"
+                className=" w-full h-full object-contain"
                 src={productData?.[2]?.images[0]}
                 alt=""
               />
@@ -90,7 +90,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
               Introducing
             </Tag>
             <h3 className="text-xl md:text-3xl font-bold text-white">{truncateString(productData?.[1]?.name, 5)}</h3>
-            <p className="text-white md:text-xl font-semibold ">{truncateString(productData?.[1]?.description, 10)} </p>
+            <p className="text-white md:text-xl font-semibold ">{truncateString(productData?.[1]?.description, 6)} </p>
             <div className="w-24 md:w-36">
               <CommonBtn
                 onClick={() => navigate(`/product/${productData?.[1]._id}`)}
@@ -108,7 +108,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
           >
             <div className="w-32 md:w-60 h-32 md:h-60 mx-auto">
               <img
-                className=" w-full h-full"
+                className=" w-full h-full object-contain"
                 src={productData?.[1]?.images[0]}
                 alt=""
               />

@@ -11,13 +11,29 @@ import ComputerAccessories from "../components/ui/home/ComputerAccessries";
 import HomeAds2 from "../components/ui/home/HomeAds2";
 import Subscribe from "../components/ui/home/Subscribe";
 import LoadingComponent from "../components/LoadingComponent";
+import { TQueryParams } from "../types";
+import { useEffect, useState } from "react";
 /**
  * TODO:
  * 1. Handle product loading
  */
 const Home = () => {
-  const { data: products, isLoading: productIsLoading } = useGetProductsQuery(undefined);
+  const [limit, setLimit] = useState(20);
+  const searchQuery: TQueryParams[] = [
+    {
+      name: "limit",
+      value: limit + "",
+    },
+    {
+      name: "page",
+      value: 1 + "",
+    },
+  ];
+  const { data: products, isLoading: productIsLoading } = useGetProductsQuery(searchQuery);
 
+  useEffect(() => {
+    setLimit(products?.meta?.total || 20);
+  }, [products]);
   const productData = sortByDiscount(products?.data?.map((product) => product) as TProduct[]);
 
   if (productIsLoading) {
@@ -44,7 +60,7 @@ const Home = () => {
       {/* Comuter Accessories */}
       <ComputerAccessories />
       {/* Home Ads 2 */}
-      <HomeAds2 product={productData?.[1]} />
+      <HomeAds2 />
       <Subscribe />
     </div>
   );

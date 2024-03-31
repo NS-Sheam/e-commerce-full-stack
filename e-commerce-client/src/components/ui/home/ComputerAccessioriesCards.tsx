@@ -13,7 +13,7 @@ const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
       >
         <div className="w-3/4">
           <img
-            className="w-full h-full"
+            className="w-full h-full object-contain"
             src={product?.images[0]}
             alt=""
           />
@@ -51,7 +51,7 @@ const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
         >
           summer sale
         </Tag>
-        <h4 className="text-3xl text-white">{discountCalculator(product)} % Discount</h4>
+        <h4 className="text-3xl text-white">{product && discountCalculator(product)} % Discount</h4>
         <p className="text-white text-center ">
           Only for <span className="text-warning">SmartPhone</span> products
         </p>

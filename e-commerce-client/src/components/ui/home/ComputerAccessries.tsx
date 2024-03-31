@@ -1,13 +1,29 @@
 import { Col, Row } from "antd";
 import ProductCard from "../ProductCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
 import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
-import { TProduct } from "../../../types";
+import { TProduct, TQueryParams } from "../../../types";
 import ComputerAccessioriesCards from "./ComputerAccessioriesCards";
 import LoadingComponent from "../../LoadingComponent";
+import { Link } from "react-router-dom";
 const ComputerAccessories = () => {
-  const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(undefined);
+  const [limit, setLimit] = useState(20);
+  const searchQuery: TQueryParams[] = [
+    {
+      name: "limit",
+      value: limit + "",
+    },
+    {
+      name: "page",
+      value: 1 + "",
+    },
+  ];
+
+  const { data: pData, isLoading: isPLoading, isFetching: isPFetching } = useGetProductsQuery(searchQuery);
+  useEffect(() => {
+    setLimit(pData?.meta?.total || 20);
+  }, [pData]);
 
   const [category, setCategory] = useState("All Products");
   const categories = ["All Products", "Keyboard", "Mouse", "Headphone", "Printer"];
@@ -16,7 +32,7 @@ const ComputerAccessories = () => {
     if (category === "All Products") {
       return product;
     } else {
-      return product.category.name.toLocaleLowerCase() === category.toLocaleLowerCase();
+      return product.category.some((cat) => cat.name === category);
     }
   }) as TProduct[];
 
@@ -78,9 +94,12 @@ const ComputerAccessories = () => {
                     </Col>
                   ))}
                   <Col span={4}>
-                    <p className="text-xs cursor-pointer text-orange font-semibold flex justify-center items-center gap-2">
+                    <Link
+                      to="/shop"
+                      className=" text-xs cursor-pointer text-orange font-semibold flex justify-center items-center gap-2"
+                    >
                       Show all products <FaArrowRight />
-                    </p>
+                    </Link>
                   </Col>
                 </Row>
               </Col>
@@ -108,7 +127,7 @@ const ComputerAccessories = () => {
           gutter={[16, 16]}
           className="  h-full"
         >
-          <ComputerAccessioriesCards product={productData?.[1]} />
+          <ComputerAccessioriesCards product={pData?.data?.[0] as TProduct} />
         </Row>
       </Col>
     </Row>

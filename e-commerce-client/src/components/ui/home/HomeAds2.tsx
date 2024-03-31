@@ -4,9 +4,22 @@ import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { truncateString } from "../../../utils/product.utils";
+import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
 
-const HomeAds2 = ({ product }: { product: TProduct }) => {
+const HomeAds2 = () => {
+  const {
+    data: pData,
+    isLoading: isPLoading,
+    isFetching: isPFetching,
+  } = useGetProductsQuery([
+    {
+      name: "category",
+      value: "Laptop",
+    },
+  ]);
+  const product = pData?.data?.[0] as TProduct;
   const navigate = useNavigate();
+  if (isPLoading || isPFetching) return null;
   return (
     <Row
       gutter={[8, 22]}
@@ -46,12 +59,12 @@ const HomeAds2 = ({ product }: { product: TProduct }) => {
             style={{
               border: "5px solid #ffffff",
             }}
-            className="absolute bg-[#FFCEAD] w-20 md:w-28 h-20 md:h-28 rounded-full top-o md:-top-12 left-0 md:-left-14 flex justify-center items-center"
+            className="absolute bg-[#FFCEAD] w-20 md:w-28 h-20 md:h-28 rounded-full top-0  left-0 md:-left-16 flex justify-center items-center"
           >
             <span className="md:text-xl font-bold text-grayBlack">${product?.price}</span>
           </div>
           <img
-            className="w-full h-full"
+            className="w-full h-full object-contain"
             src={product?.images[0]}
             alt=""
           />
