@@ -1,5 +1,5 @@
 import { Col, Row, Select } from "antd";
-import { useGetCategoriesQuery, useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
+import { useGetProductsQuery } from "../redux/features/productManagement/productManagement.api";
 import { useState } from "react";
 import CategoryFilter from "../components/Shop/CategoryFilter";
 import PriceFilter from "../components/Shop/PriceFilter";
@@ -11,7 +11,7 @@ import ShopCardsSide from "../components/Shop/ShopCardsSide";
 import { TMeta, TQueryParams } from "../types";
 import ShopProductLargeCard from "../components/Shop/ShopProductLargeCard";
 import ActiveFilter from "../components/Shop/ActiveFilter";
-import ShopSearchBar from "../components/Shop/ShopSearchBar";
+// import ShopSearchBar from "../components/Shop/ShopSearchBar";
 import ShopPagination from "../components/Shop/ShopPagination";
 import { RxCross2 } from "react-icons/rx";
 import { CiFilter } from "react-icons/ci";
@@ -33,7 +33,7 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState(searchParams.get("searchTerm") || "");
   const [sort, setSort] = useState<string>("price");
   const [showFilter, setShowFilter] = useState(false);
-  const { data: cData, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
+
   const searchQuery: TQueryParams[] = [
     {
       name: "limit",
@@ -88,7 +88,7 @@ const Shop = () => {
     });
   }
 
-  if (isCLoading || isCFetching || pIsLoading || pIsFetching) {
+  if (pIsLoading || pIsFetching) {
     return (
       <div className="min-h-[70vh] flex justify-center items-center">
         <LoadingComponent />
@@ -130,7 +130,6 @@ const Shop = () => {
           <RxCross2 />
         </p>
         <CategoryFilter
-          categories={cData || []}
           setter={setCategories}
           pageSetter={setPage}
         />
@@ -159,12 +158,12 @@ const Shop = () => {
         {/* Search section  */}
         <Row
           gutter={[16, 16]}
-          justify="space-between"
+          justify="end"
         >
-          <ShopSearchBar
+          {/* <ShopSearchBar
             placeholder="Search for products"
             setSearchTerm={setSearchTerm}
-          />
+          /> */}
           <Col
             span={24}
             md={{ span: 6 }}
