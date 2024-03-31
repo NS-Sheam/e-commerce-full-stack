@@ -59,7 +59,7 @@ const BestDealLongCard = ({ product }: { product: TProduct }) => {
         </div>
         <div className="h-full">
           <img
-            className="object-contain w-full h-full"
+            className="object-cover w-full h-full"
             src={product?.images[0]}
             alt=""
           />

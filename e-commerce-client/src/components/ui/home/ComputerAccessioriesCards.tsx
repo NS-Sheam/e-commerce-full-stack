@@ -3,8 +3,10 @@ import { TProduct } from "../../../types";
 import { discountCalculator, truncateString } from "../../../utils/product.utils";
 import CommonBtn from "../CommonBtn";
 import { FaArrowRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Col
@@ -30,7 +32,10 @@ const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
           </Tag>
         </div>
         <div className=" w-full">
-          <CommonBtn size="large">
+          <CommonBtn
+            onClick={() => navigate(`/product/${product._id}`)}
+            size="large"
+          >
             Shop Now <FaArrowRight />
           </CommonBtn>
         </div>
@@ -57,6 +62,7 @@ const ComputerAccessioriesCards = ({ product }: { product: TProduct }) => {
         </p>
         <div className=" w-full ">
           <CommonBtn
+            onClick={() => navigate(`/shop?category=Smartphone`)}
             backgroundColor="#2DA5F3"
             size="large"
           >

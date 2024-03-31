@@ -16,8 +16,7 @@ const Subscribe = () => {
       >
         <h3 className="text-white text-2xl md:text-4xl text-center">Subscribe to our newsletter</h3>
         <p className="text-white text-center md:text-xl">
-          Praesent fringilla erat a lacinia egestas. Donec vehicula tempor libero et cursus. Donec non quam urna.
-          Quisque vitae porta ipsum.
+          Get the latest news and updates from our store. We promise not to spam you.
         </p>
 
         <div className="relative w-full">
