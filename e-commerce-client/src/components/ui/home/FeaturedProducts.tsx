@@ -1,14 +1,36 @@
 import { Col, Row } from "antd";
 import ProductCard from "../ProductCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa6";
-import { TProduct } from "../../../types/product.types";
 import FeatureProductLargeCard from "./FeatureProductLargeCard";
 import { Link } from "react-router-dom";
+import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
+import { TQueryParams } from "../../../types";
 
-const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
+const FeaturedProducts = () => {
+  const [limit, setLimit] = useState(20);
+  const searchQuery: TQueryParams[] = [
+    {
+      name: "limit",
+      value: limit + "",
+    },
+    {
+      name: "page",
+      value: 1 + "",
+    },
+  ];
+  const { data: productData } = useGetProductsQuery(searchQuery);
+
+  useEffect(() => {
+    setLimit(productData?.meta?.total || 20);
+  }, [productData]);
+
   const [category, setCategory] = useState("All Products");
-  const categories = ["All Products", "Electronics", "Fashion", "Home & Kitchen", "Health & Beauty"];
+
+  const categories = ["All Products", "Electronics", "Home Appliances", "Computer"];
+  const largeCardProduct = productData?.data?.filter((product) =>
+    product.category.some((cat) => cat.name === "Smartphone")
+  )[0];
 
   return (
     <Row
@@ -19,7 +41,7 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
         span={24}
         md={{ span: 6 }}
       >
-        <FeatureProductLargeCard product={productData?.[3]} />
+        <FeatureProductLargeCard product={largeCardProduct!} />
       </Col>
       <Col
         span={24}
@@ -77,7 +99,7 @@ const FeaturedProducts = ({ productData }: { productData: TProduct[] }) => {
               </Col>
             </Row>
           </Col>
-          {productData?.slice(0, 7)?.map((product) => (
+          {productData?.data?.slice(0, 7)?.map((product) => (
             <Col
               key={product._id}
               span={12}

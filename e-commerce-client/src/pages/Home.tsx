@@ -38,7 +38,7 @@ const Home = () => {
       {/* Shop with categories  */}
       <ShopWithCategories />
       {/* Feature Products  */}
-      <FeaturedProducts productData={productData} />
+      <FeaturedProducts />
       {/* Home Ads 1 */}
       <HomeAds1 productData={productData} />
       {/* Comuter Accessories */}

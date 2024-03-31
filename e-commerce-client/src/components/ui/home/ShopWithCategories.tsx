@@ -10,7 +10,7 @@ import { useMediaQuery } from "react-responsive";
 import { useGetCategoriesQuery } from "../../../redux/features/productManagement/productManagement.api";
 
 const ShopWithCategories = () => {
-  const { data: categories, isLoading: isCLoading, isFetching: isCFetching } = useGetCategoriesQuery(undefined);
+  const { data: categories } = useGetCategoriesQuery(undefined);
   const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
   const isMediumDevice = useMediaQuery({ query: "(max-width: 1024px)" });
 
@@ -43,6 +43,7 @@ const ShopWithCategories = () => {
                 alt={category.name}
                 src={category.image}
                 style={{ width: isSmallDevice ? "8rem" : "12rem", height: isSmallDevice ? "8rem" : "12rem" }}
+                className="object-contain w-full h-full"
               />
               <h3 className="text-[#191C1F] font-medium text-center">{category.name}</h3>
             </Card>

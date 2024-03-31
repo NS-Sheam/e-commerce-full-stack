@@ -4,6 +4,7 @@ import CommonBtn from "../CommonBtn";
 
 import { discountCalculator } from "../../../utils/product.utils";
 import { FaArrowRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 /**
  * TODO:
@@ -12,6 +13,7 @@ import { FaArrowRight } from "react-icons/fa6";
  */
 
 const FeatureProductLargeCard = ({ product }: { product: TProduct }) => {
+  const navigate = useNavigate();
   return (
     <Row className="shadow-lg rounded-md overflow-hidden bg-white h-full">
       <Col
@@ -31,7 +33,10 @@ const FeatureProductLargeCard = ({ product }: { product: TProduct }) => {
           </Tag>
         </div>
         <div className="w-2/3 mx-auto">
-          <CommonBtn size="large">
+          <CommonBtn
+            onClick={() => navigate(`/product/${product._id}`)}
+            size="large"
+          >
             Shop Now <FaArrowRight />
           </CommonBtn>
         </div>
@@ -41,8 +46,8 @@ const FeatureProductLargeCard = ({ product }: { product: TProduct }) => {
         className="relative bg-warning"
       >
         <img
-          className="w-full h-full"
-          src={product?.images[2]}
+          className="w-full h-full object-contain p-2"
+          src={product?.images[1]}
           alt=""
         />
       </Col>

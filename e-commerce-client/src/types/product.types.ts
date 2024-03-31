@@ -21,7 +21,7 @@ export type TProduct = {
   brand: string;
   price: number;
   images: string[];
-  category: TCatgeory;
+  category: TCatgeory[];
   vendor: TVendor;
   inventory: {
     quantity: number;
