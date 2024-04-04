@@ -55,7 +55,6 @@ const customerSchema = new Schema<TCustomer>(
         {
           type: Schema.Types.ObjectId,
           ref: "Product",
-          unique: true,
         },
       ],
       default: [],

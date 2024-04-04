@@ -42,6 +42,8 @@ const Register = () => {
     }
     try {
       const res = (await registerUser(formData)) as TReduxResponse<any>;
+      console.log(res);
+
       if (!res.error) {
         toast.success("Registered successfully. Check your email for verification link.", {
           id: toastId,

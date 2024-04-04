@@ -72,7 +72,7 @@ const createCustomer = async (
 
   try {
     // Starting Session
-    session.startTransaction();
+    await session.startTransaction();
 
     // Transaction 1: Create User
     const newUser = await User.create([userData], { session });
@@ -110,13 +110,15 @@ const createCustomer = async (
       "365d",
     );
     const verifyUrl = `${config.client_url}/auth/verify-email?token=${verifyEmailToken}`;
-    sendEmail(
+
+    await sendEmail(
       verifyUrl,
       newUser[0].email,
       "Verify your email",
       "Verify Email",
       "Verify your email by clicking the link below:",
     );
+
     await session.commitTransaction();
     await session.endSession();
     return newCustomer[0];
