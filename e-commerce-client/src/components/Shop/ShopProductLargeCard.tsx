@@ -43,7 +43,7 @@ const ShopProductLargeCard = ({ product }: TShopProductLargeCardProps) => {
         className="space-y-3 bg-warning text-center flex flex-col justify-center items-center p-4"
       >
         <p className="text-[#BE4646] font-bold ">Best Selling Product</p>
-        <h4 className="text-3xl text-grayBlack">{product?.name}</h4>
+        <h4 className="text-3xl text-grayBlack font-semibold ">{product?.name}</h4>
         <p className="font-semibold">For all ellectronics products</p>
         <div>
           <span>Only for: </span>

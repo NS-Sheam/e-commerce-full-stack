@@ -5,7 +5,6 @@ import { FaArrowRight } from "react-icons/fa6";
 import { useGetProductsQuery } from "../../../redux/features/productManagement/productManagement.api";
 import { TProduct, TQueryParams } from "../../../types";
 import ComputerAccessioriesCards from "./ComputerAccessioriesCards";
-import LoadingComponent from "../../LoadingComponent";
 import { Link } from "react-router-dom";
 const ComputerAccessories = () => {
   const [limit, setLimit] = useState(20);

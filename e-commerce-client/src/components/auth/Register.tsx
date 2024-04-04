@@ -52,7 +52,7 @@ const Register = () => {
         if (!loginRes.error) {
           const user = verifyToken(loginRes.data.data.accessToken) as TUser;
 
-          const data = await fetch("http://localhost:4000/api/v1/users/me", {
+          const data = await fetch(`${import.meta.env.VITE_BASE_URL}/users/me`, {
             method: "GET",
             credentials: "include",
             headers: {

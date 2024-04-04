@@ -1,4 +1,4 @@
-import { Col, Flex, Row, Spin } from "antd";
+import { Col, Row } from "antd";
 import { useGetProductsQuery } from "../../redux/features/productManagement/productManagement.api";
 import ProductCard from "../ui/ProductCard";
 import { useEffect } from "react";

@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { TReduxResponse } from "../../types/global";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:4000/api/v1",
+  baseUrl: `${import.meta.env.VITE_BASE_URL}`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -26,7 +26,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, FetchBaseQ
   let result = (await baseQuery(arg, api, extraOptions)) as TReduxResponse<any>;
 
   if (result?.error?.statusCode === 401) {
-    const res = await fetch("http://localhost:4000/api/v1/auth/refresh-token", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/refresh-token`, {
       method: "POST",
       credentials: "include",
     });
