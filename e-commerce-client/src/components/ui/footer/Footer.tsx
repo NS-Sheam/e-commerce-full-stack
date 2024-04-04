@@ -103,7 +103,7 @@ const Footer = () => {
           </p>
         </div>
       )}
-      <div className="space-y-2 flex flex-col items-start">
+      <div className="space-y-2 flex flex-col items-start order">
         <h3 className="text-xl font-bold">Download App</h3>
         <div className="flex flex-col gap-3 justify-center items-center">
           <GooglePlayButton

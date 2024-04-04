@@ -24,6 +24,7 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
         md={{ span: 12 }}
       >
         <Row
+          align="middle"
           gutter={[0, 16]}
           className="bg-grayWhite2 px-5 py-5 md:py-14 rounded-sm h-full"
         >
@@ -69,10 +70,11 @@ const HomeAds1 = ({ productData }: { productData: TProduct[] }) => {
         md={{ span: 12 }}
         className="relative"
       >
-        <div className="absolute h-14 md:h-28 w-14 md:w-28 rounded-full z-10 bg-[#2DA5F3] top-2 md:top-4 right-2 md:right-4 flex items-center justify-center">
+        <div className="absolute h-14 md:h-28 w-14 md:w-28 rounded-full z-10 bg-[#2DA5F3] top-14 md:top-16 right-2 md:right-4 flex items-center justify-center">
           <span className="text-xs md:text-2xl font-bold text-white">${productData?.[1]?.price}</span>
         </div>
         <Row
+          align="middle"
           gutter={[0, 16]}
           className="bg-grayBlack px-5 py-5 md:py-14 rounded-sm h-full"
         >

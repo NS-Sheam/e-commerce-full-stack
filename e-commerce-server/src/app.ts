@@ -15,6 +15,8 @@ app.use(
       "http://localhost:5173",
       "https://next-shop-e-commerce.netlify.app",
       "http://next-shop-e-commerce.netlify.app",
+      "https://660eb89398624204c4f97d7b--next-shop-e-commerce.netlify.app/",
+      "http://660eb89398624204c4f97d7b--next-shop-e-commerce.netlify.app/",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],

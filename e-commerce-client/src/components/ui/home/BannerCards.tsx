@@ -17,15 +17,16 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
   return (
     <Row
       gutter={[8, 22]}
-      className="px-1 md:px-0  py-2"
+      className="px-1 md:px-0  py-2 h-full"
     >
       <Col
+        className="h-full md:h-1/2"
         span={12}
         md={{ span: 24 }}
       >
         <Row
           gutter={[0, 16]}
-          className="bg-grayBlack p-3 rounded-sm"
+          className="bg-grayBlack p-3 rounded-sm h-full"
         >
           <Col
             span={24}
@@ -61,12 +62,13 @@ const BannerCards = ({ productData }: { productData: TProduct[] }) => {
         </Row>
       </Col>
       <Col
+        className="h-full md:h-1/2"
         span={12}
         md={{ span: 24 }}
       >
         <Row
           gutter={[0, 16]}
-          className="bg-grayWhite2 p-3 rounded-sm "
+          className="bg-grayWhite2 p-3 rounded-sm h-full "
         >
           <Col
             span={24}

@@ -15,7 +15,7 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
   const isSmallDevice = useMediaQuery({ query: "(max-width: 768px)" });
 
   return (
-    <div className="bg-grayWhite2">
+    <div className="bg-grayWhite2 h-full">
       <Swiper
         pagination={true}
         modules={[Pagination, Autoplay, Thumbs]}
@@ -24,14 +24,14 @@ const BannerCarousel = ({ productData }: { productData: TProduct[] }) => {
           disableOnInteraction: false,
         }}
         loop={true}
-        className="mySwiper bg-black"
+        className="mySwiper bg-black h-full"
       >
         {productData?.map((product) => (
           <SwiperSlide key={product._id}>
             <Row
               justify="center"
               align="middle"
-              className="bg-grayWhite2 p-14 rounded-sm"
+              className="bg-grayWhite2 p-14 rounded-sm h-full"
               gutter={[16, 16]}
             >
               <Col
