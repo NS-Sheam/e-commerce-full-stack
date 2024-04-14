@@ -13,7 +13,15 @@ const addOrder = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
+const validatePayment = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderServices.validatePayment(req.query);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Payment validated successfully",
+    data: result,
+  });
+});
 const paymentSuccess = catchAsync(async (req: Request, res: Response) => {
   const result = await OrderServices.paymentSuccess(req.params.transactionId);
 
@@ -92,4 +100,5 @@ export const OrderControllers = {
   getOrderForCustomer,
   getOrderForVendor,
   changeOrderStatus,
+  validatePayment,
 };

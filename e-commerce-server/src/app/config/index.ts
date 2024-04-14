@@ -25,4 +25,9 @@ export default {
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
   sslc_store_id: process.env.SSLC_STORE_ID,
   sslc_store_password: process.env.SSLC_STORE_PASSWORD,
+  sslc_payment_api: process.env.SSLC_PAYMENT_API,
+  sslc_validation_api: process.env.SSLC_VALIDATION_API,
+  sslc_success_url: process.env.SSLC_SUCCESS_URL,
+  sslc_cancel_url: process.env.SSLC_CANCEL_URL,
+  sslc_failure_url: process.env.SSLC_FAILURE_URL,
 };

@@ -13,6 +13,7 @@ router.post(
   validateRequest(OrderValidations.addOrderValidationSchema),
   OrderControllers.addOrder,
 );
+router.get("/ipn", OrderControllers.validatePayment);
 
 router.get("/payment/success/:transactionId", OrderControllers.paymentSuccess);
 router.get("/payment/failed/:transactionId", OrderControllers.paymentFailed);

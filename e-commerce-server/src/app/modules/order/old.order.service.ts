@@ -14,6 +14,7 @@ import { TVendor } from "../vendor/vendor.interface";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { orderSearchableFields } from "./order.const";
 import config from "../../config";
+import SSLCommerzPayment from "sslcommerz-lts";
 import { Category } from "../category/category.model";
 import { SSLService } from "../SSL/ssl.service";
 const addOrder = async (user: JwtPayload, payload: TOrder) => {
@@ -111,22 +112,53 @@ const addOrder = async (user: JwtPayload, payload: TOrder) => {
 
     const categories = (await Promise.all(categoriesPromises)).join(", ");
 
-    const initPaymentData = {
-      totalPrice,
-      transactionId,
-      customer,
-      payload,
-      productsName,
-      categories,
+    // SSLCommerz data
+    const sslCommerzData = {
+      total_amount: totalPrice,
+      currency: "BDT",
+      tran_id: transactionId,
+      success_url: `${config.server_url}/orders/payment/success/${transactionId}`,
+      fail_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
+      cancel_url: `${config.server_url}/orders/payment/failed/${transactionId}`,
+      ipn_url: "http://localhost:3030/ipn",
+      shipping_method: "Courier",
+      // products: productsForSSLCommerz, // Array of products
+      product_name: productsName,
+      product_category: categories,
+      product_profile: "general",
+      cus_name: `${customer.name.firstName} ${customer.name.lastName}`,
+      cus_email: customer.email,
+      cus_add1: payload.shippingInfo?.address,
+      cus_add2: payload.shippingInfo?.address,
+      cus_city: payload.shippingInfo?.city,
+      cus_state: payload.shippingInfo?.state,
+      cus_postcode: payload.shippingInfo?.postalCode || 1216,
+      cus_country: payload.shippingInfo?.country || "Bangladesh",
+      cus_phone: customer.mobileNo,
+      cus_fax: customer.mobileNo,
+      ship_name: `${customer.name.firstName} ${customer.name.lastName}`,
+      ship_add1: payload.shippingInfo?.address,
+      ship_add2: payload.shippingInfo?.address,
+      ship_city: payload.shippingInfo?.city,
+      ship_state: payload.shippingInfo?.state,
+      ship_postcode: payload.shippingInfo?.postalCode || 1216,
+      ship_country: payload.shippingInfo?.country || "Bangladesh",
     };
 
-    const result = await SSLService.initPayment(initPaymentData);
+    const store_id = config.sslc_store_id;
+    const store_passwd = config.sslc_store_password;
+    const is_live = false;
+
+    const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+    const apiResponse = await sslcz.init(sslCommerzData);
+
+    const GatewayPageURL = apiResponse.GatewayPageURL;
 
     await session.commitTransaction();
     await session.endSession();
     return {
       data: newOrder,
-      url: result.GatewayPageURL,
+      url: GatewayPageURL,
     };
   } catch (error) {
     await session.abortTransaction();
@@ -323,7 +355,7 @@ const changeOrderStatus = async (orderId: string, status: string) => {
   return order;
 };
 
-export const OrderServices = {
+export const OldOrderServices = {
   addOrder,
   validatePayment,
   paymentSuccess,
