@@ -8,7 +8,7 @@ import EComProfileImageUploader from "../form/EComProfileImageUploader";
 import { useLoginMutation, useRegistrationMutation } from "../../redux/features/auth/auth.api";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../types/global";
-import GoogleLoginButton from "../ui/GoogleLoginButton";
+// import GoogleLoginButton from "../ui/GoogleLoginButton";
 import { verifyToken } from "../../utils/verifyToken";
 import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
 import { useAppDispatch } from "../../redux/hooks";
@@ -170,7 +170,7 @@ const Register = () => {
             >
               Register
             </Button>
-            <GoogleLoginButton />
+            {/* <GoogleLoginButton /> */}
           </EComForm>
         </Col>
       </Row>

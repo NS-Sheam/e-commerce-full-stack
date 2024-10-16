@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useLoginMutation } from "../../redux/features/auth/auth.api";
 import { verifyToken } from "../../utils/verifyToken";
 import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
-import GoogleLoginButton from "../ui/GoogleLoginButton";
+// import GoogleLoginButton from "../ui/GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
 import { TReduxResponse } from "../../types";
 
@@ -82,7 +82,7 @@ const Login = () => {
             >
               Login
             </Button>
-            <GoogleLoginButton />
+            {/* <GoogleLoginButton /> */}
           </EComForm>
         </Col>
       </Row>

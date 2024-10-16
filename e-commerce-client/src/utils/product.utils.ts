@@ -11,10 +11,10 @@ export const sortByDiscount = (products: TProduct[]) => {
 
 export const truncateString = (str: string, num: number) => {
   // Split the string into an array of words
-  let words = str.split(" ");
+  let words = str?.split(" ");
 
   // Check if the string length is greater than the specified number of words
-  if (words.length > num) {
+  if (words?.length > num) {
     // Slice the array to get only the first 'num' words
     words = words.slice(0, num);
 

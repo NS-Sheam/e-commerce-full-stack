@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/auth.Slice";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "antd";
-import logo from "../../../assets/icons/nazmus-sakib.png";
+import logo from "../../../assets/icons/tech-logo.png";
 import { RxCross2 } from "react-icons/rx";
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -91,8 +91,8 @@ const Navbar = () => {
   return (
     <section className="bg-primary ">
       <div className="text-sm lg:text-xl text-center lg:flex items-center justify-between inner-container lg:py-1">
-        <p className="text-white font-semibold text-xs md:text-base">
-          Welcome to Next Shop, the best online shopping site
+        <p className="text-white font-medium text-xs md:text-base">
+          Welcome to Tech Essentials, the best online shopping site
         </p>
         <p className="flex items-center justify-center gap-2">
           <span className=" text-white text-base">Follow Us:</span>
@@ -110,24 +110,24 @@ const Navbar = () => {
       <div className="relative grid grid-cols-5 justify-between py-1 inner-container">
         <div
           onClick={() => navigate("/")}
-          className="flex justify-center items-center gap-2 col-span-2 md:col-span-1 cursor-pointer"
+          className="flex flex-row items-center gap-2 col-span-3 md:col-span-1 cursor-pointer"
         >
           <img
             src={logo}
             alt="logo"
-            style={{
-              border: "2px solid #fa8232",
-            }}
-            className="w-8 md:w-12 h-8 md:h-12 rounded-full bg-white"
+            // style={{
+            //   border: "2px solid #fa8232",
+            // }}
+            className="w-16"
           />
-          <h2 className="font-bold text-white text-sm md:text-xl">
-            <span className="text-orange">Next</span> Shop
+          <h2 className="font-bold text-white text-sm lg:text-xl">
+            <span className="text-orange">Tech</span> Essentials
           </h2>
         </div>
 
         <div
-          className={`absolute top-full lg:top-0 right-0 md:relative md:col-span-3 my-auto lg:mx-20 ${
-            showSearch ? "block" : "hidden lg:block"
+          className={`absolute top-full md:top-0 right-0 md:relative md:col-span-3 my-auto lg:mx-16 ${
+            showSearch ? "block" : "hidden md:block"
           }`}
         >
           <RxCross2
@@ -159,7 +159,7 @@ const Navbar = () => {
             />
           </div>
         </div>
-        <div className="flex justify-end items-center gap-8 col-span-3 md:col-span-1 text-xl md:text-3xl font-bold">
+        <div className="flex justify-end items-center gap-5 lg:gap-8 col-span-2 md:col-span-1 text-xl md:text-3xl font-bold">
           {rightMenu.map((item) => (
             <div
               className="flex justify-center items-center lg:w-10 h-4 md:h-10 rounded-full md:hover:bg-white text-white md:hover:text-primary transition-all duration-300 ease-in-out cursor-pointer"
