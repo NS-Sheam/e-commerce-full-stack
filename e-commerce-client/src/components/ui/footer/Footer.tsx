@@ -58,7 +58,7 @@ const Footer = () => {
         </p>
       </div>
       {user && user.userType === "customer" && (
-        <div className={`space-y-1`}>
+        <div className={`space-y-1 text-sm`}>
           <h3 className="text-xl font-bold">Quick links</h3>
           <p
             className="cursor-pointer hover:underline"
