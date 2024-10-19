@@ -41,14 +41,16 @@ const Orders = () => {
           })
           .flat()
       : user?.userType === "vendor"
-      ? vendorOrders?.data?.map((order) => {
-          return order.products.map((product) => {
-            return {
-              ...product,
-              order,
-            };
-          });
-        })
+      ? vendorOrders?.data
+          ?.map((order) => {
+            return order.products.map((product) => {
+              return {
+                ...product,
+                order,
+              };
+            });
+          })
+          ?.flat()
       : orders?.data
           ?.map((order) => {
             return order.products.map((product) => {
@@ -59,7 +61,6 @@ const Orders = () => {
             });
           })
           .flat();
-
   const handleNavigateProductOrder = (orderId: string, productId: string) => {
     navigate(`/order/${orderId}/${productId}`);
   };
@@ -108,11 +109,11 @@ const Orders = () => {
                 >
                   <div className="md:flex items-center justify-start gap-2">
                     <img
-                      src={product.images[0]}
-                      alt={product.name}
+                      src={product?.images?.[0]}
+                      alt={product?.name}
                       className="w-full h-full md:w-32 md:h-20 text-grayBlack"
                     />
-                    <span className="text-2xl md:text-xl font-semibold">{product.name}</span>
+                    <span className="text-2xl md:text-xl font-semibold">{product?.name}</span>
                   </div>
                 </Col>
                 <Col
@@ -128,16 +129,16 @@ const Orders = () => {
                   <Tag
                     className="text-base font-semibold"
                     color={
-                      product.order.status === "placed"
+                      product?.order?.status === "placed"
                         ? "gold"
-                        : product.order.status === "shipped"
+                        : product?.order?.status === "shipped"
                         ? "blue"
-                        : product.order.status === "delivered"
+                        : product?.order?.status === "delivered"
                         ? "green"
                         : "red"
                     }
                   >
-                    {product.order.status}
+                    {product?.order?.status}
                   </Tag>
                 </Col>
 
@@ -147,7 +148,7 @@ const Orders = () => {
                   className="flex items-center justify-center gap-2"
                 >
                   <span className="text-grayBlack font-bold text-lg">
-                    {moment(product.order.createdAt).format("MMMM Do YYYY")}
+                    {moment(product?.order?.createdAt).format("MMMM Do YYYY")}
                   </span>
                 </Col>
               </Row>
@@ -167,4 +168,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Orders;
