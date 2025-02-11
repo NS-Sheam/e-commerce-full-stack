@@ -10,7 +10,6 @@ import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
 import GoogleLoginButton from "../ui/GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
 import { TReduxResponse } from "../../types";
-import { useState } from "react";
 
 const loginCredintial: { [key in "customer" | "vendor" | "admin"]: { email: string; password: string } } = {
   customer: {
