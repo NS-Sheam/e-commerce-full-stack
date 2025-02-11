@@ -15,7 +15,7 @@ export const handleAddToWishList = async ({ productId, doesWishListContainProduc
   })) as TResponse<TUser>;
 
   if (res.error) {
-    toast.error(res?.error?.message || "Something went wrong", { id: toastId });
+    toast.error(res?.error.data.errorSources?.[0]?.message || "Something went wrong", { id: toastId });
     return;
   }
   toast.success(doesWishListContainProduct ? "Removed from wishlist" : "Added to wishlist", { id: toastId });

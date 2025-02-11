@@ -78,14 +78,16 @@ const Orders = () => {
       </div>
     );
   }
+  const flattedOrders = orderedProducts?.flat();
+
   return (
     <div className="p-4">
       <DashboardHeading>
         <h3>Orders</h3>
       </DashboardHeading>
       <Row gutter={[16, 16]}>
-        {orderedProducts?.length > 0 ? (
-          orderedProducts?.map((product: any, index: number) => (
+        {flattedOrders?.length > 0 ? (
+          flattedOrders?.map((product: any, index: number) => (
             <Col
               key={index}
               span={12}
@@ -108,36 +110,36 @@ const Orders = () => {
                 >
                   <div className="md:flex items-center justify-start gap-2">
                     <img
-                      src={product.images[0]}
-                      alt={product.name}
+                      src={product?.images?.[0]}
+                      alt={product?.name}
                       className="w-full h-full md:w-32 md:h-20 text-grayBlack"
                     />
-                    <span className="text-2xl md:text-xl font-semibold">{product.name}</span>
+                    <span className="text-xs font-semibold">{product?.name}</span>
                   </div>
                 </Col>
                 <Col
                   span={24}
                   md={{ span: 5 }}
                 >
-                  <span className="text-[#2DA5F3] font-bold text-xl">${product.price}</span>
+                  <span className="text-[#2DA5F3] font-bold text-xs">${product?.price}</span>
                 </Col>
                 <Col
                   span={24}
                   md={{ span: 5 }}
                 >
                   <Tag
-                    className="text-base font-semibold"
+                    className="text-xs font-semibold"
                     color={
-                      product.order.status === "placed"
+                      product?.order?.status === "placed"
                         ? "gold"
-                        : product.order.status === "shipped"
+                        : product?.order?.status === "shipped"
                         ? "blue"
-                        : product.order.status === "delivered"
+                        : product?.order?.status === "delivered"
                         ? "green"
                         : "red"
                     }
                   >
-                    {product.order.status}
+                    {product?.order?.status}
                   </Tag>
                 </Col>
 
@@ -146,8 +148,8 @@ const Orders = () => {
                   md={{ span: 6 }}
                   className="flex items-center justify-center gap-2"
                 >
-                  <span className="text-grayBlack font-bold text-lg">
-                    {moment(product.order.createdAt).format("MMMM Do YYYY")}
+                  <span className="text-grayBlack font-bold text-xs">
+                    {moment(product?.order?.createdAt).format("MMMM Do YYYY")}
                   </span>
                 </Col>
               </Row>

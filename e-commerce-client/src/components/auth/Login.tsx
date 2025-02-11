@@ -10,6 +10,22 @@ import { TUser, setUser } from "../../redux/features/auth/auth.Slice";
 import GoogleLoginButton from "../ui/GoogleLoginButton";
 import { useNavigate } from "react-router-dom";
 import { TReduxResponse } from "../../types";
+import { useState } from "react";
+
+const loginCredintial: { [key in "customer" | "vendor" | "admin"]: { email: string; password: string } } = {
+  customer: {
+    email: "customer123@gmail.com",
+    password: "customer123",
+  },
+  vendor: {
+    email: "123sheamfeni@gmail.com",
+    password: "123456",
+  },
+  admin: {
+    email: "7582mnsakibs@gmail.com",
+    password: "123456",
+  },
+};
 
 const Login = () => {
   const [login] = useLoginMutation();
@@ -82,6 +98,23 @@ const Login = () => {
             >
               Login
             </Button>
+            {Object.keys(loginCredintial).map((key) => (
+              <Button
+                key={key}
+                onClick={() => {
+                  onSubmit(loginCredintial[key as "customer" | "vendor" | "admin"]);
+                }}
+                style={{
+                  width: "100%",
+                  margin: "0.5rem 0 0 0",
+                  backgroundColor: "#fa8232",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
+                Login as {key}
+              </Button>
+            ))}
             <GoogleLoginButton />
           </EComForm>
         </Col>
